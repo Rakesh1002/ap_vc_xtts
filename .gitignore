@@ -172,3 +172,28 @@ celerybeat.pid
 # Alembic
 alembic.ini.local
 migrations/versions/
+
+# XTTS and ML specific
+xtts_models/
+tts_models/
+*.pth.tar
+model.pth
+model.bin
+config.json
+vocab.json
+speakers.pth
+lexicon.db
+
+# Virtual Environment (be more specific)
+venv/
+.venv/
+**/site-packages/
+**/lib/python*/
+**/*.dylib
+**/*.so
+**/*.dll
+
+# Language and dictionary files
+**/espeak/
+**/gruut_lang_*/
+**/sudachidict_core/

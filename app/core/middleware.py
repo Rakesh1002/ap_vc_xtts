@@ -3,8 +3,11 @@ from fastapi.responses import JSONResponse
 import redis
 from app.core.config import get_settings
 import time
+import logging
+from app.core.metrics import REQUEST_COUNT, REQUEST_LATENCY
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
 
 class RateLimiter:
     def __init__(self, redis_client: redis.Redis):
@@ -42,3 +45,34 @@ async def rate_limit_middleware(request: Request, call_next):
     
     response = await call_next(request)
     return response 
+
+async def metrics_middleware(request: Request, call_next):
+    """Middleware to collect request metrics"""
+    start_time = time.time()
+    
+    try:
+        response = await call_next(request)
+        
+        # Record request count with method and endpoint
+        REQUEST_COUNT.labels(
+            method=request.method,
+            endpoint=request.url.path
+        ).inc()
+        
+        # Record latency
+        duration = time.time() - start_time
+        REQUEST_LATENCY.labels(
+            endpoint=request.url.path
+        ).observe(duration)
+        
+        return response
+        
+    except Exception as e:
+        # Record error count
+        REQUEST_COUNT.labels(
+            method=request.method,
+            endpoint=request.url.path
+        ).inc()
+        
+        logger.exception("Error in request processing")
+        raise

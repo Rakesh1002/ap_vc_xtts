@@ -165,13 +165,14 @@ curl -X POST "http://localhost:8000/api/v1/auth/token" \
 curl -X POST "http://localhost:8000/api/v1/voice/voices/" \
      -H "Authorization: Bearer $TOKEN" \
      -F "file=@sample.wav" \
-     -F "name=Test Voice"
+     -F "name=Test Voice" \
+     -F "description=This is a test voice"
 
 # Create cloning job
 curl -X POST "http://localhost:8000/api/v1/voice/clone/" \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d '{"voice_id": 1, "text": "Hello world"}'
+     -d '{"voice_id": 1, "input_text": "Hello world"}'
 ```
 
 ### Translation
@@ -243,6 +244,7 @@ chmod +x scripts/start.sh
 ```
 
 Development mode features:
+
 - Auto-reload for code changes
 - Debug logging
 - 2 Celery workers
@@ -256,6 +258,7 @@ Development mode features:
 ```
 
 Production mode features:
+
 - Multiple uvicorn workers (configurable)
 - Optimized Celery settings
 - Production-level logging
@@ -426,11 +429,13 @@ sudo systemctl start nginx
 ### Monitoring
 
 1. Check service status:
+
 ```bash
 sudo supervisorctl status
 ```
 
 2. View logs:
+
 ```bash
 # API logs
 tail -f /var/log/supervisor/api.out.log
@@ -440,6 +445,7 @@ tail -f /var/log/supervisor/celery.out.log
 ```
 
 3. Monitor resources:
+
 ```bash
 # GPU usage
 nvidia-smi -l 1
@@ -451,6 +457,7 @@ htop
 ### Backup and Maintenance
 
 1. Database backup:
+
 ```bash
 # Backup database
 pg_dump -h $DB_HOST -U $DB_USER -d $DB_NAME > backup.sql
@@ -460,6 +467,7 @@ psql -h $DB_HOST -U $DB_USER -d $DB_NAME < backup.sql
 ```
 
 2. Model files backup:
+
 ```bash
 # Backup models directory
 tar -czf models_backup.tar.gz models/
@@ -473,3 +481,238 @@ tar -czf models_backup.tar.gz models/
 4. Regular security updates
 5. Implement rate limiting
 6. Use strong passwords and key-based SSH authentication
+
+## Queue Configuration
+
+The application uses two separate Celery queues for different types of tasks:
+
+### Voice Queue (`voice-queue`)
+
+- Handles voice cloning tasks
+- Lower concurrency (2 workers)
+- Higher memory allocation per task
+- Longer time limits (1 hour)
+- GPU-intensive operations
+
+### Translation Queue (`translation-queue`)
+
+- Handles audio translation tasks
+- Higher concurrency (4 workers)
+- Lower memory requirements
+- Shorter time limits (30 minutes)
+- CPU-intensive operations
+
+### Starting the Workers
+
+```bash
+# Start all workers
+./scripts/start_workers.sh
+
+# Or start workers individually
+celery -A app.core.celery_app worker -Q voice-queue -n voice_worker@%h --concurrency=2
+celery -A app.core.celery_app worker -Q translation-queue -n translation_worker@%h --concurrency=4
+```
+
+## API Endpoints
+
+### Voice Processing
+
+#### Create Voice Profile
+
+```http
+POST /api/v1/voice/voices/
+Content-Type: multipart/form-data
+
+name: string
+description: string (optional)
+file: audio file (WAV, MP3, OGG)
+```
+
+#### Create Cloning Job
+
+```http
+POST /api/v1/voice/clone/
+Content-Type: application/json
+
+{
+    "voice_id": integer,
+    "input_text": string
+}
+```
+
+#### Get Job Status
+
+```http
+GET /api/v1/voice/clone/{job_id}/status
+```
+
+### Audio Translation
+
+#### Create Translation Job
+
+```http
+POST /api/v1/translation/translate/
+Content-Type: multipart/form-data
+
+target_language: string
+source_language: string (optional)
+file: audio file
+```
+
+#### Create Translation from URL
+
+```http
+POST /api/v1/translation/translate/url/
+Content-Type: application/json
+
+{
+    "url": string,
+    "target_language": string,
+    "source_language": string (optional)
+}
+```
+
+## Service Architecture
+
+### Storage Service
+
+- Handles file uploads to S3
+- Supports multipart uploads for large files
+- Downloads from various sources (S3, HTTP, social media)
+- Temporary file management
+- Automatic cleanup
+
+### Voice Cloning Service
+
+- XTTS v2 model integration
+- Progress tracking
+- Memory optimization
+- GPU resource management
+- Automatic cleanup of temporary files
+
+### Translation Service
+
+- Faster Whisper integration
+- Multiple language support
+- Automatic language detection
+- Streaming audio processing
+- Resource optimization
+
+## Error Handling
+
+The application uses a structured error handling system:
+
+```python
+class AudioProcessingError:
+    error_code: str
+    message: str
+    details: dict
+    severity: ErrorSeverity
+    category: ErrorCategory
+```
+
+Error categories:
+
+- Validation
+- Processing
+- Storage
+- System
+- Model
+
+## Monitoring
+
+### Metrics Available
+
+- Request latency
+- Queue lengths
+- Job processing times
+- Model inference times
+- Resource usage (CPU, RAM, GPU)
+- Error rates
+
+### Prometheus Endpoints
+
+```http
+GET /metrics
+```
+
+### WebSocket Status Updates
+
+```javascript
+ws://api.example.com/ws/{token}
+```
+
+## Development Setup
+
+1. Install dependencies:
+
+```bash
+poetry install
+```
+
+2. Set up environment:
+
+```bash
+cp .env.example .env
+# Edit .env with your settings
+```
+
+3. Start services:
+
+```bash
+# Start PostgreSQL and Redis
+docker-compose up -d db redis
+
+# Start API server
+poetry run uvicorn app.main:app --reload
+
+# Start workers
+./scripts/start_workers.sh
+```
+
+## Production Deployment
+
+1. Configure workers:
+
+```bash
+# Edit worker settings in app/core/config.py
+WORKER_CONCURRENCY = 4
+TASK_TIMEOUT = 3600
+MAX_RETRIES = 3
+```
+
+2. Set up monitoring:
+
+```bash
+# Start Prometheus
+docker-compose up -d prometheus
+
+# Start Grafana
+docker-compose up -d grafana
+```
+
+3. Configure SSL:
+
+```nginx
+# Example Nginx configuration
+server {
+    listen 443 ssl;
+    server_name api.example.com;
+
+    ssl_certificate /etc/letsencrypt/live/api.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.example.com/privkey.pem;
+
+    location / {
+        proxy_pass http://localhost:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /ws {
+        proxy_pass http://localhost:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```

@@ -7475,3 +7475,1513 @@ RuntimeError: No response returned.
 2024-11-07 20:44:01.624 | INFO     | app.main:shutdown_event:83 - Shutting down application...
 2024-11-07 20:44:01.624 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
 2024-11-07 20:44:01.624 | INFO     | logging:callHandlers:1706 - Finished server process [72554]
+2024-11-07 21:01:27.251 | INFO     | logging:callHandlers:1706 - Started server process [74817]
+2024-11-07 21:01:27.271 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:01:27.274 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:01:27.275 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:01:44.443 | WARNING  | logging:callHandlers:1706 - Error: {"error_id": "11857fd3-9076-47f1-8abe-9efd761c4145", "error_code": "UPLOAD_FAILED", "message": "Failed to upload file", "details": {}, "severity": "medium", "category": "processing", "timestamp": "2024-11-07T15:31:44.439925", "traceback": null}
+2024-11-07 21:01:44.457 | INFO     | logging:callHandlers:1706 - 127.0.0.1:56291 - "POST /api/v1/voice/voices/ HTTP/1.1" 400
+2024-11-07 21:07:11.968 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:07:12.080 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:07:12.082 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:07:12.083 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:07:12.084 | INFO     | logging:callHandlers:1706 - Finished server process [74817]
+2024-11-07 21:08:38.351 | INFO     | logging:callHandlers:1706 - Started server process [75601]
+2024-11-07 21:08:38.352 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:08:38.352 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:08:38.353 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:10:20.101 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:10:20.210 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:10:20.211 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:10:20.211 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:10:20.212 | INFO     | logging:callHandlers:1706 - Finished server process [75601]
+2024-11-07 21:11:38.315 | INFO     | logging:callHandlers:1706 - Started server process [75739]
+2024-11-07 21:11:38.316 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:11:38.319 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:11:38.319 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:12:34.763 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:12:34.872 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:12:34.876 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:12:34.878 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:12:34.879 | INFO     | logging:callHandlers:1706 - Finished server process [75739]
+2024-11-07 21:13:42.340 | INFO     | logging:callHandlers:1706 - Started server process [75949]
+2024-11-07 21:13:42.341 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:13:42.342 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:13:42.342 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:14:03.775 | WARNING  | logging:callHandlers:1706 - Error: {"error_id": "aab2bd64-f259-4e2f-9ad3-988c453c2f19", "error_code": "UPLOAD_FAILED", "message": "Failed to upload file", "details": {}, "severity": "medium", "category": "processing", "timestamp": "2024-11-07T15:44:03.771423", "traceback": null}
+2024-11-07 21:14:03.784 | INFO     | logging:callHandlers:1706 - 127.0.0.1:56865 - "POST /api/v1/voice/voices/ HTTP/1.1" 400
+2024-11-07 21:15:26.558 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:15:26.661 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:15:26.662 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:15:26.663 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:15:26.663 | INFO     | logging:callHandlers:1706 - Finished server process [75949]
+2024-11-07 21:16:58.492 | INFO     | logging:callHandlers:1706 - Started server process [76133]
+2024-11-07 21:16:58.498 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:16:58.505 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:16:58.506 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:31:55.516 | WARNING  | logging:callHandlers:1706 - Error: {"error_id": "dfa8c19c-411e-435b-a9df-6f3d6a5bce63", "error_code": "UPLOAD_FAILED", "message": "Failed to upload file", "details": {}, "severity": "medium", "category": "processing", "timestamp": "2024-11-07T16:01:55.511069", "traceback": null}
+2024-11-07 21:31:55.534 | INFO     | logging:callHandlers:1706 - 127.0.0.1:58278 - "POST /api/v1/voice/voices/ HTTP/1.1" 400
+2024-11-07 21:39:03.127 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:39:03.243 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:39:03.251 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:39:03.255 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:39:03.258 | INFO     | logging:callHandlers:1706 - Finished server process [76133]
+2024-11-07 21:40:41.992 | INFO     | logging:callHandlers:1706 - Started server process [77157]
+2024-11-07 21:40:41.994 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:40:42.002 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:40:42.002 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:41:19.441 | INFO     | logging:callHandlers:1706 - 127.0.0.1:59112 - "POST /health HTTP/1.1" 405
+2024-11-07 21:41:26.477 | INFO     | logging:callHandlers:1706 - 127.0.0.1:59134 - "POST /api/v1/health HTTP/1.1" 404
+2024-11-07 21:41:35.106 | INFO     | logging:callHandlers:1706 - 127.0.0.1:59146 - "POST /api/v1/health HTTP/1.1" 404
+2024-11-07 21:41:39.208 | INFO     | logging:callHandlers:1706 - 127.0.0.1:59146 - "POST /health HTTP/1.1" 405
+2024-11-07 21:41:45.080 | INFO     | logging:callHandlers:1706 - 127.0.0.1:59169 - "GET /health HTTP/1.1" 200
+2024-11-07 21:41:58.877 | WARNING  | logging:callHandlers:1706 - Error: {"error_id": "1b471389-75bf-4556-ad99-6ce07c548e6f", "error_code": "UPLOAD_FAILED", "message": "Failed to upload file", "details": {}, "severity": "medium", "category": "processing", "timestamp": "2024-11-07T16:11:58.872368", "traceback": null}
+2024-11-07 21:41:58.886 | INFO     | logging:callHandlers:1706 - 127.0.0.1:59185 - "POST /api/v1/voice/voices/ HTTP/1.1" 400
+2024-11-07 21:42:46.795 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:42:46.899 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:42:46.901 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:42:46.911 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:42:46.912 | INFO     | logging:callHandlers:1706 - Finished server process [77157]
+2024-11-07 21:56:32.497 | INFO     | logging:callHandlers:1706 - Started server process [78727]
+2024-11-07 21:56:32.497 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:56:32.498 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:56:32.499 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:57:05.379 | ERROR    | logging:callHandlers:1706 - Failed to upload file: 'Settings' object has no attribute 'MULTIPART_THRESHOLD'
+2024-11-07 21:57:05.385 | WARNING  | logging:callHandlers:1706 - Error: {"error_id": "91d48783-7131-4b2e-be85-f8c4faa0ac5c", "error_code": "UPLOAD_FAILED", "message": "Failed to upload file", "details": {}, "severity": "medium", "category": "processing", "timestamp": "2024-11-07T16:27:05.380996", "traceback": null}
+2024-11-07 21:57:05.398 | INFO     | logging:callHandlers:1706 - 127.0.0.1:60318 - "POST /api/v1/voice/voices/ HTTP/1.1" 400
+2024-11-07 21:58:11.294 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 21:58:11.399 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 21:58:11.400 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 21:58:11.400 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 21:58:11.401 | INFO     | logging:callHandlers:1706 - Finished server process [78727]
+2024-11-07 21:58:41.088 | INFO     | logging:callHandlers:1706 - Started server process [78926]
+2024-11-07 21:58:41.088 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 21:58:41.089 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 21:58:41.089 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 21:58:45.029 | INFO     | logging:callHandlers:1706 - Successfully uploaded file to https://unquest.s3.amazonaws.com/voices/ce237a51-5cbb-460d-b88f-c62858c2ca98/police-77121.mp3
+2024-11-07 21:58:45.048 | ERROR    | logging:callHandlers:1706 - Unexpected error in create_voice
+Traceback (most recent call last):
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 2423, in _determine_joins
+    self.primaryjoin = join_condition(
+    │                  └ <function join_condition at 0x15591fba0>
+    └ <sqlalchemy.orm.relationships.JoinCondition object at 0x314e44b10>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/sql/util.py", line 123, in join_condition
+    return Join._join_condition(
+           │    └ <classmethod(<function Join._join_condition at 0x155b0d8a0>)>
+           └ <class 'sqlalchemy.sql.selectable.Join'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/sql/selectable.py", line 1380, in _join_condition
+    raise exc.NoForeignKeysError(
+          │   └ <class 'sqlalchemy.exc.NoForeignKeysError'>
+          └ <module 'sqlalchemy.exc' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/exc.py'>
+
+sqlalchemy.exc.NoForeignKeysError: Can't find any foreign key relationships between 'translation_jobs' and 'voices'.
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 7
+               └ <function _main at 0x103108ae0>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x103019620>
+           └ <SpawnProcess name='SpawnProcess-2' parent=78725 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x103018b80>
+    └ <SpawnProcess name='SpawnProcess-2' parent=78725 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x103df3750>, 'target': <bound method Server.run of <uvicorn.server.Server object...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-2' parent=78725 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-2' parent=78725 started>
+    │    └ <function subprocess_started at 0x103e5ff60>
+    └ <SpawnProcess name='SpawnProcess-2' parent=78725 started>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x103ede510>>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+           │       │   │    └ <function Server.serve at 0x103e5ef20>
+           │       │   └ <uvicorn.server.Server object at 0x103ede510>
+           │       └ <function run at 0x103b67380>
+           └ <module 'asyncio' from '/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asy...
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x103eda790>
+           │      └ <function Runner.run at 0x103bd7100>
+           └ <asyncio.runners.Runner object at 0x103eddd50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/ser...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x103bd4d60>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x103eddd50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x103bd4cc0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x103bd6ac0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x103b67ba0>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+          │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x314cc6340>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x30fdfd790>
+          └ <starlette.middleware.base.BaseHTTPMiddleware object at 0x103edf710>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x314cc6340>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x314c36010>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x30fdfd790>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x314cc6340>
+          │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x314c35f50>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x3149e6b90>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x314c36010>
+          └ <function wrap_app_handling_exceptions at 0x1057d4220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x314cc6700>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x3149e6b90>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x314cc6700>
+          │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x3149e6b90>>
+          └ <fastapi.routing.APIRouter object at 0x3149e6b90>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x314cc6700>
+          │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x1057d5940>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x314cc6700>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x306630220>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x314cc6700>
+          │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x314b2b850>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x314cc67a0>
+          └ <function wrap_app_handling_exceptions at 0x1057d4220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x314cc68e0>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x314cc62a0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x314cc67a0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x314b2b850>
+                     └ <function get_request_handler.<locals>.app at 0x306650fe0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x1057d5440>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'db': <sqlalchemy.orm.session.AsyncSession object at 0x3120a4590>, 'name': 'Test', 'description': 'Sample voice for cloning'...
+                 │         └ <function create_voice at 0x3087ceb60>
+                 └ <fastapi.dependencies.models.Dependant object at 0x314c25350>
+
+> File "/Users/rakesh/ap_vc/app/api/v1/voice.py", line 79, in create_voice
+    voice = VoiceModel(
+            └ <class 'app.models.audio.Voice'>
+
+  File "<string>", line 4, in __init__
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 566, in _initialize_instance
+    manager.dispatch.init(self, args, kwargs)
+    │       │        │    │     │     └ {'name': 'Test', 'description': 'Sample voice for cloning', 'file_path': 'voices/ce237a51-5cbb-460d-b88f-c62858c2ca98/police-...
+    │       │        │    │     └ ()
+    │       │        │    └ <sqlalchemy.orm.state.InstanceState object at 0x314e15250>
+    │       │        └ <member 'init' of 'InstanceEventsDispatch' objects>
+    │       └ <sqlalchemy.event.base.InstanceEventsDispatch object at 0x15688b7f0>
+    └ <ClassManager of <class 'app.models.audio.Voice'> at 156852390>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/event/attr.py", line 497, in __call__
+    fn(*args, **kw)
+    │   │       └ {}
+    │   └ (<sqlalchemy.orm.state.InstanceState object at 0x314e15250>, (), {'name': 'Test', 'description': 'Sample voice for cloning', ...
+    └ <function _event_on_init at 0x156115a80>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 4407, in _event_on_init
+    instrumenting_mapper._check_configure()
+    │                    └ <function Mapper._check_configure at 0x1561119e0>
+    └ <Mapper at 0x154cb11d0; Voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 2399, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+    │                      │    └ <sqlalchemy.orm.decl_api.registry object at 0x15687ddd0>
+    │                      └ <Mapper at 0x154cb11d0; Voice>
+    └ <function _configure_registries at 0x1561156c0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 4215, in _configure_registries
+    _do_configure_registries(registries, cascade)
+    │                        │           └ True
+    │                        └ set()
+    └ <function _do_configure_registries at 0x156115800>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 4256, in _do_configure_registries
+    mapper._post_configure_properties()
+    │      └ <function Mapper._post_configure_properties at 0x1561118a0>
+    └ <Mapper at 0x155012f50; TranslationJob>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 2416, in _post_configure_properties
+    prop.init()
+    │    └ <function MapperProperty.init at 0x155fde340>
+    └ <_RelationshipDeclared at 0x1568c9f90; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/interfaces.py", line 589, in init
+    self.do_init()
+    │    └ <function RelationshipProperty.do_init at 0x156108180>
+    └ <_RelationshipDeclared at 0x1568c9f90; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 1644, in do_init
+    self._setup_join_conditions()
+    │    └ <function RelationshipProperty._setup_join_conditions at 0x156108400>
+    └ <_RelationshipDeclared at 0x1568c9f90; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 1884, in _setup_join_conditions
+    self._join_condition = jc = JoinCondition(
+    │                           └ <class 'sqlalchemy.orm.relationships.JoinCondition'>
+    └ <_RelationshipDeclared at 0x1568c9f90; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 2310, in __init__
+    self._determine_joins()
+    │    └ <function JoinCondition._determine_joins at 0x156109440>
+    └ <sqlalchemy.orm.relationships.JoinCondition object at 0x314e44b10>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 2444, in _determine_joins
+    raise sa_exc.NoForeignKeysError(
+          │      └ <class 'sqlalchemy.exc.NoForeignKeysError'>
+          └ <module 'sqlalchemy.exc' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/exc.py'>
+
+sqlalchemy.exc.NoForeignKeysError: Could not determine join condition between parent/child tables on relationship TranslationJob.voice - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2024-11-07 21:58:45.068 | INFO     | logging:callHandlers:1706 - 127.0.0.1:60455 - "POST /api/v1/voice/voices/ HTTP/1.1" 500
+2024-11-07 22:03:25.421 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:03:25.525 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:03:25.527 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:03:25.527 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:03:25.530 | INFO     | logging:callHandlers:1706 - Finished server process [78926]
+2024-11-07 22:05:48.111 | INFO     | logging:callHandlers:1706 - Started server process [79773]
+2024-11-07 22:05:48.112 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:05:48.115 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:05:48.115 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:07:48.635 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:07:48.740 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:07:48.742 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:07:48.742 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:07:48.743 | INFO     | logging:callHandlers:1706 - Finished server process [79773]
+2024-11-07 22:08:15.165 | INFO     | logging:callHandlers:1706 - Started server process [79990]
+2024-11-07 22:08:15.166 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:08:15.167 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:08:15.167 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:08:57.133 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:08:57.236 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:08:57.237 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:08:57.237 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:08:57.237 | INFO     | logging:callHandlers:1706 - Finished server process [79990]
+2024-11-07 22:09:25.817 | INFO     | logging:callHandlers:1706 - Started server process [80121]
+2024-11-07 22:09:25.818 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:09:25.819 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:09:25.820 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:10:12.735 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:10:12.837 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:10:12.838 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:10:12.838 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:10:12.838 | INFO     | logging:callHandlers:1706 - Finished server process [80121]
+2024-11-07 22:10:38.557 | INFO     | logging:callHandlers:1706 - Started server process [80290]
+2024-11-07 22:10:38.557 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:10:38.558 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:10:38.558 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:11:02.730 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:11:02.833 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:11:02.833 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:11:02.833 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:11:02.834 | INFO     | logging:callHandlers:1706 - Finished server process [80290]
+2024-11-07 22:11:30.568 | INFO     | logging:callHandlers:1706 - Started server process [80401]
+2024-11-07 22:11:30.569 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:11:30.571 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:11:30.572 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:12:03.634 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:12:03.750 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:12:03.751 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:12:03.752 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:12:03.753 | INFO     | logging:callHandlers:1706 - Finished server process [80401]
+2024-11-07 22:12:38.104 | INFO     | logging:callHandlers:1706 - Started server process [80528]
+2024-11-07 22:12:38.104 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:12:38.105 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:12:38.105 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:16:11.610 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:16:11.714 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:16:11.716 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:16:11.716 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:16:11.716 | INFO     | logging:callHandlers:1706 - Finished server process [80528]
+2024-11-07 22:19:07.992 | INFO     | logging:callHandlers:1706 - Started server process [81471]
+2024-11-07 22:19:07.993 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:19:07.993 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:19:07.993 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:20:29.402 | INFO     | logging:callHandlers:1706 - Successfully uploaded file to https://unquest.s3.amazonaws.com/voices/7c896453-ece8-4375-9484-b124ec6b61ce/police-77121.mp3
+2024-11-07 22:20:29.444 | ERROR    | logging:callHandlers:1706 - Unexpected error in create_voice
+Traceback (most recent call last):
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 2423, in _determine_joins
+    self.primaryjoin = join_condition(
+    │                  └ <function join_condition at 0x16af17d80>
+    └ <sqlalchemy.orm.relationships.JoinCondition object at 0x1600409d0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/sql/util.py", line 123, in join_condition
+    return Join._join_condition(
+           │    └ <classmethod(<function Join._join_condition at 0x16b10da80>)>
+           └ <class 'sqlalchemy.sql.selectable.Join'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/sql/selectable.py", line 1380, in _join_condition
+    raise exc.NoForeignKeysError(
+          │   └ <class 'sqlalchemy.exc.NoForeignKeysError'>
+          └ <module 'sqlalchemy.exc' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/exc.py'>
+
+sqlalchemy.exc.NoForeignKeysError: Can't find any foreign key relationships between 'translation_jobs' and 'voices'.
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 7
+               └ <function _main at 0x10054cae0>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x10045d620>
+           └ <SpawnProcess name='SpawnProcess-2' parent=81423 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x10045cb80>
+    └ <SpawnProcess name='SpawnProcess-2' parent=81423 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x10186f590>, 'target': <bound method Server.run of <uvicorn.server.Server object...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-2' parent=81423 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-2' parent=81423 started>
+    │    └ <function subprocess_started at 0x1018dbf60>
+    └ <SpawnProcess name='SpawnProcess-2' parent=81423 started>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x10195a250>>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+           │       │   │    └ <function Server.serve at 0x1018daf20>
+           │       │   └ <uvicorn.server.Server object at 0x10195a250>
+           │       └ <function run at 0x100fab380>
+           └ <module 'asyncio' from '/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asy...
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x101956790>
+           │      └ <function Runner.run at 0x10101b100>
+           └ <asyncio.runners.Runner object at 0x101959a50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/ser...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x101018d60>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x101959a50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x101018cc0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x10101aac0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x100fabba0>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+          │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x31596e480>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x3158c2b50>
+          └ <starlette.middleware.base.BaseHTTPMiddleware object at 0x3064cfad0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x31596e480>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x3062c8650>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x3158c2b50>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x31596e480>
+          │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x315972050>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x30fd7ad10>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x3062c8650>
+          └ <function wrap_app_handling_exceptions at 0x1035dc220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x31596e840>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x30fd7ad10>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x31596e840>
+          │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x30fd7ad10>>
+          └ <fastapi.routing.APIRouter object at 0x30fd7ad10>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x31596e840>
+          │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x1035dd940>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x31596e840>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x3043551c0>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x31596e840>
+          │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x315908ed0>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x31596e8e0>
+          └ <function wrap_app_handling_exceptions at 0x1035dc220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x31596ea20>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x31596e3e0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x31596e8e0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x315908ed0>
+                     └ <function get_request_handler.<locals>.app at 0x304094d60>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x1035dd440>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'db': <sqlalchemy.orm.session.AsyncSession object at 0x30fd8b490>, 'name': 'Test', 'description': 'Sample voice for cloning'...
+                 │         └ <function create_voice at 0x306492d40>
+                 └ <fastapi.dependencies.models.Dependant object at 0x3158c8b90>
+
+> File "/Users/rakesh/ap_vc/app/api/v1/voice.py", line 79, in create_voice
+    voice = VoiceModel(
+            └ <class 'app.models.audio.Voice'>
+
+  File "<string>", line 4, in __init__
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state.py", line 566, in _initialize_instance
+    manager.dispatch.init(self, args, kwargs)
+    │       │        │    │     │     └ {'name': 'Test', 'description': 'Sample voice for cloning', 'file_path': 'voices/7c896453-ece8-4375-9484-b124ec6b61ce/police-...
+    │       │        │    │     └ ()
+    │       │        │    └ <sqlalchemy.orm.state.InstanceState object at 0x160019490>
+    │       │        └ <member 'init' of 'InstanceEventsDispatch' objects>
+    │       └ <sqlalchemy.event.base.InstanceEventsDispatch object at 0x16c31a5d0>
+    └ <ClassManager of <class 'app.models.audio.Voice'> at 16c30c650>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/event/attr.py", line 497, in __call__
+    fn(*args, **kw)
+    │   │       └ {}
+    │   └ (<sqlalchemy.orm.state.InstanceState object at 0x160019490>, (), {'name': 'Test', 'description': 'Sample voice for cloning', ...
+    └ <function _event_on_init at 0x16b609c60>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 4407, in _event_on_init
+    instrumenting_mapper._check_configure()
+    │                    └ <function Mapper._check_configure at 0x16b605bc0>
+    └ <Mapper at 0x16c2b3310; Voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 2399, in _check_configure
+    _configure_registries({self.registry}, cascade=True)
+    │                      │    └ <sqlalchemy.orm.decl_api.registry object at 0x16c35bcd0>
+    │                      └ <Mapper at 0x16c2b3310; Voice>
+    └ <function _configure_registries at 0x16b6098a0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 4215, in _configure_registries
+    _do_configure_registries(registries, cascade)
+    │                        │           └ True
+    │                        └ set()
+    └ <function _do_configure_registries at 0x16b6099e0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 4256, in _do_configure_registries
+    mapper._post_configure_properties()
+    │      └ <function Mapper._post_configure_properties at 0x16b605a80>
+    └ <Mapper at 0x16c39ec10; TranslationJob>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/mapper.py", line 2416, in _post_configure_properties
+    prop.init()
+    │    └ <function MapperProperty.init at 0x16b3da520>
+    └ <_RelationshipDeclared at 0x16c392170; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/interfaces.py", line 589, in init
+    self.do_init()
+    │    └ <function RelationshipProperty.do_init at 0x16b4f8360>
+    └ <_RelationshipDeclared at 0x16c392170; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 1644, in do_init
+    self._setup_join_conditions()
+    │    └ <function RelationshipProperty._setup_join_conditions at 0x16b4f85e0>
+    └ <_RelationshipDeclared at 0x16c392170; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 1884, in _setup_join_conditions
+    self._join_condition = jc = JoinCondition(
+    │                           └ <class 'sqlalchemy.orm.relationships.JoinCondition'>
+    └ <_RelationshipDeclared at 0x16c392170; voice>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 2310, in __init__
+    self._determine_joins()
+    │    └ <function JoinCondition._determine_joins at 0x16b4f9620>
+    └ <sqlalchemy.orm.relationships.JoinCondition object at 0x1600409d0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/relationships.py", line 2444, in _determine_joins
+    raise sa_exc.NoForeignKeysError(
+          │      └ <class 'sqlalchemy.exc.NoForeignKeysError'>
+          └ <module 'sqlalchemy.exc' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/exc.py'>
+
+sqlalchemy.exc.NoForeignKeysError: Could not determine join condition between parent/child tables on relationship TranslationJob.voice - there are no foreign keys linking these tables.  Ensure that referencing columns are associated with a ForeignKey or ForeignKeyConstraint, or specify a 'primaryjoin' expression.
+2024-11-07 22:20:29.471 | INFO     | logging:callHandlers:1706 - 127.0.0.1:61559 - "POST /api/v1/voice/voices/ HTTP/1.1" 500
+2024-11-07 22:21:03.331 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:21:03.433 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:21:03.434 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:21:03.434 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:21:03.434 | INFO     | logging:callHandlers:1706 - Finished server process [81471]
+2024-11-07 22:23:14.626 | INFO     | logging:callHandlers:1706 - Started server process [81845]
+2024-11-07 22:23:14.627 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:23:14.628 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:23:14.628 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:23:26.478 | INFO     | logging:callHandlers:1706 - Successfully uploaded file to https://unquest.s3.amazonaws.com/voices/5121e956-f2ca-4263-a5d9-7ef276467b29/police-77121.mp3
+2024-11-07 22:23:26.533 | ERROR    | logging:callHandlers:1706 - Unexpected error in create_voice
+Traceback (most recent call last):
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connect_utils.py", line 496, in _parse_connect_dsn_and_args
+    sslmode = SSLMode.parse(ssl)
+              │       │     └ 'true'
+              │       └ <classmethod(<function SSLMode.parse at 0x125645580>)>
+              └ <enum 'SSLMode'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connect_utils.py", line 45, in parse
+    return getattr(cls, sslmode.replace('-', '_'))
+                   │    │       └ <method 'replace' of 'str' objects>
+                   │    └ 'true'
+                   └ <enum 'SSLMode'>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/enum.py", line 786, in __getattr__
+    raise AttributeError(name) from None
+                         └ 'true'
+
+AttributeError: true
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 7
+               └ <function _main at 0x100400ae0>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x100311620>
+           └ <SpawnProcess name='SpawnProcess-1' parent=81843 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x100310b80>
+    └ <SpawnProcess name='SpawnProcess-1' parent=81843 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x1010eb590>, 'target': <bound method Server.run of <uvicorn.server.Server object...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-1' parent=81843 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-1' parent=81843 started>
+    │    └ <function subprocess_started at 0x101157f60>
+    └ <SpawnProcess name='SpawnProcess-1' parent=81843 started>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x1011d6250>>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+           │       │   │    └ <function Server.serve at 0x101156f20>
+           │       │   └ <uvicorn.server.Server object at 0x1011d6250>
+           │       └ <function run at 0x100e5f380>
+           └ <module 'asyncio' from '/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asy...
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x1011d2790>
+           │      └ <function Runner.run at 0x100ecf100>
+           └ <asyncio.runners.Runner object at 0x1011d5a50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/ser...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x100eccd60>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x1011d5a50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x100ecccc0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x100eceac0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x100e5fba0>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+          │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x1722aa340>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x14e6eced0>
+          └ <starlette.middleware.base.BaseHTTPMiddleware object at 0x16dd1e050>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x1722aa340>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x172216750>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x14e6eced0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x1722aa340>
+          │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x1721fec90>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x171fca2d0>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x172216750>
+          └ <function wrap_app_handling_exceptions at 0x102564220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x1722aa700>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x171fca2d0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x1722aa700>
+          │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x171fca2d0>>
+          └ <fastapi.routing.APIRouter object at 0x171fca2d0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x1722aa700>
+          │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x102565940>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x1722aa700>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x14b294c20>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x1722aa700>
+          │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x16dd79210>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x1722aa7a0>
+          └ <function wrap_app_handling_exceptions at 0x102564220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x1722aa8e0>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x1722aa2a0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x1722aa7a0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x16dd79210>
+                     └ <function get_request_handler.<locals>.app at 0x14b3342c0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x102565440>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'db': <sqlalchemy.orm.session.AsyncSession object at 0x13e429290>, 'name': 'Test', 'description': 'Sample voice for cloning'...
+                 │         └ <function create_voice at 0x14e5d6c00>
+                 └ <fastapi.dependencies.models.Dependant object at 0x172204d50>
+
+> File "/Users/rakesh/ap_vc/app/api/v1/voice.py", line 87, in create_voice
+    await db.commit()
+          │  └ <function AsyncSession.commit at 0x1253c04a0>
+          └ <sqlalchemy.orm.session.AsyncSession object at 0x13e429290>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/ext/asyncio/session.py", line 1009, in commit
+    await greenlet_spawn(self.sync_session.commit)
+          │              │    │            └ <function Session.commit at 0x1252d31a0>
+          │              │    └ <sqlalchemy.orm.session.Session object at 0x16dd1e650>
+          │              └ <sqlalchemy.orm.session.AsyncSession object at 0x13e429290>
+          └ <function greenlet_spawn at 0x12481a7a0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 201, in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             │       │      │   └ <built-in function exc_info>
+             │       │      └ <module 'sys' (built-in)>
+             │       └ <method 'throw' of 'greenlet.greenlet' objects>
+             └ <_AsyncIoGreenlet object at 0x172306340 (otid=0x1246c3d20) dead>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2028, in commit
+    trans.commit(_to_root=True)
+    │     └ <function SessionTransaction.commit at 0x1252d22a0>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+  File "<string>", line 2, in commit
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {'_to_root': True}
+                │  │      └ ()
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+                └ <function SessionTransaction.commit at 0x1252d20c0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1313, in commit
+    self._prepare_impl()
+    │    └ <function SessionTransaction._prepare_impl at 0x1252d1f80>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ ()
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+                └ <function SessionTransaction._prepare_impl at 0x1252d1ee0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    │    │       └ <function Session.flush at 0x1252da0c0>
+    │    └ <sqlalchemy.orm.session.Session object at 0x16dd1e650>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4352, in flush
+    self._flush(objects)
+    │    │      └ None
+    │    └ <function Session._flush at 0x1252da2a0>
+    └ <sqlalchemy.orm.session.Session object at 0x16dd1e650>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4487, in _flush
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x172307bc0>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ ClientConfigurationError('`sslmode` parameter must be one of: disable, allow, prefer, require, verify-ca, verify-full')
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4448, in _flush
+    flush_context.execute()
+    │             └ <function UOWTransaction.execute at 0x1252b2b60>
+    └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x172306a90>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+    │   │       └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x172306a90>
+    │   └ <function SaveUpdateAll.execute at 0x1252b36a0>
+    └ SaveUpdateAll(Mapper[Voice(voices)])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    │    │         │               └ <function save_obj at 0x12520a340>
+    │    │         └ <module 'sqlalchemy.orm.persistence' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py'>
+    │    └ <module 'sqlalchemy.util.preloaded' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/preloaded.py'>
+    └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 60, in save_obj
+    for (
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 223, in _organize_states_for_save
+    for state, dict_, mapper, connection in _connections_for_states(
+                                            └ <function _connections_for_states at 0x125295da0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1753, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+                 │              │           │          └ <Mapper at 0x1253e4950; Voice>
+                 │              │           └ <function SessionTransaction.connection at 0x1252d16c0>
+                 │              └ <sqlalchemy.orm.session.SessionTransaction object at 0x1723035c0>
+                 └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x172306a90>
+  File "<string>", line 2, in connection
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {'execution_options': None}
+                │  │      └ (<Mapper at 0x1253e4950; Voice>,)
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x1723035c0>
+                └ <function SessionTransaction.connection at 0x1252d1620>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1039, in connection
+    return self._connection_for_bind(bind, execution_options)
+           │    │                    │     └ None
+           │    │                    └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true)
+           │    └ <function SessionTransaction._connection_for_bind at 0x1252d1e40>
+           └ <sqlalchemy.orm.session.SessionTransaction object at 0x1723035c0>
+  File "<string>", line 2, in _connection_for_bind
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ (Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true), None)
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x1723035c0>
+                └ <function SessionTransaction._connection_for_bind at 0x1252d1c60>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1175, in _connection_for_bind
+    conn = self._parent._connection_for_bind(
+           │    │       └ <function SessionTransaction._connection_for_bind at 0x1252d1e40>
+           │    └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+           └ <sqlalchemy.orm.session.SessionTransaction object at 0x1723035c0>
+  File "<string>", line 2, in _connection_for_bind
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ (Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true), None)
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x13cd5ef80>
+                └ <function SessionTransaction._connection_for_bind at 0x1252d1c60>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1189, in _connection_for_bind
+    conn = bind.connect()
+           │    └ <function Engine.connect at 0x124e04ae0>
+           └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true)
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3278, in connect
+    return self._connection_cls(self)
+           │    │               └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true)
+           │    └ <class 'sqlalchemy.engine.base.Connection'>
+           └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true)
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+    │                        │      └ <function Engine.raw_connection at 0x124e04b80>
+    │                        └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true)
+    └ <sqlalchemy.engine.base.Connection object at 0x172307010>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3302, in raw_connection
+    return self.pool.connect()
+           │    │    └ <function Pool.connect at 0x1248b9e40>
+           │    └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+           └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?ssl=true)
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           │                │         └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+           │                └ <classmethod(<function _ConnectionFairy._checkout at 0x1248bbec0>)>
+           └ <class 'sqlalchemy.pool.base._ConnectionFairy'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            │                 │        └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+            │                 └ <classmethod(<function _ConnectionRecord.checkout at 0x1248baa20>)>
+            └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+    rec = pool._do_get()
+          │    └ <function QueuePool._do_get at 0x1248bf600>
+          └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 179, in _do_get
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x1723075c0>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ ClientConfigurationError('`sslmode` parameter must be one of: disable, allow, prefer, require, verify-ca, verify-full')
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 177, in _do_get
+    return self._create_connection()
+           │    └ <function Pool._create_connection at 0x1248b9bc0>
+           └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+    return _ConnectionRecord(self)
+           │                 └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+           └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+    self.__connect()
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x172282120>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x172307480>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ ClientConfigurationError('`sslmode` parameter must be one of: disable, allow, prefer, require, verify-ca, verify-full')
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+    │    │                               │    │               └ <sqlalchemy.pool.base._ConnectionRecord object at 0x172282120>
+    │    │                               │    └ <function create_engine.<locals>.connect at 0x1253c9300>
+    │    │                               └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x1253e6390>
+    │    └ <member 'dbapi_connection' of '_ConnectionRecord' objects>
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x172282120>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/create.py", line 643, in connect
+    return dialect.connect(*cargs, **cparams)
+           │       │        │        └ {'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'database': 'neondb', 'user': 'neondb_owner', 'password': '8sYPq...
+           │       │        └ []
+           │       └ <function DefaultDialect.connect at 0x124eb0c20>
+           └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x1253c5a50>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 621, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+           │    │            │        │        └ {'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'database': 'neondb', 'user': 'neondb_owner', 'password': '8sYPq...
+           │    │            │        └ ()
+           │    │            └ <function AsyncAdapt_asyncpg_dbapi.connect at 0x125602520>
+           │    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi object at 0x1253c5750>
+           └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x1253c5a50>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 949, in connect
+    await_only(creator_fn(*arg, **kw)),
+    │          │           │      └ {'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'database': 'neondb', 'user': 'neondb_owner', 'password': '8sYPq...
+    │          │           └ ()
+    │          └ <function connect at 0x1256e8e00>
+    └ <function await_only at 0x1246d8f40>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           │       │             └ <coroutine object connect at 0x172189540>
+           │       └ <attribute 'parent' of 'greenlet.greenlet' objects>
+           └ <_AsyncIoGreenlet object at 0x172306340 (otid=0x1246c3d20) dead>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+                  └ <coroutine object connect at 0x172189540>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connection.py", line 2329, in connect
+    return await connect_utils._connect(
+                 │             └ <function _connect at 0x1256e8ae0>
+                 └ <module 'asyncpg.connect_utils' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connect_utils.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connect_utils.py", line 983, in _connect
+    addrs, params, config = _parse_connect_arguments(**kwargs)
+                            │                          └ {'dsn': None, 'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'port': None, 'user': 'neondb_owner', 'password': '...
+                            └ <function _parse_connect_arguments at 0x1256e80e0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connect_utils.py", line 692, in _parse_connect_arguments
+    addrs, params = _parse_connect_dsn_and_args(
+                    └ <function _parse_connect_dsn_and_args at 0x1256e8040>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/connect_utils.py", line 499, in _parse_connect_dsn_and_args
+    raise exceptions.ClientConfigurationError(
+          │          └ <class 'asyncpg.exceptions._base.ClientConfigurationError'>
+          └ <module 'asyncpg.exceptions' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/asyncpg/exceptions/__init__.py'>
+
+asyncpg.exceptions._base.ClientConfigurationError: `sslmode` parameter must be one of: disable, allow, prefer, require, verify-ca, verify-full
+2024-11-07 22:23:26.586 | INFO     | logging:callHandlers:1706 - 127.0.0.1:61678 - "POST /api/v1/voice/voices/ HTTP/1.1" 500
+2024-11-07 22:24:58.902 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:24:59.009 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:24:59.021 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:24:59.026 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:24:59.026 | INFO     | logging:callHandlers:1706 - Finished server process [81845]
+2024-11-07 22:25:24.618 | INFO     | logging:callHandlers:1706 - Started server process [82017]
+2024-11-07 22:25:24.619 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:25:24.619 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:25:24.620 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:25:30.797 | INFO     | logging:callHandlers:1706 - Successfully uploaded file to https://unquest.s3.amazonaws.com/voices/ef5282c8-be94-41c2-bdc6-5a82a6de7005/police-77121.mp3
+2024-11-07 22:25:30.813 | ERROR    | logging:callHandlers:1706 - Unexpected error in create_voice
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               │     │   └ 4
+               │     └ 7
+               └ <function _main at 0x100550ae0>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/spawn.py", line 135, in _main
+    return self._bootstrap(parent_sentinel)
+           │    │          └ 4
+           │    └ <function BaseProcess._bootstrap at 0x100461620>
+           └ <SpawnProcess name='SpawnProcess-2' parent=81843 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x100460b80>
+    └ <SpawnProcess name='SpawnProcess-2' parent=81843 started>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {'config': <uvicorn.config.Config object at 0x10123b590>, 'target': <bound method Server.run of <uvicorn.server.Server object...
+    │    │        │    │        └ <SpawnProcess name='SpawnProcess-2' parent=81843 started>
+    │    │        │    └ ()
+    │    │        └ <SpawnProcess name='SpawnProcess-2' parent=81843 started>
+    │    └ <function subprocess_started at 0x1012a7f60>
+    └ <SpawnProcess name='SpawnProcess-2' parent=81843 started>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+    │              └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+    └ <bound method Server.run of <uvicorn.server.Server object at 0x101326250>>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/server.py", line 62, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           │       │   │    │             └ [<socket.socket fd=3, family=2, type=1, proto=0, laddr=('127.0.0.1', 8000)>]
+           │       │   │    └ <function Server.serve at 0x1012a6f20>
+           │       │   └ <uvicorn.server.Server object at 0x101326250>
+           │       └ <function run at 0x100faf380>
+           └ <module 'asyncio' from '/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asy...
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           │      │   └ <coroutine object Server.serve at 0x101322790>
+           │      └ <function Runner.run at 0x10101f100>
+           └ <asyncio.runners.Runner object at 0x101325a50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           │    │     │                  └ <Task pending name='Task-1' coro=<Server.serve() running at /Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/uvicorn/ser...
+           │    │     └ <function BaseEventLoop.run_until_complete at 0x10101cd60>
+           │    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+           └ <asyncio.runners.Runner object at 0x101325a50>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
+    self.run_forever()
+    │    └ <function BaseEventLoop.run_forever at 0x10101ccc0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
+    self._run_once()
+    │    └ <function BaseEventLoop._run_once at 0x10101eac0>
+    └ <_UnixSelectorEventLoop running=True closed=False debug=False>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 1936, in _run_once
+    handle._run()
+    │      └ <function Handle._run at 0x100fafba0>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/opt/homebrew/Cellar/python@3.11/3.11.10/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py", line 84, in _run
+    self._context.run(self._callback, *self._args)
+    │    │            │    │           │    └ <member '_args' of 'Handle' objects>
+    │    │            │    │           └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    │            │    └ <member '_callback' of 'Handle' objects>
+    │    │            └ <Handle Task.task_wakeup(<Future finished result=0>)>
+    │    └ <member '_context' of 'Handle' objects>
+    └ <Handle Task.task_wakeup(<Future finished result=0>)>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+          │    │   │      │                      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x324622480>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.cors.CORSMiddleware object at 0x30db05a50>
+          └ <starlette.middleware.base.BaseHTTPMiddleware object at 0x3064969d0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x324622480>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x30db0b6d0>
+          └ <starlette.middleware.cors.CORSMiddleware object at 0x30db05a50>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+          │                            │    │    │     │      │        └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.send_no_error at 0x324622480>
+          │                            │    │    │     │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │                            │    │    │     └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    │    └ <starlette.requests.Request object at 0x324625bd0>
+          │                            │    └ <fastapi.routing.APIRouter object at 0x324556b90>
+          │                            └ <starlette.middleware.exceptions.ExceptionMiddleware object at 0x30db0b6d0>
+          └ <function wrap_app_handling_exceptions at 0x103cd4220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x324622840>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <fastapi.routing.APIRouter object at 0x324556b90>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+          │    │                │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x324622840>
+          │    │                │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │    │                └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <bound method Router.app of <fastapi.routing.APIRouter object at 0x324556b90>>
+          └ <fastapi.routing.APIRouter object at 0x324556b90>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+          │     │      │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x324622840>
+          │     │      │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │     │      └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │     └ <function Route.handle at 0x103cd5940>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+          │    │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x324622840>
+          │    │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │    │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │    └ <function request_response.<locals>.app at 0x16d590c20>
+          └ APIRoute(path='/api/v1/voice/voices/', name='create_voice', methods=['POST'])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+          │                            │    │        │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x324622840>
+          │                            │    │        │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │                            │    │        └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          │                            │    └ <starlette.requests.Request object at 0x324597dd0>
+          │                            └ <function request_response.<locals>.app.<locals>.app at 0x3246228e0>
+          └ <function wrap_app_handling_exceptions at 0x103cd4220>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+          │   │      │        └ <function wrap_app_handling_exceptions.<locals>.wrapped_app.<locals>.sender at 0x324622a20>
+          │   │      └ <function BaseHTTPMiddleware.__call__.<locals>.call_next.<locals>.receive_or_disconnect at 0x3246223e0>
+          │   └ {'type': 'http', 'asgi': {'version': '3.0', 'spec_version': '2.3'}, 'http_version': '1.1', 'server': ('127.0.0.1', 8000), 'cl...
+          └ <function request_response.<locals>.app.<locals>.app at 0x3246228e0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+                     │    └ <starlette.requests.Request object at 0x324597dd0>
+                     └ <function get_request_handler.<locals>.app at 0x16d62c2c0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+                         └ <function run_endpoint_function at 0x103cd5440>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+                 │         │      └ {'db': <sqlalchemy.orm.session.AsyncSession object at 0x3245c0f50>, 'name': 'Test', 'description': 'Sample voice for cloning'...
+                 │         └ <function create_voice at 0x306466c00>
+                 └ <fastapi.dependencies.models.Dependant object at 0x324581250>
+
+> File "/Users/rakesh/ap_vc/app/api/v1/voice.py", line 87, in create_voice
+    await db.commit()
+          │  └ <function AsyncSession.commit at 0x11d4c04a0>
+          └ <sqlalchemy.orm.session.AsyncSession object at 0x3245c0f50>
+
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/ext/asyncio/session.py", line 1009, in commit
+    await greenlet_spawn(self.sync_session.commit)
+          │              │    │            └ <function Session.commit at 0x11d3d31a0>
+          │              │    └ <sqlalchemy.orm.session.Session object at 0x30fc88890>
+          │              └ <sqlalchemy.orm.session.AsyncSession object at 0x3245c0f50>
+          └ <function greenlet_spawn at 0x11c91a7a0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             │       │       │       └ {}
+             │       │       └ ()
+             │       └ <method 'switch' of 'greenlet.greenlet' objects>
+             └ <_AsyncIoGreenlet object at 0x31384b3c0 (otid=0x11c7bfd50) dead>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2028, in commit
+    trans.commit(_to_root=True)
+    │     └ <function SessionTransaction.commit at 0x11d3d22a0>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+  File "<string>", line 2, in commit
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {'_to_root': True}
+                │  │      └ ()
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+                └ <function SessionTransaction.commit at 0x11d3d20c0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1313, in commit
+    self._prepare_impl()
+    │    └ <function SessionTransaction._prepare_impl at 0x11d3d1f80>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ ()
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+                └ <function SessionTransaction._prepare_impl at 0x11d3d1ee0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    │    │       └ <function Session.flush at 0x11d3da0c0>
+    │    └ <sqlalchemy.orm.session.Session object at 0x30fc88890>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4352, in flush
+    self._flush(objects)
+    │    │      └ None
+    │    └ <function Session._flush at 0x11d3da2a0>
+    └ <sqlalchemy.orm.session.Session object at 0x30fc88890>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4487, in _flush
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x32467f900>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ TypeError("connect() got an unexpected keyword argument 'sslmode'")
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4448, in _flush
+    flush_context.execute()
+    │             └ <function UOWTransaction.execute at 0x11d3b2b60>
+    └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x157cf4850>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+    │   │       └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x157cf4850>
+    │   └ <function SaveUpdateAll.execute at 0x11d3b36a0>
+    └ SaveUpdateAll(Mapper[Voice(voices)])
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    │    │         │               └ <function save_obj at 0x11d30a340>
+    │    │         └ <module 'sqlalchemy.orm.persistence' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py'>
+    │    └ <module 'sqlalchemy.util.preloaded' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/preloaded.py'>
+    └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 60, in save_obj
+    for (
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 223, in _organize_states_for_save
+    for state, dict_, mapper, connection in _connections_for_states(
+                                            └ <function _connections_for_states at 0x11d395da0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1753, in _connections_for_states
+    connection = uowtransaction.transaction.connection(base_mapper)
+                 │              │           │          └ <Mapper at 0x11d4cfa10; Voice>
+                 │              │           └ <function SessionTransaction.connection at 0x11d3d16c0>
+                 │              └ <sqlalchemy.orm.session.SessionTransaction object at 0x324695040>
+                 └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x157cf4850>
+  File "<string>", line 2, in connection
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {'execution_options': None}
+                │  │      └ (<Mapper at 0x11d4cfa10; Voice>,)
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x324695040>
+                └ <function SessionTransaction.connection at 0x11d3d1620>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1039, in connection
+    return self._connection_for_bind(bind, execution_options)
+           │    │                    │     └ None
+           │    │                    └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require)
+           │    └ <function SessionTransaction._connection_for_bind at 0x11d3d1e40>
+           └ <sqlalchemy.orm.session.SessionTransaction object at 0x324695040>
+  File "<string>", line 2, in _connection_for_bind
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ (Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require), None)
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x324695040>
+                └ <function SessionTransaction._connection_for_bind at 0x11d3d1c60>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1175, in _connection_for_bind
+    conn = self._parent._connection_for_bind(
+           │    │       └ <function SessionTransaction._connection_for_bind at 0x11d3d1e40>
+           │    └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+           └ <sqlalchemy.orm.session.SessionTransaction object at 0x324695040>
+  File "<string>", line 2, in _connection_for_bind
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ (Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require), None)
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x157242cb0>
+                └ <function SessionTransaction._connection_for_bind at 0x11d3d1c60>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1189, in _connection_for_bind
+    conn = bind.connect()
+           │    └ <function Engine.connect at 0x11cf04ae0>
+           └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require)
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3278, in connect
+    return self._connection_cls(self)
+           │    │               └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require)
+           │    └ <class 'sqlalchemy.engine.base.Connection'>
+           └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require)
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+    self._dbapi_connection = engine.raw_connection()
+    │                        │      └ <function Engine.raw_connection at 0x11cf04b80>
+    │                        └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require)
+    └ <sqlalchemy.engine.base.Connection object at 0x32467f010>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 3302, in raw_connection
+    return self.pool.connect()
+           │    │    └ <function Pool.connect at 0x11c9b1e40>
+           │    └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+           └ Engine(postgresql+asyncpg://neondb_owner:***@ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech/neondb?sslmode=require)
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 449, in connect
+    return _ConnectionFairy._checkout(self)
+           │                │         └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+           │                └ <classmethod(<function _ConnectionFairy._checkout at 0x11c9b3ec0>)>
+           └ <class 'sqlalchemy.pool.base._ConnectionFairy'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 1263, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            │                 │        └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+            │                 └ <classmethod(<function _ConnectionRecord.checkout at 0x11c9b2a20>)>
+            └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 712, in checkout
+    rec = pool._do_get()
+          │    └ <function QueuePool._do_get at 0x11c9bf600>
+          └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 179, in _do_get
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x32467f300>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ TypeError("connect() got an unexpected keyword argument 'sslmode'")
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/impl.py", line 177, in _do_get
+    return self._create_connection()
+           │    └ <function Pool._create_connection at 0x11c9b1bc0>
+           └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 390, in _create_connection
+    return _ConnectionRecord(self)
+           │                 └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+           └ <class 'sqlalchemy.pool.base._ConnectionRecord'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 674, in __init__
+    self.__connect()
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x3246189f0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 900, in __connect
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from '/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/__init__.py'>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x32467f140>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ TypeError("connect() got an unexpected keyword argument 'sslmode'")
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/pool/base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+    │    │                               │    │               └ <sqlalchemy.pool.base._ConnectionRecord object at 0x3246189f0>
+    │    │                               │    └ <function create_engine.<locals>.connect at 0x11d4c9260>
+    │    │                               └ <sqlalchemy.pool.impl.AsyncAdaptedQueuePool object at 0x11d6bf610>
+    │    └ <member 'dbapi_connection' of '_ConnectionRecord' objects>
+    └ <sqlalchemy.pool.base._ConnectionRecord object at 0x3246189f0>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/create.py", line 643, in connect
+    return dialect.connect(*cargs, **cparams)
+           │       │        │        └ {'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'database': 'neondb', 'user': 'neondb_owner', 'password': '8sYPq...
+           │       │        └ []
+           │       └ <function DefaultDialect.connect at 0x11cfb0c20>
+           └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x11d4c5810>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 621, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)
+           │    │            │        │        └ {'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'database': 'neondb', 'user': 'neondb_owner', 'password': '8sYPq...
+           │    │            │        └ ()
+           │    │            └ <function AsyncAdapt_asyncpg_dbapi.connect at 0x11d602480>
+           │    └ <sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi object at 0x11d4e5f50>
+           └ <sqlalchemy.dialects.postgresql.asyncpg.PGDialect_asyncpg object at 0x11d4c5810>
+  File "/Users/rakesh/ap_vc/venv/lib/python3.11/site-packages/sqlalchemy/dialects/postgresql/asyncpg.py", line 949, in connect
+    await_only(creator_fn(*arg, **kw)),
+    │          │           │      └ {'host': 'ep-spring-sound-a5bgpo8v.us-east-2.aws.neon.tech', 'database': 'neondb', 'user': 'neondb_owner', 'password': '8sYPq...
+    │          │           └ ()
+    │          └ <function connect at 0x11d6e8d60>
+    └ <function await_only at 0x11c7d4f40>
+
+TypeError: connect() got an unexpected keyword argument 'sslmode'
+2024-11-07 22:25:30.833 | INFO     | logging:callHandlers:1706 - 127.0.0.1:61772 - "POST /api/v1/voice/voices/ HTTP/1.1" 500
+2024-11-07 22:27:04.073 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:27:04.180 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:27:04.181 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:27:04.181 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:27:04.181 | INFO     | logging:callHandlers:1706 - Finished server process [82017]
+2024-11-07 22:27:41.917 | INFO     | logging:callHandlers:1706 - Started server process [82176]
+2024-11-07 22:27:41.917 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:27:41.918 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:27:41.918 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:27:48.990 | INFO     | logging:callHandlers:1706 - Successfully uploaded file to https://unquest.s3.amazonaws.com/voices/67f55825-5465-4d3f-b041-3831b765ec32/police-77121.mp3
+2024-11-07 22:27:58.429 | INFO     | logging:callHandlers:1706 - Successfully created voice profile: 1
+2024-11-07 22:27:58.685 | INFO     | logging:callHandlers:1706 - 127.0.0.1:61920 - "POST /api/v1/voice/voices/ HTTP/1.1" 200
+2024-11-07 22:29:34.979 | INFO     | logging:callHandlers:1706 - Checking model path: models/XTTS-v2
+2024-11-07 22:29:34.985 | INFO     | logging:callHandlers:1706 - Checking config path: models/XTTS-v2/config.json
+2024-11-07 22:30:09.109 | INFO     | logging:callHandlers:1706 - XTTS model initialized successfully
+2024-11-07 22:30:09.229 | INFO     | logging:callHandlers:1706 - 127.0.0.1:62016 - "POST /api/v1/voice/clone/ HTTP/1.1" 422
+2024-11-07 22:31:28.636 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:31:28.741 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:31:28.745 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:31:28.748 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:31:28.750 | INFO     | logging:callHandlers:1706 - Finished server process [82176]
+2024-11-07 22:32:07.687 | INFO     | logging:callHandlers:1706 - Started server process [82525]
+2024-11-07 22:32:07.687 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:32:07.688 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:32:07.688 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:32:30.463 | INFO     | logging:callHandlers:1706 - Checking model path: models/XTTS-v2
+2024-11-07 22:32:30.465 | INFO     | logging:callHandlers:1706 - Checking config path: models/XTTS-v2/config.json
+2024-11-07 22:33:16.514 | INFO     | logging:callHandlers:1706 - XTTS model initialized successfully
+2024-11-07 22:33:33.683 | INFO     | logging:callHandlers:1706 - 127.0.0.1:62283 - "POST /api/v1/voice/clone/ HTTP/1.1" 200
+2024-11-07 22:34:33.441 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:34:33.545 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:34:33.547 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:34:33.549 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:34:33.549 | INFO     | logging:callHandlers:1706 - Finished server process [82525]
+2024-11-07 22:35:12.929 | INFO     | logging:callHandlers:1706 - Started server process [82713]
+2024-11-07 22:35:12.930 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:35:12.930 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:35:12.931 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:35:55.314 | INFO     | logging:callHandlers:1706 - Checking model path: models/XTTS-v2
+2024-11-07 22:35:55.315 | INFO     | logging:callHandlers:1706 - Checking config path: models/XTTS-v2/config.json
+2024-11-07 22:36:28.237 | INFO     | logging:callHandlers:1706 - XTTS model initialized successfully
+2024-11-07 22:36:43.826 | INFO     | logging:callHandlers:1706 - 127.0.0.1:62456 - "POST /api/v1/voice/clone/ HTTP/1.1" 200
+2024-11-07 22:38:07.298 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:38:07.400 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:38:07.401 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:38:07.402 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:38:07.404 | INFO     | logging:callHandlers:1706 - Finished server process [82713]
+2024-11-07 22:38:53.076 | INFO     | logging:callHandlers:1706 - Started server process [83055]
+2024-11-07 22:38:53.077 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:38:53.078 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:38:53.078 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:40:22.586 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:40:22.692 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:40:22.693 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:40:22.695 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:40:22.695 | INFO     | logging:callHandlers:1706 - Finished server process [83055]
+2024-11-07 22:40:46.113 | INFO     | logging:callHandlers:1706 - Started server process [83325]
+2024-11-07 22:40:46.115 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:40:46.116 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:40:46.116 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:41:50.414 | INFO     | logging:callHandlers:1706 - Checking model path: models/XTTS-v2
+2024-11-07 22:41:50.415 | INFO     | logging:callHandlers:1706 - Checking config path: models/XTTS-v2/config.json
+2024-11-07 22:42:21.959 | INFO     | logging:callHandlers:1706 - XTTS model initialized successfully
+2024-11-07 22:42:36.191 | INFO     | logging:callHandlers:1706 - 127.0.0.1:62738 - "POST /api/v1/voice/clone/ HTTP/1.1" 200
+2024-11-07 22:45:48.155 | INFO     | logging:callHandlers:1706 - Checking model path: models/XTTS-v2
+2024-11-07 22:45:48.155 | INFO     | logging:callHandlers:1706 - Checking config path: models/XTTS-v2/config.json
+2024-11-07 22:46:30.634 | INFO     | logging:callHandlers:1706 - XTTS model initialized successfully
+2024-11-07 22:46:34.645 | INFO     | logging:callHandlers:1706 - 127.0.0.1:62945 - "POST /api/v1/voice/clone/ HTTP/1.1" 200
+2024-11-07 22:49:08.658 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:49:08.768 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:49:08.777 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:49:08.779 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:49:08.781 | INFO     | logging:callHandlers:1706 - Finished server process [83325]
+2024-11-07 22:49:41.136 | INFO     | logging:callHandlers:1706 - Started server process [83920]
+2024-11-07 22:49:41.137 | INFO     | logging:callHandlers:1706 - Waiting for application startup.
+2024-11-07 22:49:41.137 | INFO     | app.main:startup_event:79 - Starting up application...
+2024-11-07 22:49:41.137 | INFO     | logging:callHandlers:1706 - Application startup complete.
+2024-11-07 22:51:09.308 | INFO     | logging:callHandlers:1706 - Checking model path: models/XTTS-v2
+2024-11-07 22:51:09.310 | INFO     | logging:callHandlers:1706 - Checking config path: models/XTTS-v2/config.json
+2024-11-07 22:51:45.567 | INFO     | logging:callHandlers:1706 - XTTS model initialized successfully
+2024-11-07 22:51:59.712 | INFO     | logging:callHandlers:1706 - 127.0.0.1:63119 - "POST /api/v1/voice/clone/ HTTP/1.1" 200
+2024-11-07 22:52:45.852 | INFO     | logging:callHandlers:1706 - Shutting down
+2024-11-07 22:52:45.965 | INFO     | logging:callHandlers:1706 - Waiting for application shutdown.
+2024-11-07 22:52:45.972 | INFO     | app.main:shutdown_event:83 - Shutting down application...
+2024-11-07 22:52:45.974 | INFO     | logging:callHandlers:1706 - Application shutdown complete.
+2024-11-07 22:52:45.987 | INFO     | logging:callHandlers:1706 - Finished server process [83920]

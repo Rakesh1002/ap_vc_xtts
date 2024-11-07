@@ -1,128 +1,61 @@
-from typing import Optional, Dict, Any
-import torch
+"""Core optimization and resource management"""
+from typing import Dict, Any
 import psutil
-import gc
-from functools import wraps
-import time
+import torch
+from app.core.config import get_settings
+from app.core.memory import memory_manager
+from app.core.metrics import RESOURCE_USAGE
 import logging
-from app.core.metrics import MODEL_INFERENCE_TIME
-from app.core.device import get_device_manager
-from app.core.errors import AudioProcessingError, ErrorCodes, ErrorSeverity, ErrorCategory
 
 logger = logging.getLogger(__name__)
+settings = get_settings()
 
-class PerformanceOptimizer:
+class ResourceOptimizer:
     def __init__(self):
-        self.device_manager = get_device_manager()
-        self.memory_threshold = 0.85  # 85% memory usage threshold
-        self.last_cleanup = time.time()
-        self.cleanup_interval = 300  # 5 minutes
+        self.memory_manager = memory_manager
+        self.settings = get_settings()
+        self._init_gpu()
+
+    def _init_gpu(self):
+        """Initialize GPU settings"""
+        if torch.cuda.is_available():
+            # Set memory growth
+            for device in range(torch.cuda.device_count()):
+                torch.cuda.set_per_process_memory_fraction(0.8, device)
+                
+            # Optimize allocator
+            torch.cuda.set_per_process_memory_fraction(0.8)
+            torch.backends.cudnn.benchmark = True
+
+    def optimize_for_inference(self):
+        """Optimize system for inference"""
+        # Clear memory
+        self.memory_manager.cleanup()
         
-    def check_resources(self) -> Dict[str, float]:
-        """Check system resource usage"""
-        stats = {
-            "cpu_percent": psutil.cpu_percent(),
-            "ram_percent": psutil.virtual_memory().percent,
+        # Set process priority
+        try:
+            psutil.Process().nice(10)
+        except Exception as e:
+            logger.warning(f"Failed to set process priority: {e}")
+
+    def get_resource_metrics(self) -> Dict[str, Any]:
+        """Get current resource metrics"""
+        metrics = {
+            'cpu_percent': psutil.cpu_percent(),
+            'memory_percent': psutil.virtual_memory().percent,
+            'disk_usage': psutil.disk_usage('/').percent,
         }
         
-        if self.device_manager.is_gpu_available:
-            for i in range(torch.cuda.device_count()):
-                allocated = torch.cuda.memory_allocated(i) / torch.cuda.get_device_properties(i).total_memory
-                stats[f"gpu_{i}_memory_percent"] = allocated * 100
-                
-        return stats
-    
-    def optimize_memory(self):
-        """Perform memory optimization if needed"""
-        current_time = time.time()
-        if current_time - self.last_cleanup < self.cleanup_interval:
-            return
+        if torch.cuda.is_available():
+            metrics.update({
+                'gpu_memory_allocated': torch.cuda.memory_allocated(),
+                'gpu_memory_cached': torch.cuda.memory_reserved(),
+            })
             
-        stats = self.check_resources()
-        needs_cleanup = any(
-            v > self.memory_threshold * 100 for k, v in stats.items() 
-            if k.endswith("_percent")
-        )
+        # Update Prometheus metrics
+        RESOURCE_USAGE.labels(resource='cpu').set(metrics['cpu_percent'])
+        RESOURCE_USAGE.labels(resource='memory').set(metrics['memory_percent'])
         
-        if needs_cleanup:
-            logger.info("Performing memory cleanup")
-            self._cleanup_memory()
-            self.last_cleanup = current_time
-    
-    def _cleanup_memory(self):
-        """Perform thorough memory cleanup"""
-        # Python garbage collection
-        gc.collect()
-        
-        # Clear CUDA cache if available
-        if self.device_manager.is_gpu_available:
-            torch.cuda.empty_cache()
-            
-        # Clear any model-specific caches
-        # Add model-specific cache clearing here
-        
-        # Log memory stats after cleanup
-        stats = self.check_resources()
-        logger.info(f"Memory stats after cleanup: {stats}")
+        return metrics
 
-def optimize_performance(timeout: Optional[float] = None):
-    """Decorator for optimizing performance of resource-intensive operations"""
-    def decorator(func):
-        @wraps(func)
-        async def wrapper(*args, **kwargs):
-            optimizer = PerformanceOptimizer()
-            
-            # Check resources before execution
-            pre_stats = optimizer.check_resources()
-            logger.debug(f"Resource stats before {func.__name__}: {pre_stats}")
-            
-            # Optimize memory if needed
-            optimizer.optimize_memory()
-            
-            start_time = time.time()
-            try:
-                # Execute the function with timeout if specified
-                if timeout:
-                    # Implement timeout logic here
-                    pass
-                
-                result = await func(*args, **kwargs)
-                
-                # Record metrics
-                execution_time = time.time() - start_time
-                MODEL_INFERENCE_TIME.labels(
-                    model_name=func.__name__
-                ).observe(execution_time)
-                
-                return result
-                
-            except Exception as e:
-                # Check if error is resource-related
-                post_stats = optimizer.check_resources()
-                if any(v > 95 for v in post_stats.values()):
-                    raise AudioProcessingError(
-                        message="Resource exhaustion during processing",
-                        error_code=ErrorCodes.RESOURCE_EXHAUSTED,
-                        details={"resource_stats": post_stats},
-                        severity=ErrorSeverity.HIGH,
-                        category=ErrorCategory.SYSTEM,
-                        original_error=e
-                    )
-                raise
-                
-            finally:
-                # Log resource usage
-                post_stats = optimizer.check_resources()
-                logger.debug(f"Resource stats after {func.__name__}: {post_stats}")
-                
-                # Cleanup if necessary
-                optimizer.optimize_memory()
-                
-        return wrapper
-    return decorator
-
-# Example usage in voice cloning service:
-@optimize_performance(timeout=300)
-async def process_voice_cloning(self, voice_file_path: str, text: str) -> str:
-    # Existing voice cloning logic
-    pass 
+resource_optimizer = ResourceOptimizer()

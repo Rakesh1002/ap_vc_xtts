@@ -1,7 +1,8 @@
 from pydantic_settings import BaseSettings
 from functools import lru_cache
-from typing import Dict, Any
+from typing import Dict, Any, List
 import torch
+from app.core.constants import CeleryQueues
 
 class Settings(BaseSettings):
     # Basic settings
@@ -31,12 +32,17 @@ class Settings(BaseSettings):
     S3_SECRET_KEY: str
     S3_BUCKET: str
     S3_REGION: str
+    MULTIPART_THRESHOLD: int = 8 * 1024 * 1024  # 8MB
+    MULTIPART_CHUNKSIZE: int = 8 * 1024 * 1024  # 8MB
+    MAX_CONCURRENCY: int = 10
+    DOWNLOAD_DIR: str = "/tmp/downloads"
+    UPLOAD_DIR: str = "/tmp/uploads"
     
     # Model Paths
     WHISPER_MODEL_PATH: str = "models/model.bin"
     WHISPER_CONFIG_PATH: str = "models/config.json"
     
-    # XTTS model paths - fixed paths
+    # XTTS model paths
     XTTS_BASE_DIR: str = "models/XTTS-v2"
     XTTS_MODEL_PATH: str = "models/XTTS-v2/model.pth"
     XTTS_CONFIG_PATH: str = "models/XTTS-v2/config.json"
@@ -64,20 +70,100 @@ class Settings(BaseSettings):
     CUDA_VISIBLE_DEVICES: str = "0"
     DEVICE_STRATEGY: str = "auto"
     
-    # SSL Settings
-    SSL: str = "require"
-    SSL_CA_CERTS: str = "/etc/ssl/certs/ca-certificates.crt"
+    # Database SSL Settings
+    SSL_MODE: str = "require"
+    SSL_CA_CERTS: str | None = None
     
+    # Celery Settings
+    CELERY_BROKER_URL: str = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
+    CELERY_TASK_SERIALIZER: str = "json"
+    CELERY_RESULT_SERIALIZER: str = "json"
+    CELERY_ACCEPT_CONTENT: List[str] = ["json"]
+    CELERY_TIMEZONE: str = "UTC"
+    CELERY_TASK_TRACK_STARTED: bool = True
+    CELERY_TASK_TIME_LIMIT: int = 3600
+    CELERY_WORKER_PREFETCH_MULTIPLIER: int = 1
+    CELERY_WORKER_MAX_TASKS_PER_CHILD: int = 50
+    CELERY_WORKER_MAX_MEMORY_PER_CHILD: int = 400000
+    CELERY_DEFAULT_QUEUE: str = CeleryQueues.VOICE
+    
+    # Queue Settings
+    VOICE_QUEUE_CONCURRENCY: int = 2
+    TRANSLATION_QUEUE_CONCURRENCY: int = 4
+    VOICE_QUEUE_TIME_LIMIT: int = 3600
+    TRANSLATION_QUEUE_TIME_LIMIT: int = 1800
+    
+    # Memory Management
+    MEMORY_CLEANUP_INTERVAL: int = 5  # Minutes
+    MAX_MEMORY_USAGE: int = 90  # Percentage
+    FORCE_GC_THRESHOLD: int = 85  # Percentage
+    MIN_FREE_MEMORY: int = 2000  # MB
+    
+    # Queue Management
+    MAX_QUEUE_SIZE: int = 100
+    QUEUE_TIMEOUT: int = 3600  # 1 hour
+    STALE_JOB_THRESHOLD: int = 24  # Hours
+    MAX_RETRIES_PER_JOB: int = 3
+    RETRY_BACKOFF: int = 60  # Seconds
+    
+    # Task Processing
+    BATCH_SIZE: int = 10
+    MAX_CONCURRENT_JOBS: int = 5
+    JOB_PRIORITY_LEVELS: int = 3
+    TASK_SOFT_TIMEOUT: int = 3300  # 55 minutes
+    TASK_HARD_TIMEOUT: int = 3600  # 60 minutes
+
+    # Database Pool Settings
+    DB_POOL_SIZE: int = 5
+    DB_MAX_OVERFLOW: int = 10
+    DB_POOL_TIMEOUT: int = 30
+    DB_POOL_RECYCLE: int = 1800  # 30 minutes
+    DB_ECHO: bool = False
+    DB_ECHO_POOL: bool = False
+    DB_PRE_PING: bool = True
+    DB_POOL_RESET_ON_RETURN: str = "rollback"
+
+    # Connection Pool Settings
+    ASYNC_POOL_SIZE: int = 20
+    ASYNC_MAX_OVERFLOW: int = 10
+    ASYNC_POOL_TIMEOUT: int = 30
+    ASYNC_MAX_CONNECTIONS: int = 100
+    ASYNC_POOL_RECYCLE: int = 300  # 5 minutes
+
+    # Redis Pool Settings
+    REDIS_POOL_SIZE: int = 10
+    REDIS_POOL_TIMEOUT: int = 20
+    REDIS_MAX_CONNECTIONS: int = 50
+    REDIS_RETRY_ON_TIMEOUT: bool = True
+    REDIS_SOCKET_KEEPALIVE: bool = True
+
     class Config:
         case_sensitive = True
         env_file = ".env"
+        extra = "ignore"  # Ignore extra fields in environment variables
 
     @property
     def database_url(self) -> str:
+        """Base database URL without SSL parameters"""
         if self.SQLALCHEMY_DATABASE_URI:
-            return self.SQLALCHEMY_DATABASE_URI
+            return self.SQLALCHEMY_DATABASE_URI.split('?')[0]  # Remove any existing parameters
+            
+        # Build URL from environment variables
         return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}/{self.POSTGRES_DB}"
+
+    @property
+    def async_database_url(self) -> str:
+        """Async database URL (for FastAPI) with SSL parameter"""
+        base_url = self.database_url.replace('postgresql://', 'postgresql+asyncpg://')
+        return f"{base_url}?ssl=require"  # asyncpg uses ssl=require
+
+    @property
+    def sync_database_url(self) -> str:
+        """Sync database URL (for Alembic) with SSL parameter"""
+        base_url = self.database_url.replace('postgresql://', 'postgresql+psycopg2://')
+        return f"{base_url}?sslmode=require"  # psycopg2 uses sslmode=require
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings() 
+    return Settings()

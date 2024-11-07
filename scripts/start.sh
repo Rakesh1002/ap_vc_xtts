@@ -113,6 +113,55 @@ start_redis() {
     fi
 }
 
+# Function to start workers
+start_workers() {
+    local mode=$1
+    print_status "Starting Celery workers..."
+    
+    # Set environment variables for worker processes
+    export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+    export PYTORCH_ENABLE_MPS_FALLBACK=1
+    
+    if [ "$mode" = "dev" ]; then
+        # Development mode - single worker process
+        poetry run celery -A celery_worker worker \
+            --loglevel=debug \
+            -Q voice-queue,translation-queue \
+            --pool=solo \
+            --concurrency=1 \
+            --max-tasks-per-child=10 \
+            --max-memory-per-child=2000000 \
+            --time-limit=3600 \
+            --soft-time-limit=3300 &
+            
+    elif [ "$mode" = "prod" ]; then
+        # Production mode - separate workers for each queue
+        # Voice queue worker (GPU intensive)
+        poetry run celery -A celery_worker worker \
+            --loglevel=info \
+            -Q voice-queue \
+            -n voice_worker@%h \
+            --pool=solo \
+            --concurrency=1 \
+            --max-tasks-per-child=100 \
+            --max-memory-per-child=4000000 \
+            --time-limit=3600 \
+            --soft-time-limit=3300 &
+            
+        # Translation queue worker (CPU intensive)
+        poetry run celery -A celery_worker worker \
+            --loglevel=info \
+            -Q translation-queue \
+            -n translation_worker@%h \
+            --pool=solo \
+            --concurrency=1 \
+            --max-tasks-per-child=200 \
+            --max-memory-per-child=2000000 \
+            --time-limit=1800 \
+            --soft-time-limit=1700 &
+    fi
+}
+
 # Function to start services
 start_services() {
     local mode=$1
@@ -135,13 +184,8 @@ start_services() {
         # Start services in development mode
         print_status "Starting services in development mode..."
         
-        # Start Celery worker with auto-reload
-        print_status "Starting Celery worker..."
-        poetry run celery -A app.core.celery_app worker \
-            --loglevel=info \
-            -Q voice-queue,translation-queue \
-            --concurrency=2 \
-            --max-tasks-per-child=10 &
+        # Start Celery workers
+        start_workers "dev"
         
         # Start FastAPI with auto-reload
         print_status "Starting FastAPI server..."
@@ -156,13 +200,8 @@ start_services() {
         # Start services in production mode
         print_status "Starting services in production mode..."
         
-        # Start Celery worker
-        print_status "Starting Celery worker..."
-        poetry run celery -A app.core.celery_app worker \
-            --loglevel=info \
-            -Q voice-queue,translation-queue \
-            --concurrency=${WORKER_CONCURRENCY:-2} \
-            --max-tasks-per-child=100 &
+        # Start Celery workers
+        start_workers "prod"
         
         # Start FastAPI with production settings
         print_status "Starting FastAPI server..."
@@ -173,10 +212,6 @@ start_services() {
             --log-level info \
             --proxy-headers \
             --forwarded-allow-ips='*'
-            
-    else
-        print_error "Invalid mode. Use 'dev' or 'prod'"
-        exit 1
     fi
 }
 

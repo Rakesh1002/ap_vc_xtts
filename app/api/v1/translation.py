@@ -13,6 +13,8 @@ from app.services.media_extractor import MediaExtractor
 from pathlib import Path
 from app.core.errors import AudioProcessingError
 import logging
+from app.core.constants import CeleryQueues, CeleryTasks
+from app.core.celery_app import celery_app
 
 router = APIRouter()
 translation_service = TranslationService()
@@ -28,48 +30,62 @@ async def create_translation_job(
     file: UploadFile = File(...),
     db: AsyncSession = Depends(get_db)
 ):
-    # Validate languages
-    if target_language not in SUPPORTED_LANGUAGES:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Unsupported target language. Supported languages: {', '.join(SUPPORTED_LANGUAGES)}"
-        )
-    if source_language and source_language not in SUPPORTED_LANGUAGES:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Unsupported source language. Supported languages: {', '.join(SUPPORTED_LANGUAGES)}"
-        )
-    
-    # Validate audio file
-    if not file.content_type.startswith('audio/'):
-        raise HTTPException(status_code=400, detail="File must be an audio file")
-    
-    # Generate S3 path
-    file_path = f"translations/inputs/{uuid.uuid4()}/{file.filename}"
-    
-    # Upload to S3
     try:
-        translation_service._upload_to_s3(file.file, file_path)
+        # Validate languages
+        if target_language not in SUPPORTED_LANGUAGES:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unsupported target language. Supported languages: {', '.join(SUPPORTED_LANGUAGES)}"
+            )
+        if source_language and source_language not in SUPPORTED_LANGUAGES:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unsupported source language. Supported languages: {', '.join(SUPPORTED_LANGUAGES)}"
+            )
+        
+        # Validate audio file
+        if not file.content_type.startswith('audio/'):
+            raise HTTPException(status_code=400, detail="File must be an audio file")
+        
+        # Generate S3 path
+        file_path = f"translations/inputs/{uuid.uuid4()}/{file.filename}"
+        
+        # Upload to S3
+        try:
+            translation_service._upload_to_s3(file.file, file_path)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail="Failed to upload file")
+        
+        # Create job record
+        translation_job = TranslationJobModel(
+            status=ProcessingStatus.PENDING,
+            source_language=source_language,
+            target_language=target_language,
+            input_path=file_path,
+            created_at=datetime.utcnow(),
+            queue=CeleryQueues.TRANSLATION
+        )
+        
+        db.add(translation_job)
+        await db.commit()
+        await db.refresh(translation_job)
+        
+        # Start Celery task with translation queue
+        logger.debug(f"Starting translation job: {translation_job.id} in queue: {CeleryQueues.TRANSLATION}")
+        task = celery_app.send_task(
+            CeleryTasks.TRANSLATE_AUDIO,
+            args=[translation_job.id],
+            queue=CeleryQueues.TRANSLATION,
+            priority=0
+        )
+        
+        translation_job.task_id = task.id
+        await db.commit()
+        
+        return translation_job
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Failed to upload file")
-    
-    # Create job record
-    translation_job = TranslationJobModel(
-        status=ProcessingStatus.PENDING,
-        source_language=source_language,
-        target_language=target_language,
-        input_path=file_path,
-        created_at=datetime.utcnow()
-    )
-    
-    db.add(translation_job)
-    await db.commit()
-    await db.refresh(translation_job)
-    
-    # Start background task
-    translate_audio.delay(translation_job.id)
-    
-    return translation_job
+        logger.error(f"Failed to process file {file.filename}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to process file")
 
 @router.get("/translations/", response_model=List[TranslationJob])
 async def list_translations(
@@ -142,15 +158,25 @@ async def create_translation_job_from_url(
         source_language=source_language,
         target_language=target_language,
         input_path=s3_path,
-        created_at=datetime.utcnow()
+        created_at=datetime.utcnow(),
+        queue=CeleryQueues.TRANSLATION
     )
     
     db.add(translation_job)
     await db.commit()
     await db.refresh(translation_job)
     
-    # Start background task
-    translate_audio.delay(translation_job.id)
+    # Start Celery task with translation queue
+    logger.debug(f"Starting translation job: {translation_job.id} in queue: {CeleryQueues.TRANSLATION}")
+    task = celery_app.send_task(
+        CeleryTasks.TRANSLATE_AUDIO,
+        args=[translation_job.id],
+        queue=CeleryQueues.TRANSLATION,
+        priority=0
+    )
+    
+    translation_job.task_id = task.id
+    await db.commit()
     
     return translation_job
 

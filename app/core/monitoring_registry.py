@@ -1,8 +1,69 @@
-"""Centralized metrics configuration"""
+"""Centralized monitoring configuration"""
 from prometheus_client import Counter, Histogram, Gauge
-from app.core.monitoring_registry import MetricsRegistry
+from typing import Dict, Any, List, Optional, Type, Union
+import logging
 
-# API Metrics
+logger = logging.getLogger(__name__)
+
+DEFAULT_BUCKETS = [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+
+class MetricsRegistry:
+    _metrics: Dict[str, Any] = {}
+    
+    @classmethod
+    def register_metric(
+        cls,
+        name: str,
+        metric_type: Type[Union[Counter, Histogram, Gauge]],
+        description: str,
+        labels: Optional[List[str]] = None,
+        **kwargs
+    ):
+        """Register a Prometheus metric with additional configuration"""
+        if name not in cls._metrics:
+            if metric_type == Counter:
+                cls._metrics[name] = Counter(
+                    name,
+                    description,
+                    labels or []
+                )
+            elif metric_type == Histogram:
+                buckets = kwargs.get('buckets', DEFAULT_BUCKETS)
+                cls._metrics[name] = Histogram(
+                    name,
+                    description,
+                    labels or [],
+                    buckets=buckets
+                )
+            elif metric_type == Gauge:
+                cls._metrics[name] = Gauge(
+                    name,
+                    description,
+                    labels or []
+                )
+        return cls._metrics[name]
+    
+    @classmethod
+    def get_metric(cls, name: str):
+        """Get registered metric by name"""
+        return cls._metrics.get(name)
+
+    @classmethod
+    def clear_metrics(cls):
+        """Clear all registered metrics"""
+        cls._metrics.clear()
+
+    @classmethod
+    def get_all_metrics(cls) -> Dict[str, Any]:
+        """Get all registered metrics"""
+        return cls._metrics.copy()
+
+    @classmethod
+    def metric_exists(cls, name: str) -> bool:
+        """Check if a metric exists"""
+        return name in cls._metrics
+
+# Register base metrics with default buckets
 REQUEST_COUNT = MetricsRegistry.register_metric(
     'api_request_total',
     Counter,
@@ -15,10 +76,9 @@ REQUEST_LATENCY = MetricsRegistry.register_metric(
     Histogram,
     'Request latency',
     ['endpoint'],
-    buckets=[0.1, 0.5, 1.0, 2.0, 5.0]
+    buckets=DEFAULT_BUCKETS
 )
 
-# Task Metrics
 TASK_PROCESSING_TIME = MetricsRegistry.register_metric(
     'task_processing_seconds',
     Histogram,
@@ -41,7 +101,6 @@ JOB_STATUS = MetricsRegistry.register_metric(
     ['job_type', 'status']
 )
 
-# Resource Metrics
 RESOURCE_USAGE = MetricsRegistry.register_metric(
     'resource_usage',
     Gauge,
@@ -63,7 +122,6 @@ GPU_METRICS = MetricsRegistry.register_metric(
     ['device', 'metric']
 )
 
-# Model Metrics
 MODEL_INFERENCE_TIME = MetricsRegistry.register_metric(
     'model_inference_seconds',
     Histogram,
@@ -79,7 +137,6 @@ MODEL_BATCH_SIZE = MetricsRegistry.register_metric(
     ['model_name']
 )
 
-# Cache Metrics
 CACHE_HITS = MetricsRegistry.register_metric(
     'cache_hits_total',
     Counter,
@@ -94,7 +151,6 @@ CACHE_MISSES = MetricsRegistry.register_metric(
     ['cache_type']
 )
 
-# Storage Metrics
 STORAGE_OPERATIONS = MetricsRegistry.register_metric(
     'storage_operations_total',
     Counter,
@@ -110,7 +166,6 @@ STORAGE_LATENCY = MetricsRegistry.register_metric(
     buckets=[0.1, 0.5, 1.0, 2.0, 5.0]
 )
 
-# Database Metrics
 DB_CONNECTIONS = MetricsRegistry.register_metric(
     'db_connections',
     Gauge,
@@ -126,7 +181,6 @@ DB_OPERATION_LATENCY = MetricsRegistry.register_metric(
     buckets=[0.01, 0.05, 0.1, 0.5, 1.0]
 )
 
-# Queue Metrics
 QUEUE_SIZE = MetricsRegistry.register_metric(
     'queue_size',
     Gauge,
@@ -142,7 +196,6 @@ QUEUE_LATENCY = MetricsRegistry.register_metric(
     buckets=[1, 5, 15, 30, 60, 300]
 )
 
-# Error Metrics
 ERROR_COUNT = MetricsRegistry.register_metric(
     'error_total',
     Counter,
@@ -150,7 +203,6 @@ ERROR_COUNT = MetricsRegistry.register_metric(
     ['type', 'severity', 'component']
 )
 
-# Custom Business Metrics
 VOICE_CLONING_SUCCESS_RATE = MetricsRegistry.register_metric(
     'voice_cloning_success_rate',
     Gauge,

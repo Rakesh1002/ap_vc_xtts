@@ -26,7 +26,16 @@ class Voice(VoiceBase):
 
 class CloningJobCreate(BaseModel):
     voice_id: int
-    input_text: str = Field(..., min_length=1, max_length=5000)
+    input_text: str = Field(..., min_length=1, max_length=5000, description="Text to be converted to speech")
+
+    # Add example for better API documentation
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "voice_id": 1,
+                "input_text": "Hello world, this is a test message."
+            }
+        }
 
 class CloningJob(BaseModel):
     id: int

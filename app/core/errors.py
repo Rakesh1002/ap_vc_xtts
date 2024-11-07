@@ -17,60 +17,67 @@ class ErrorSeverity(str, Enum):
 
 class ErrorCategory(str, Enum):
     VALIDATION = "validation"
-    AUTHENTICATION = "authentication"
-    AUTHORIZATION = "authorization"
     PROCESSING = "processing"
     STORAGE = "storage"
-    MODEL = "model"
+    SECURITY = "security"
     SYSTEM = "system"
+    MODEL = "model"
 
-class AudioProcessingError(Exception):
+class ErrorCodes(str, Enum):
+    # Security Errors
+    INVALID_TOKEN = "INVALID_TOKEN"
+    TOKEN_EXPIRED = "TOKEN_EXPIRED"
+    TOKEN_CREATION_FAILED = "TOKEN_CREATION_FAILED"
+    WEAK_PASSWORD = "WEAK_PASSWORD"
+    UNAUTHORIZED = "UNAUTHORIZED"
+    FORBIDDEN = "FORBIDDEN"
+    
+    # Processing Errors
+    PROCESSING_FAILED = "PROCESSING_FAILED"
+    TASK_TIMEOUT = "TASK_TIMEOUT"
+    QUEUE_FULL = "QUEUE_FULL"
+    
+    # Storage Errors
+    UPLOAD_FAILED = "UPLOAD_FAILED"
+    DOWNLOAD_FAILED = "DOWNLOAD_FAILED"
+    FILE_NOT_FOUND = "FILE_NOT_FOUND"
+    FILE_TOO_LARGE = "FILE_TOO_LARGE"
+    
+    # Model Errors
+    MODEL_ERROR = "MODEL_ERROR"
+    MODEL_NOT_FOUND = "MODEL_NOT_FOUND"
+    INFERENCE_ERROR = "INFERENCE_ERROR"
+    
+    # Validation Errors
+    INVALID_INPUT = "INVALID_INPUT"
+    INVALID_FORMAT = "INVALID_FORMAT"
+    INVALID_AUDIO_FORMAT = "INVALID_AUDIO_FORMAT"
+    MISSING_FIELD = "MISSING_FIELD"
+
+class BaseError(Exception):
+    """Base error class for all custom exceptions"""
     def __init__(
         self,
         message: str,
-        error_code: str,
+        error_code: ErrorCodes,
         details: Optional[Dict[str, Any]] = None,
-        original_error: Optional[Exception] = None,
         severity: ErrorSeverity = ErrorSeverity.MEDIUM,
-        category: ErrorCategory = ErrorCategory.PROCESSING,
-        error_id: Optional[str] = None
+        category: ErrorCategory = ErrorCategory.SYSTEM,
+        original_error: Optional[Exception] = None
     ):
+        super().__init__(message)
+        self.error_id = str(uuid.uuid4())
         self.message = message
         self.error_code = error_code
         self.details = details or {}
-        self.original_error = original_error
         self.severity = severity
         self.category = category
-        self.error_id = error_id or str(uuid.uuid4())
-        self.timestamp = datetime.utcnow()
-        self.traceback = self._get_traceback()
-        
-        # Log the error
-        self._log_error()
-        
-        super().__init__(self.message)
-    
-    def _get_traceback(self) -> List[str]:
-        if self.original_error:
-            return traceback.format_exception(
-                type(self.original_error),
-                self.original_error,
-                self.original_error.__traceback__
-            )
-        return traceback.format_stack()
+        self.timestamp = datetime.utcnow().isoformat()
+        self.original_error = original_error
+        self.traceback = None  # Will be set by error handler
 
-    def _log_error(self):
-        error_info = self.to_dict()
-        log_message = json.dumps(error_info, default=str)
-        
-        if self.severity in (ErrorSeverity.HIGH, ErrorSeverity.CRITICAL):
-            logger.error(f"Critical Error: {log_message}")
-            # Here you could add notifications for critical errors
-            # self._notify_critical_error(error_info)
-        else:
-            logger.warning(f"Error: {log_message}")
-    
     def to_dict(self) -> Dict[str, Any]:
+        """Convert error to dictionary format"""
         return {
             "error_id": self.error_id,
             "error_code": self.error_code,
@@ -78,36 +85,104 @@ class AudioProcessingError(Exception):
             "details": self.details,
             "severity": self.severity,
             "category": self.category,
-            "timestamp": self.timestamp.isoformat(),
-            "traceback": self.traceback if self.severity in (ErrorSeverity.HIGH, ErrorSeverity.CRITICAL) else None
+            "timestamp": self.timestamp,
+            "traceback": self.traceback
         }
 
-class ErrorCodes:
-    # Validation Errors
-    INVALID_AUDIO_FORMAT = "INVALID_AUDIO_FORMAT"
-    FILE_TOO_LARGE = "FILE_TOO_LARGE"
-    INVALID_LANGUAGE = "INVALID_LANGUAGE"
-    INVALID_PARAMETERS = "INVALID_PARAMETERS"
-    
-    # Storage Errors
-    UPLOAD_FAILED = "UPLOAD_FAILED"
-    DOWNLOAD_FAILED = "DOWNLOAD_FAILED"
-    STORAGE_QUOTA_EXCEEDED = "STORAGE_QUOTA_EXCEEDED"
-    
-    # Processing Errors
-    PROCESSING_FAILED = "PROCESSING_FAILED"
-    TIMEOUT = "TIMEOUT"
-    RESOURCE_EXHAUSTED = "RESOURCE_EXHAUSTED"
-    
-    # Model Errors
-    MODEL_ERROR = "MODEL_ERROR"
-    MODEL_NOT_LOADED = "MODEL_NOT_LOADED"
-    INFERENCE_ERROR = "INFERENCE_ERROR"
-    
-    # System Errors
-    SYSTEM_ERROR = "SYSTEM_ERROR"
-    DATABASE_ERROR = "DATABASE_ERROR"
-    WORKER_ERROR = "WORKER_ERROR"
+class SecurityError(BaseError):
+    """Security-related errors"""
+    def __init__(
+        self,
+        message: str,
+        error_code: ErrorCodes,
+        details: Optional[Dict[str, Any]] = None,
+        severity: ErrorSeverity = ErrorSeverity.HIGH,
+        original_error: Optional[Exception] = None
+    ):
+        super().__init__(
+            message=message,
+            error_code=error_code,
+            details=details,
+            severity=severity,
+            category=ErrorCategory.SECURITY,
+            original_error=original_error
+        )
+
+class AudioProcessingError(BaseError):
+    """Audio processing related errors"""
+    def __init__(
+        self,
+        message: str,
+        error_code: ErrorCodes,
+        details: Optional[Dict[str, Any]] = None,
+        severity: ErrorSeverity = ErrorSeverity.MEDIUM,
+        original_error: Optional[Exception] = None
+    ):
+        super().__init__(
+            message=message,
+            error_code=error_code,
+            details=details,
+            severity=severity,
+            category=ErrorCategory.PROCESSING,
+            original_error=original_error
+        )
+
+class StorageError(BaseError):
+    """Storage-related errors"""
+    def __init__(
+        self,
+        message: str,
+        error_code: ErrorCodes,
+        details: Optional[Dict[str, Any]] = None,
+        severity: ErrorSeverity = ErrorSeverity.MEDIUM,
+        original_error: Optional[Exception] = None
+    ):
+        super().__init__(
+            message=message,
+            error_code=error_code,
+            details=details,
+            severity=severity,
+            category=ErrorCategory.STORAGE,
+            original_error=original_error
+        )
+
+class ValidationError(BaseError):
+    """Validation-related errors"""
+    def __init__(
+        self,
+        message: str,
+        error_code: ErrorCodes,
+        details: Optional[Dict[str, Any]] = None,
+        severity: ErrorSeverity = ErrorSeverity.LOW,
+        original_error: Optional[Exception] = None
+    ):
+        super().__init__(
+            message=message,
+            error_code=error_code,
+            details=details,
+            severity=severity,
+            category=ErrorCategory.VALIDATION,
+            original_error=original_error
+        )
+
+class ModelError(BaseError):
+    """Model-related errors"""
+    def __init__(
+        self,
+        message: str,
+        error_code: ErrorCodes,
+        details: Optional[Dict[str, Any]] = None,
+        severity: ErrorSeverity = ErrorSeverity.HIGH,
+        original_error: Optional[Exception] = None
+    ):
+        super().__init__(
+            message=message,
+            error_code=error_code,
+            details=details,
+            severity=severity,
+            category=ErrorCategory.MODEL,
+            original_error=original_error
+        )
 
 def handle_error(e: Exception, context: Dict[str, Any] = None) -> AudioProcessingError:
     """Convert various exceptions to AudioProcessingError with appropriate categorization"""

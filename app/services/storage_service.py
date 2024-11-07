@@ -1,27 +1,23 @@
 import boto3
 import logging
 from botocore.exceptions import ClientError
-from typing import BinaryIO, Optional
+from typing import BinaryIO, Tuple
 from app.core.config import get_settings
 from urllib.parse import urlparse
 import requests
-import yt_dlp
 import mimetypes
 from botocore.config import Config
 import os
 import time
 from pathlib import Path
-import asyncio
-import random
+from app.services.media_extractor import MediaExtractor
+from app.core.errors import AudioProcessingError, ErrorCodes
 
 logger = logging.getLogger(__name__)
-
-class DownloadError(Exception):
-    pass
+settings = get_settings()
 
 class StorageService:
     def __init__(self):
-        settings = get_settings()
         self.s3_client = boto3.client(
             's3',
             aws_access_key_id=settings.S3_ACCESS_KEY,
@@ -36,165 +32,76 @@ class StorageService:
             )
         )
         self.bucket = settings.S3_BUCKET
-        self.temp_dir = Path("/tmp/downloads")
+        self.temp_dir = Path(settings.DOWNLOAD_DIR)
         self.temp_dir.mkdir(parents=True, exist_ok=True)
-
-        # List of user agents to rotate
-        self.user_agents = [
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
-            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
-        ]
-
-    async def _download_youtube(self, url: str) -> Optional[str]:
-        """Download YouTube video audio with enhanced anti-bot measures"""
-        try:
-            # Generate a random user agent
-            user_agent = random.choice(self.user_agents)
-            
-            ydl_opts = {
-                'format': 'bestaudio/best',
-                'outtmpl': str(self.temp_dir / '%(id)s.%(ext)s'),
-                'quiet': True,
-                'no_warnings': True,
-                'extract_audio': True,
-                'audio_format': 'mp3',
-                'nocheckcertificate': True,
-                'http_headers': {
-                    'User-Agent': user_agent,
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                    'Accept-Language': 'en-us,en;q=0.5',
-                    'Accept-Encoding': 'gzip, deflate',
-                    'DNT': '1',
-                    'Connection': 'keep-alive',
-                },
-                'socket_timeout': 30,
-                'retries': 5,
-                'fragment_retries': 10,
-                'skip_download': False,
-                'continuedl': True,
-                'external_downloader': 'aria2c',  # Use aria2c for better download handling
-                'external_downloader_args': ['--min-split-size=1M', '--max-connection-per-server=16'],
-                'sleep_interval': 3,  # Add delay between requests
-                'max_sleep_interval': 6,
-                'sleep_interval_requests': 1
-            }
-
-            # Try to use cookies if available
-            cookie_file = Path("youtube.cookies")
-            if cookie_file.exists():
-                ydl_opts['cookiefile'] = str(cookie_file)
-
-            loop = asyncio.get_event_loop()
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                # Run extract_info in a thread pool
-                info = await loop.run_in_executor(None, lambda: ydl.extract_info(url, download=True))
-                if info is None:
-                    raise Exception("Failed to extract video information")
-                
-                # Get the downloaded file path
-                file_path = str(self.temp_dir / f"{info['id']}.mp3")
-                if not os.path.exists(file_path):
-                    raise Exception(f"Downloaded file not found at {file_path}")
-                
-                return file_path
-                
-        except Exception as e:
-            logger.error(f"YouTube download error: {str(e)}")
-            # Try alternative download method if first attempt fails
-            return await self._fallback_youtube_download(url)
-
-    async def _fallback_youtube_download(self, url: str) -> Optional[str]:
-        """Fallback method for YouTube downloads"""
-        try:
-            # Use different format and options for fallback
-            ydl_opts = {
-                'format': 'worstaudio/worst',  # Try lowest quality first
-                'outtmpl': str(self.temp_dir / '%(id)s.%(ext)s'),
-                'quiet': True,
-                'no_warnings': True,
-                'extract_audio': True,
-                'audio_format': 'mp3',
-                'sleep_interval': 5,
-                'max_sleep_interval': 10,
-                'http_headers': {
-                    'User-Agent': random.choice(self.user_agents),
-                    'Accept': '*/*',
-                },
-            }
-            
-            loop = asyncio.get_event_loop()
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = await loop.run_in_executor(None, lambda: ydl.extract_info(url, download=True))
-                if info is None:
-                    raise Exception("Failed to extract video information in fallback")
-                
-                file_path = str(self.temp_dir / f"{info['id']}.mp3")
-                if not os.path.exists(file_path):
-                    raise Exception(f"Downloaded file not found at {file_path}")
-                
-                return file_path
-                
-        except Exception as e:
-            logger.error(f"Fallback YouTube download error: {str(e)}")
-            raise DownloadError(f"Failed to download from URL {url}: {str(e)}")
 
     async def upload_file(self, file: BinaryIO, key: str) -> str:
         """Upload a file to S3 with multipart support"""
+        logger.debug(f"Starting upload for file with key: {key}")
         try:
+            # Ensure the file pointer is at the beginning
+            if hasattr(file, 'seek'):
+                file.seek(0)
+
             content_type, _ = mimetypes.guess_type(key)
             content_type = content_type or 'application/octet-stream'
             
-            if file.seekable() and file.tell() > get_settings().MULTIPART_THRESHOLD:
-                transfer_config = boto3.s3.transfer.TransferConfig(
-                    multipart_threshold=get_settings().MULTIPART_THRESHOLD,
-                    max_concurrency=10
-                )
-                self.s3_client.upload_fileobj(
-                    file, 
-                    self.bucket, 
-                    key,
-                    ExtraArgs={'ContentType': content_type},
-                    Config=transfer_config
-                )
-            else:
-                self.s3_client.upload_fileobj(
-                    file, 
-                    self.bucket, 
-                    key,
-                    ExtraArgs={'ContentType': content_type}
-                )
+            # Configure transfer settings
+            transfer_config = boto3.s3.transfer.TransferConfig(
+                multipart_threshold=settings.MULTIPART_THRESHOLD,
+                multipart_chunksize=settings.MULTIPART_CHUNKSIZE,
+                max_concurrency=settings.MAX_CONCURRENCY
+            )
+
+            # Upload the file
+            logger.debug(f"Uploading file to S3: bucket={self.bucket}, key={key}")
+            self.s3_client.upload_fileobj(
+                file, 
+                self.bucket, 
+                key,
+                ExtraArgs={'ContentType': content_type},
+                Config=transfer_config
+            )
             
             url = f"https://{self.bucket}.s3.amazonaws.com/{key}"
             logger.info(f"Successfully uploaded file to {url}")
             return url
             
         except ClientError as e:
-            logger.error(f"Failed to upload file to S3: {str(e)}")
-            raise
+            error_msg = f"Failed to upload file to S3: {str(e)}. Key: {key}, Bucket: {self.bucket}"
+            logger.error(error_msg)
+            raise AudioProcessingError(
+                message="Failed to upload file to storage",
+                error_code=ErrorCodes.UPLOAD_FAILED,
+                details={"error": str(e)},
+                original_error=e
+            )
+        except Exception as e:
+            error_msg = f"Unexpected error during file upload: {str(e)}"
+            logger.error(error_msg)
+            raise AudioProcessingError(
+                message="Failed to upload file",
+                error_code=ErrorCodes.UPLOAD_FAILED,
+                details={"error": str(e)},
+                original_error=e
+            )
 
     async def download_from_url(self, url: str) -> str:
-        """Download file from URL and return local path"""
+        """Download file from URL (S3 or HTTP) to local temp directory"""
         try:
-            if "youtube.com" in url or "youtu.be" in url:
-                return await self._download_youtube(url)
+            # Parse URL
+            parsed_url = urlparse(url)
+            filename = os.path.basename(parsed_url.path)
+            local_path = self.temp_dir / filename
 
-            # Create downloads directory if it doesn't exist
-            os.makedirs(get_settings().DOWNLOAD_DIR, exist_ok=True)
-            
-            # Generate a unique filename
-            filename = f"{time.time_ns()}_{url.split('/')[-1]}"
-            local_path = os.path.join(get_settings().DOWNLOAD_DIR, filename)
-            
-            if 's3.amazonaws.com' in url:
-                # Parse S3 URL
-                parsed_url = urlparse(url)
-                bucket = parsed_url.netloc.split('.')[0]
+            if parsed_url.netloc.endswith('s3.amazonaws.com'):
+                # Download from S3
                 key = parsed_url.path.lstrip('/')
-                
-                # Download from S3 to local file
-                self.s3_client.download_file(bucket, key, local_path)
+                self.s3_client.download_file(
+                    self.bucket,
+                    key,
+                    str(local_path)
+                )
             else:
                 # Download from HTTP URL
                 response = requests.get(url, stream=True)
@@ -203,10 +110,49 @@ class StorageService:
                 with open(local_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
-            
-            logger.info(f"Downloaded file to local path: {local_path}")
-            return local_path
-                
+
+            logger.info(f"Successfully downloaded file to {local_path}")
+            return str(local_path)
+
         except Exception as e:
-            logger.error(f"Failed to download from URL {url}: {str(e)}")
-            raise 
+            error_msg = f"Failed to download file from {url}: {str(e)}"
+            logger.error(error_msg)
+            raise AudioProcessingError(
+                message="Failed to download file",
+                error_code=ErrorCodes.DOWNLOAD_FAILED,
+                details={"error": str(e), "url": url},
+                original_error=e
+            )
+
+    async def delete_file(self, key: str):
+        """Delete a file from S3"""
+        try:
+            self.s3_client.delete_object(
+                Bucket=self.bucket,
+                Key=key
+            )
+            logger.info(f"Successfully deleted file {key} from bucket {self.bucket}")
+        except Exception as e:
+            logger.error(f"Failed to delete file {key}: {e}")
+            # Don't raise - just log the error
+
+    def generate_presigned_url(self, key: str, expiration: int = 3600) -> str:
+        """Generate a presigned URL for an S3 object"""
+        try:
+            url = self.s3_client.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': self.bucket,
+                    'Key': key
+                },
+                ExpiresIn=expiration
+            )
+            return url
+        except Exception as e:
+            logger.error(f"Failed to generate presigned URL for {key}: {e}")
+            raise AudioProcessingError(
+                message="Failed to generate download URL",
+                error_code=ErrorCodes.STORAGE_ERROR,
+                details={"error": str(e), "key": key},
+                original_error=e
+            )

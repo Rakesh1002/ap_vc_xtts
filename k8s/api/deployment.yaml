@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audio-processing-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: audio-processing-api
+  template:
+    spec:
+      containers:
+        - name: api
+          image: audio-processing-api:latest
+          resources:
+            limits:
+              cpu: "2"
+              memory: "4Gi"
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+          volumeMounts:
+            - name: models
+              mountPath: /app/models
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: models-pvc 

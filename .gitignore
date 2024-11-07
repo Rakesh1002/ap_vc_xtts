@@ -197,3 +197,33 @@ venv/
 **/espeak/
 **/gruut_lang_*/
 **/sudachidict_core/
+
+# XTTS specific outputs
+output/
+generated/
+inference/
+*.wav.json
+*.wav.txt
+
+# Temporary model downloads
+downloaded_models/
+pretrained/
+*.partial
+*.download
+
+# Runtime files
+*.pid
+*.socket
+supervisor.*
+gunicorn.*
+
+# Local configurations
+config.local.yml
+settings.local.json
+*.local.conf
+
+# Debug files
+debug/
+profiling/
+*.profile
+*.stats

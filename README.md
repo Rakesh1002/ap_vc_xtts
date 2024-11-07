@@ -2,6 +2,18 @@
 
 A high-performance audio processing service providing voice cloning and translation capabilities using state-of-the-art AI models (XTTS V2 and Faster Whisper).
 
+## Table of Contents
+
+- [Key Features](#key-features)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Development Setup](#development-setup)
+- [Production Deployment](#production-deployment)
+- [API Documentation](#api-documentation)
+- [Architecture](#architecture)
+- [Monitoring](#monitoring)
+- [Contributing](#contributing)
+
 ## Key Features
 
 ### Voice Cloning (XTTS V2 0.22.0)
@@ -22,26 +34,17 @@ A high-performance audio processing service providing voice cloning and translat
 - Multiple output formats
 - Batch translation support
 
-### Technical Stack
-
-- FastAPI 0.109.0 for async API
-- PyTorch 2.1.2 with CUDA support
-- PostgreSQL (Neon) with asyncpg
-- Redis 5.0+ for caching and task queue
-- Celery 5.3.6 for distributed processing
-- S3-compatible storage
-- Prometheus/Grafana monitoring
-- JWT authentication and rate limiting
-
 ## Prerequisites
 
 ### System Requirements
 
-- Python 3.11 (required)
+- Python 3.11+
 - CUDA-capable GPU (recommended)
+- 16GB+ RAM
+- 100GB+ SSD storage
+- PostgreSQL 14+
+- Redis 5.0+
 - FFmpeg
-- PostgreSQL client
-- Redis
 
 ### Installation
 
@@ -50,289 +53,15 @@ A high-performance audio processing service providing voice cloning and translat
 ```bash
 # Ubuntu/Debian
 sudo apt-get update && sudo apt-get install -y \
-    python3.11 \
-    python3.11-dev \
-    ffmpeg \
-    libpq-dev \
-    postgresql-client \
-    libsndfile1 \
-    sox \
-    libsox-dev \
-    portaudio19-dev \
-    libasound2-dev \
-    cmake \
-    pkg-config
+    python3.11 python3.11-dev \
+    ffmpeg libpq-dev postgresql-client \
+    libsndfile1 sox libsox-dev \
+    portaudio19-dev libasound2-dev \
+    cmake pkg-config
 
 # macOS
-brew install \
-    python@3.11 \
-    ffmpeg \
-    postgresql@14 \
-    sox \
-    portaudio \
-    cmake \
-    pkg-config
-```
-
-2. Clone and Setup:
-
-```bash
-# Clone repository
-git clone https://github.com/yourusername/audio-processing-api
-cd audio-processing-api
-
-# Run setup script
-chmod +x scripts/setup.sh
-./scripts/setup.sh --dev  # Use --dev for development environment
-```
-
-3. Environment Configuration:
-
-```bash
-cp .env.example .env
-# Edit .env with your settings
-```
-
-4. Start Services:
-
-```bash
-# Using Docker Compose
-docker-compose up -d
-
-# Or start components individually
-docker-compose up -d db redis
-poetry run uvicorn app.main:app --reload
-poetry run celery -A app.core.celery_app worker -Q voice-queue,translation-queue
-```
-
-## Development
-
-### Database Migrations
-
-```bash
-# Create new migration
-poetry run alembic revision --autogenerate -m "Description"
-
-# Apply migrations
-poetry run alembic upgrade head
-
-# Rollback
-poetry run alembic downgrade -1
-```
-
-### Code Style
-
-```bash
-# Format code
-poetry run black app tests
-
-# Sort imports
-poetry run isort app tests
-
-# Type checking
-poetry run mypy app
-```
-
-### Testing
-
-```bash
-# Run tests
-poetry run pytest
-
-# With coverage
-poetry run pytest --cov=app --cov-report=html
-```
-
-## API Usage
-
-### Authentication
-
-```bash
-# Register
-curl -X POST "http://localhost:8000/api/v1/auth/register" \
-     -H "Content-Type: application/json" \
-     -d '{"email": "user@example.com", "password": "password"}'
-
-# Get token
-curl -X POST "http://localhost:8000/api/v1/auth/token" \
-     -d "username=user@example.com&password=password"
-```
-
-### Voice Cloning
-
-```bash
-# Upload voice
-curl -X POST "http://localhost:8000/api/v1/voice/voices/" \
-     -H "Authorization: Bearer $TOKEN" \
-     -F "file=@sample.wav" \
-     -F "name=Test Voice" \
-     -F "description=This is a test voice"
-
-# Create cloning job
-curl -X POST "http://localhost:8000/api/v1/voice/clone/" \
-     -H "Authorization: Bearer $TOKEN" \
-     -H "Content-Type: application/json" \
-     -d '{"voice_id": 1, "input_text": "Hello world"}'
-```
-
-### Translation
-
-```bash
-# Translate audio
-curl -X POST "http://localhost:8000/api/v1/translation/translate/" \
-     -H "Authorization: Bearer $TOKEN" \
-     -F "file=@audio.wav" \
-     -F "target_language=es"
-
-# Translate from URL
-curl -X POST "http://localhost:8000/api/v1/translation/translate/url/" \
-     -H "Authorization: Bearer $TOKEN" \
-     -d '{"url": "https://example.com/audio.mp3", "target_language": "es"}'
-```
-
-## Project Structure
-
-```
-audio-processing-api/
-├── app/
-│   ├── api/            # API endpoints
-│   ├── core/           # Core functionality
-│   ├── db/             # Database
-│   ├── models/         # SQLAlchemy models
-│   ├── schemas/        # Pydantic schemas
-│   ├── services/       # Business logic
-│   └── workers/        # Celery tasks
-├── scripts/           # Setup scripts
-├── tests/            # Test suite
-├── alembic/          # Database migrations
-└── docs/             # Documentation
-```
-
-## Monitoring
-
-- Prometheus metrics: `http://localhost:9090/metrics`
-- API documentation: `http://localhost:8000/docs`
-- OpenAPI spec: `http://localhost:8000/openapi.json`
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Run tests and linters
-4. Submit a pull request
-
-See [Contributing Guide](CONTRIBUTING.md) for details.
-
-## License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## Acknowledgments
-
-- [XTTS V2](https://github.com/coqui-ai/TTS) - Coqui TTS
-- [Faster Whisper](https://github.com/SYSTRAN/faster-whisper)
-- [FastAPI](https://fastapi.tiangolo.com/)
-
-## Running the Application
-
-### Development Mode
-
-```bash
-# Start all services in development mode
-chmod +x scripts/start.sh
-./scripts/start.sh start dev
-```
-
-Development mode features:
-
-- Auto-reload for code changes
-- Debug logging
-- 2 Celery workers
-- Single uvicorn worker
-
-### Production Mode
-
-```bash
-# Start all services in production mode
-./scripts/start.sh start prod
-```
-
-Production mode features:
-
-- Multiple uvicorn workers (configurable)
-- Optimized Celery settings
-- Production-level logging
-- SSL/TLS support
-- Proxy headers handling
-
-### Environment Variables
-
-Production deployment requires setting these environment variables:
-
-```bash
-# Web Server
-PORT=8000                     # API port
-WEB_CONCURRENCY=4            # Number of uvicorn workers
-WORKER_CONCURRENCY=4         # Number of Celery workers
-
-# GPU Settings
-CUDA_VISIBLE_DEVICES=0,1     # Comma-separated GPU indices
-DEVICE_STRATEGY=auto         # auto/cpu/cuda
-
-# Security
-ALLOWED_HOSTS=example.com    # Comma-separated hosts
-CORS_ORIGINS=*              # CORS origins
-```
-
-### Service Management
-
-```bash
-# Start services
-./scripts/start.sh start [dev|prod]
-
-# Stop all services
-./scripts/start.sh stop
-
-# Restart services
-./scripts/start.sh restart [dev|prod]
-```
-
-## Production Deployment
-
-### System Requirements
-
-- 8+ CPU cores
-- 16GB+ RAM
-- NVIDIA GPU with 8GB+ VRAM (recommended)
-- 100GB+ SSD storage
-- Ubuntu 20.04 LTS or newer
-
-### Installation Steps
-
-1. System Setup:
-
-```bash
-# Update system
-sudo apt update && sudo apt upgrade -y
-
-# Install system dependencies
-sudo apt install -y \
-    python3.11 \
-    python3.11-dev \
-    python3.11-venv \
-    nginx \
-    redis-server \
-    supervisor \
-    ffmpeg \
-    libpq-dev \
-    postgresql-client \
-    libsndfile1 \
-    sox \
-    libsox-dev \
-    portaudio19-dev \
-    libasound2-dev \
-    cmake \
-    pkg-config
+brew install python@3.11 ffmpeg postgresql@14 \
+    sox portaudio cmake pkg-config
 ```
 
 2. NVIDIA Setup (if using GPU):
@@ -346,355 +75,104 @@ wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/
 sudo sh cuda_11.8.0_520.61.05_linux.run
 ```
 
-3. Application Setup:
+## Quick Start
+
+1. Clone and Setup:
 
 ```bash
 # Clone repository
 git clone https://github.com/yourusername/audio-processing-api
 cd audio-processing-api
 
-# Setup application
-./scripts/setup.sh
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate
 
-# Configure environment
+# Install dependencies
+pip install poetry
+poetry install
+```
+
+2. Configure Environment:
+
+```bash
 cp .env.example .env
-nano .env
+# Edit .env with your settings:
+# - Database credentials
+# - Redis connection
+# - S3 storage details
+# - JWT secret key
 ```
 
-4. Nginx Configuration:
-
-```nginx
-server {
-    listen 80;
-    server_name api.example.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location /ws {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-    }
-}
-```
-
-5. Supervisor Configuration:
-
-```ini
-[program:api]
-command=/path/to/audio-processing-api/scripts/start.sh start prod
-directory=/path/to/audio-processing-api
-user=ubuntu
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/supervisor/api.err.log
-stdout_logfile=/var/log/supervisor/api.out.log
-environment=
-    PATH="/path/to/audio-processing-api/.venv/bin:%(ENV_PATH)s",
-    CUDA_VISIBLE_DEVICES="0"
-
-[program:celery]
-command=/path/to/audio-processing-api/.venv/bin/celery -A app.core.celery_app worker --loglevel=info
-directory=/path/to/audio-processing-api
-user=ubuntu
-autostart=true
-autorestart=true
-stderr_logfile=/var/log/supervisor/celery.err.log
-stdout_logfile=/var/log/supervisor/celery.out.log
-environment=
-    PATH="/path/to/audio-processing-api/.venv/bin:%(ENV_PATH)s",
-    CUDA_VISIBLE_DEVICES="0"
-```
-
-6. Start Services:
+3. Start Services:
 
 ```bash
-# Start supervisor
-sudo supervisorctl reread
-sudo supervisorctl update
-sudo supervisorctl start all
+# Using Docker Compose (recommended for development)
+docker-compose up -d
 
-# Start nginx
-sudo systemctl start nginx
-```
-
-### Monitoring
-
-1. Check service status:
-
-```bash
-sudo supervisorctl status
-```
-
-2. View logs:
-
-```bash
-# API logs
-tail -f /var/log/supervisor/api.out.log
-
-# Celery logs
-tail -f /var/log/supervisor/celery.out.log
-```
-
-3. Monitor resources:
-
-```bash
-# GPU usage
-nvidia-smi -l 1
-
-# System resources
-htop
-```
-
-### Backup and Maintenance
-
-1. Database backup:
-
-```bash
-# Backup database
-pg_dump -h $DB_HOST -U $DB_USER -d $DB_NAME > backup.sql
-
-# Restore database
-psql -h $DB_HOST -U $DB_USER -d $DB_NAME < backup.sql
-```
-
-2. Model files backup:
-
-```bash
-# Backup models directory
-tar -czf models_backup.tar.gz models/
-```
-
-### Security Recommendations
-
-1. Enable SSL/TLS with Let's Encrypt
-2. Configure firewall (UFW)
-3. Set up fail2ban
-4. Regular security updates
-5. Implement rate limiting
-6. Use strong passwords and key-based SSH authentication
-
-## Queue Configuration
-
-The application uses two separate Celery queues for different types of tasks:
-
-### Voice Queue (`voice-queue`)
-
-- Handles voice cloning tasks
-- Lower concurrency (2 workers)
-- Higher memory allocation per task
-- Longer time limits (1 hour)
-- GPU-intensive operations
-
-### Translation Queue (`translation-queue`)
-
-- Handles audio translation tasks
-- Higher concurrency (4 workers)
-- Lower memory requirements
-- Shorter time limits (30 minutes)
-- CPU-intensive operations
-
-### Starting the Workers
-
-```bash
-# Start all workers
-./scripts/start_workers.sh
-
-# Or start workers individually
-celery -A app.core.celery_app worker -Q voice-queue -n voice_worker@%h --concurrency=2
-celery -A app.core.celery_app worker -Q translation-queue -n translation_worker@%h --concurrency=4
-```
-
-## API Endpoints
-
-### Voice Processing
-
-#### Create Voice Profile
-
-```http
-POST /api/v1/voice/voices/
-Content-Type: multipart/form-data
-
-name: string
-description: string (optional)
-file: audio file (WAV, MP3, OGG)
-```
-
-#### Create Cloning Job
-
-```http
-POST /api/v1/voice/clone/
-Content-Type: application/json
-
-{
-    "voice_id": integer,
-    "input_text": string
-}
-```
-
-#### Get Job Status
-
-```http
-GET /api/v1/voice/clone/{job_id}/status
-```
-
-### Audio Translation
-
-#### Create Translation Job
-
-```http
-POST /api/v1/translation/translate/
-Content-Type: multipart/form-data
-
-target_language: string
-source_language: string (optional)
-file: audio file
-```
-
-#### Create Translation from URL
-
-```http
-POST /api/v1/translation/translate/url/
-Content-Type: application/json
-
-{
-    "url": string,
-    "target_language": string,
-    "source_language": string (optional)
-}
-```
-
-## Service Architecture
-
-### Storage Service
-
-- Handles file uploads to S3
-- Supports multipart uploads for large files
-- Downloads from various sources (S3, HTTP, social media)
-- Temporary file management
-- Automatic cleanup
-
-### Voice Cloning Service
-
-- XTTS v2 model integration
-- Progress tracking
-- Memory optimization
-- GPU resource management
-- Automatic cleanup of temporary files
-
-### Translation Service
-
-- Faster Whisper integration
-- Multiple language support
-- Automatic language detection
-- Streaming audio processing
-- Resource optimization
-
-## Error Handling
-
-The application uses a structured error handling system:
-
-```python
-class AudioProcessingError:
-    error_code: str
-    message: str
-    details: dict
-    severity: ErrorSeverity
-    category: ErrorCategory
-```
-
-Error categories:
-
-- Validation
-- Processing
-- Storage
-- System
-- Model
-
-## Monitoring
-
-### Metrics Available
-
-- Request latency
-- Queue lengths
-- Job processing times
-- Model inference times
-- Resource usage (CPU, RAM, GPU)
-- Error rates
-
-### Prometheus Endpoints
-
-```http
-GET /metrics
-```
-
-### WebSocket Status Updates
-
-```javascript
-ws://api.example.com/ws/{token}
+# Or start components individually:
+docker-compose up -d db redis
+poetry run uvicorn app.main:app --reload
+poetry run celery -A app.core.celery_app worker -Q voice-queue,translation-queue
 ```
 
 ## Development Setup
 
-1. Install dependencies:
+### Database Setup
 
 ```bash
-poetry install
+# Create database
+createdb audio_processing
+
+# Apply migrations
+poetry run alembic upgrade head
+
+# Create new migration
+poetry run alembic revision --autogenerate -m "Description"
 ```
 
-2. Set up environment:
+### Code Quality
 
 ```bash
-cp .env.example .env
-# Edit .env with your settings
+# Format code
+poetry run black app tests
+
+# Sort imports
+poetry run isort app tests
+
+# Type checking
+poetry run mypy app
+
+# Run tests
+poetry run pytest --cov=app
 ```
 
-3. Start services:
+### Local Development
 
 ```bash
-# Start PostgreSQL and Redis
-docker-compose up -d db redis
+# Start API server with hot reload
+poetry run uvicorn app.main:app --reload --port 8000
 
-# Start API server
-poetry run uvicorn app.main:app --reload
-
-# Start workers
-./scripts/start_workers.sh
+# Start Celery workers
+poetry run celery -A app.core.celery_app worker \
+    -Q voice-queue,translation-queue \
+    --loglevel=info
 ```
 
 ## Production Deployment
 
-1. Configure workers:
+### System Setup
+
+1. Install Dependencies:
 
 ```bash
-# Edit worker settings in app/core/config.py
-WORKER_CONCURRENCY = 4
-TASK_TIMEOUT = 3600
-MAX_RETRIES = 3
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y nginx supervisor
 ```
 
-2. Set up monitoring:
-
-```bash
-# Start Prometheus
-docker-compose up -d prometheus
-
-# Start Grafana
-docker-compose up -d grafana
-```
-
-3. Configure SSL:
+2. Configure Nginx:
 
 ```nginx
-# Example Nginx configuration
 server {
     listen 443 ssl;
     server_name api.example.com;
@@ -715,4 +193,559 @@ server {
         proxy_set_header Connection "upgrade";
     }
 }
+```
+
+3. Configure Supervisor:
+
+```ini
+[program:api]
+command=/path/to/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+directory=/path/to/audio-processing-api
+user=ubuntu
+autostart=true
+autorestart=true
+
+[program:celery_voice]
+command=/path/to/venv/bin/celery -A app.core.celery_app worker -Q voice-queue --concurrency=2
+directory=/path/to/audio-processing-api
+user=ubuntu
+autostart=true
+autorestart=true
+
+[program:celery_translation]
+command=/path/to/venv/bin/celery -A app.core.celery_app worker -Q translation-queue --concurrency=4
+directory=/path/to/audio-processing-api
+user=ubuntu
+autostart=true
+autorestart=true
+```
+
+4. SSL Setup:
+
+```bash
+# Install Certbot
+sudo apt install certbot python3-certbot-nginx
+
+# Get SSL certificate
+sudo certbot --nginx -d api.example.com
+```
+
+5. Start Services:
+
+```bash
+sudo systemctl start nginx
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start all
+```
+
+## API Documentation
+
+### Authentication
+
+#### Register User
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/auth/register" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "email": "user@example.com",
+           "password": "StrongPass123!",
+           "full_name": "John Doe"
+         }'
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "email": "user@example.com",
+  "full_name": "John Doe",
+  "created_at": "2024-01-01T12:00:00Z"
+}
+```
+
+#### Get Access Token
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/auth/token" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "username=user@example.com&password=StrongPass123!"
+```
+
+Response:
+
+```json
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+  "token_type": "bearer"
+}
+```
+
+### Voice Cloning
+
+#### List Voice Profiles
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/voice/voices/" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+Response:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "John's Voice",
+    "description": "Male voice sample",
+    "file_path": "voices/uuid/sample.wav",
+    "created_at": "2024-01-01T12:00:00Z"
+  }
+]
+```
+
+#### Create Voice Profile
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/voice/voices/" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -F "name=John's Voice" \
+     -F "description=Male voice sample" \
+     -F "file=@/path/to/voice_sample.wav"
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "name": "John's Voice",
+  "description": "Male voice sample",
+  "file_path": "voices/uuid/sample.wav",
+  "created_at": "2024-01-01T12:00:00Z"
+}
+```
+
+#### Create Cloning Job
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/voice/clone/" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "voice_id": 1,
+           "input_text": "Hello, this is a test of voice cloning."
+         }'
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "status": "pending",
+  "voice_id": 1,
+  "input_text": "Hello, this is a test of voice cloning.",
+  "created_at": "2024-01-01T12:00:00Z",
+  "task_id": "abc123..."
+}
+```
+
+#### Get Cloning Job Status
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/voice/clone/1/status" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+Response:
+
+```json
+{
+  "job_id": 1,
+  "status": "completed",
+  "created_at": "2024-01-01T12:00:00Z",
+  "completed_at": "2024-01-01T12:01:00Z",
+  "output_url": "https://storage.example.com/output.wav",
+  "task_status": {
+    "state": "SUCCESS",
+    "progress": 100,
+    "error": null
+  }
+}
+```
+
+#### Retry Failed Job
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/voice/clone/1/retry" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+### Audio Translation
+
+#### Create Translation Job
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/translation/translate/" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -F "target_language=es" \
+     -F "source_language=en" \
+     -F "file=@/path/to/audio.wav"
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "status": "pending",
+  "source_language": "en",
+  "target_language": "es",
+  "created_at": "2024-01-01T12:00:00Z",
+  "task_id": "xyz789..."
+}
+```
+
+#### Translate from URL
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/translation/translate/url/" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "url": "https://example.com/audio.mp3",
+           "target_language": "es",
+           "source_language": "en"
+         }'
+```
+
+#### Get Translation Status
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/translation/translations/1" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+Response:
+
+```json
+{
+  "id": 1,
+  "status": "completed",
+  "source_language": "en",
+  "target_language": "es",
+  "created_at": "2024-01-01T12:00:00Z",
+  "completed_at": "2024-01-01T12:02:00Z",
+  "output_url": "https://storage.example.com/translated.wav",
+  "transcript_url": "https://storage.example.com/transcript.txt"
+}
+```
+
+#### Batch Translation
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/translation/translate/batch/" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -F "target_language=es" \
+     -F "source_language=en" \
+     -F "files[]=@/path/to/audio1.wav" \
+     -F "files[]=@/path/to/audio2.wav"
+```
+
+### Health Check
+
+#### Get API Status
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/health"
+```
+
+Response:
+
+```json
+{
+  "status": "healthy",
+  "version": "1.0.0",
+  "gpu_available": true
+}
+```
+
+### WebSocket Connection
+
+```bash
+# Using wscat for WebSocket testing
+wscat -c "ws://localhost:8000/ws/${TOKEN}"
+```
+
+Example message:
+
+```json
+{
+  "job_id": 1,
+  "status": "processing",
+  "progress": 50,
+  "details": {
+    "step": "generating_audio",
+    "time_remaining": "30s"
+  }
+}
+```
+
+### Rate Limits
+
+- Authentication endpoints: 5 requests per minute
+- Voice cloning: 10 requests per minute
+- Translation: 20 requests per minute
+- Health check: 100 requests per minute
+
+### Error Responses
+
+Standard error response format:
+
+```json
+{
+  "error_code": "INVALID_INPUT",
+  "message": "Invalid input parameters",
+  "details": {
+    "field": "target_language",
+    "error": "Unsupported language code"
+  }
+}
+```
+
+## Architecture
+
+### Component Overview
+
+```
+audio-processing-api/
+├── app/
+│   ├── api/            # API endpoints
+│   ├── core/           # Core functionality
+│   ├── db/             # Database
+│   ├── models/         # SQLAlchemy models
+│   ├── schemas/        # Pydantic schemas
+│   ├── services/       # Business logic
+│   └── workers/        # Celery tasks
+```
+
+### Key Components
+
+- FastAPI for async API
+- Celery for distributed task processing
+- PostgreSQL for persistent storage
+- Redis for caching and task queue
+- S3 for file storage
+- Prometheus/Grafana for monitoring
+
+## Monitoring
+
+### Available Metrics
+
+- Request latency
+- Queue lengths
+- Job processing times
+- Model inference times
+- Resource usage (CPU, RAM, GPU)
+- Error rates
+
+### Prometheus Endpoints
+
+```http
+GET /metrics
+```
+
+### Grafana Dashboards
+
+- API Performance
+- Queue Statistics
+- Resource Usage
+- Error Tracking
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Run tests and linters
+4. Submit a pull request
+
+See [Contributing Guide](CONTRIBUTING.md) for details.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## Detailed Setup Guide
+
+### 1. Initial Setup
+
+The project includes several setup scripts in the `scripts/` directory to help with installation and configuration.
+
+```bash
+# Make scripts executable
+chmod +x scripts/*.sh
+
+# Run initial setup (dev or prod mode)
+./scripts/setup.sh dev
+```
+
+The setup script will:
+
+- Install Python dependencies using Poetry
+- Download and verify AI models (XTTS-v2 and Whisper)
+- Create necessary directories
+- Set appropriate permissions
+
+### 2. Database Migrations
+
+Use the migration script to manage database schema:
+
+```bash
+# Run migrations
+./scripts/migrate.sh
+
+# For manual migration commands:
+poetry run alembic revision --autogenerate -m "description"  # Create migration
+poetry run alembic upgrade head                             # Apply migrations
+poetry run alembic downgrade -1                            # Rollback one step
+```
+
+### 3. Starting Services
+
+The start script provides flexible service management:
+
+```bash
+# Development mode
+./scripts/start.sh start dev    # Start services
+./scripts/start.sh stop         # Stop services
+./scripts/start.sh restart dev  # Restart services
+
+# Production mode
+./scripts/start.sh start prod   # Start with production settings
+```
+
+The start script handles:
+
+- Environment verification
+- Redis service management
+- Celery workers configuration
+- FastAPI server startup
+- GPU detection and configuration
+
+### 4. Environment Configuration
+
+Create and configure your environment variables:
+
+```bash
+# Copy example environment file
+cp .env.example .env
+
+# Edit required variables:
+nano .env
+```
+
+Key environment variables:
+
+```bash
+# API Settings
+DEBUG=true
+API_HOST=0.0.0.0
+API_PORT=8000
+SECRET_KEY=your-secret-key
+
+# Database
+POSTGRES_SERVER=localhost
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=audio_processing
+
+# Redis
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# S3 Storage
+S3_ACCESS_KEY=your_access_key
+S3_SECRET_KEY=your_secret_key
+S3_BUCKET=your_bucket
+S3_REGION=your_region
+
+# GPU Settings
+CUDA_VISIBLE_DEVICES=0
+DEVICE_STRATEGY=auto
+
+# Worker Settings
+WORKER_CONCURRENCY=4
+VOICE_QUEUE_CONCURRENCY=2
+TRANSLATION_QUEUE_CONCURRENCY=4
+```
+
+### 5. Development Workflow
+
+1. Start development environment:
+
+```bash
+# Initial setup if not done
+./scripts/setup.sh dev
+
+# Start services in development mode
+./scripts/start.sh start dev
+```
+
+2. Run tests:
+
+```bash
+# Run all tests
+poetry run pytest
+
+# Run with coverage
+poetry run pytest --cov=app --cov-report=html
+```
+
+3. Code quality checks:
+
+```bash
+# Format code
+poetry run black app tests
+poetry run isort app tests
+
+# Type checking
+poetry run mypy app
+```
+
+### 6. Production Deployment
+
+1. Setup production environment:
+
+```bash
+# Production setup
+./scripts/setup.sh prod
+
+# Configure SSL (if needed)
+sudo certbot --nginx -d api.example.com
+
+# Start services in production mode
+./scripts/start.sh start prod
+```
+
+2. Monitor logs:
+
+```bash
+# API logs
+tail -f logs/api.log
+
+# Worker logs
+tail -f logs/celery.log
+```
+
+3. Monitor metrics:
+
+```bash
+# Check Prometheus metrics
+curl http://localhost:9090/metrics
+
+# View in Grafana
+open http://localhost:3000
 ```

@@ -8,6 +8,9 @@ from datetime import timedelta
 logger = logging.getLogger(__name__)
 settings = get_settings()
 
+# Add to cache configuration
+DENOISED_AUDIO_CACHE_TTL = 3600  # 1 hour
+
 class CacheManager:
     def __init__(self):
         self.redis = redis.Redis(

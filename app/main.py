@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.v1 import voice, translation, auth, speaker
+from app.api.v1 import voice, translation, auth, speaker, denoiser
 from app.core.config import get_settings
 from app.core.middleware import metrics_middleware, rate_limit_middleware
 from prometheus_client import make_asgi_app
@@ -46,6 +46,11 @@ app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["aut
 app.include_router(voice.router, prefix=f"{settings.API_V1_STR}/voice", tags=["voice"])
 app.include_router(translation.router, prefix=f"{settings.API_V1_STR}/translation", tags=["translation"])
 app.include_router(speaker.router, prefix=f"{settings.API_V1_STR}/speaker", tags=["speaker"])
+app.include_router(
+    denoiser.router,
+    prefix=f"{settings.API_V1_STR}/denoiser",
+    tags=["denoiser"]
+)
 
 @app.on_event("startup")
 async def startup_event():
@@ -61,6 +66,15 @@ async def startup_event():
         diarization_service = get_diarization_service()
         extraction_service = get_extraction_service()
         logger.info("Speaker analysis services initialized")
+        
+        # Initialize denoiser services
+        from app.services.spectral_denoiser_service import SpectralDenoiserService
+        
+        spectral_service = SpectralDenoiserService()
+        if spectral_service.initialized:
+            logger.info("Spectral denoiser service initialized successfully")
+        else:
+            logger.warning("Spectral denoiser service initialization failed. Some features may be unavailable.")
         
         # Log GPU availability
         if device_manager.is_gpu_available:

@@ -173,6 +173,24 @@ class Settings(BaseSettings):
     EXTRACTION_MAX_SPEAKERS: int = 10
     SPEAKER_MIN_DURATION: float = 0.5  # Minimum duration for speaker segments
 
+    # Denoiser Settings
+    DENOISER_MAX_DURATION: int = 600  # 10 minutes
+    DENOISER_SAMPLE_RATE: int = 48000
+
+    # Denoiser queue settings
+    DENOISER_QUEUE_CONCURRENCY: int = 2
+    DENOISER_QUEUE_TIME_LIMIT: int = 1000
+    DENOISER_RATE_LIMIT: str = "15/m"
+    DENOISER_PRIORITY: int = 5
+    DENOISER_MAX_RETRIES: int = 3
+
+    # Denoiser settings
+    DENOISER_MODEL: str = "dns64"  # dns48 or dns64
+    DENOISER_CHUNK_SIZE: int = 10  # seconds
+    DENOISER_MAX_MEMORY: int = 4096  # MB
+    DENOISER_USE_CUDA: bool = True
+    DENOISER_NUM_THREADS: int = 4
+
     class Config:
         case_sensitive = True
         env_file = ".env"

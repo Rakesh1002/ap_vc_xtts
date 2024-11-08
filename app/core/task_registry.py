@@ -60,6 +60,23 @@ class TaskRegistry:
         hard_time_limit=1800
     )
 
+    # Add to existing task registrations
+    register_task(
+        CeleryTasks.DENOISE_AUDIO,
+        CeleryQueues.DENOISER,
+        soft_time_limit=900,
+        hard_time_limit=1000
+    )
+
+    # Add spectral denoiser task registration
+    register_task(
+        CeleryTasks.SPECTRAL_DENOISE_AUDIO,
+        CeleryQueues.SPECTRAL,
+        soft_time_limit=900,
+        hard_time_limit=1000,
+        priority=5
+    )
+
     @classmethod
     def get_task(cls, name: str) -> Optional[Dict[str, Any]]:
         """Get task configuration by name"""

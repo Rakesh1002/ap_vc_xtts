@@ -14,6 +14,8 @@ from celery.signals import (
     task_success, task_failure,
     task_retry, task_revoked
 )
+from app.core.constants import CeleryTasks
+from app.core.optimization import ResourceOptimizer
 
 # Initialize settings and logging
 logger = logging.getLogger(__name__)
@@ -39,6 +41,12 @@ def init_worker(**kwargs):
 def task_prerun_handler(task_id, task, args, kwargs, **_):
     """Handler called before task execution"""
     logger.info(f"Starting task: {task.name}[{task_id}]")
+    
+    # Optimize for denoising tasks
+    if task.name in [CeleryTasks.DENOISE_AUDIO, CeleryTasks.SPECTRAL_DENOISE_AUDIO]:
+        resource_optimizer.optimize_for_denoising()
+    else:
+        resource_optimizer.optimize_for_inference()
 
 @task_success.connect
 def task_success_handler(sender=None, **kwargs):

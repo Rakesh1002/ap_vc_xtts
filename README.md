@@ -791,3 +791,154 @@ curl http://localhost:9090/metrics
 # View in Grafana
 open http://localhost:3000
 ```
+
+### Audio Denoising with Noise Type Optimization
+
+The API provides two methods for audio denoising:
+
+#### 1. Denoiser (Deep Learning based)
+
+```bash
+# Create denoising job with denoiser
+curl -X POST "http://localhost:8000/api/v1/denoiser/denoise" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -F "file=@audio.wav"
+
+# Check denoiser service health
+curl -X GET "http://localhost:8000/api/v1/denoiser/health"
+
+# List all denoising jobs
+curl -X GET "http://localhost:8000/api/v1/denoiser/jobs" \
+     -H "Authorization: Bearer ${TOKEN}"
+
+# Get specific job status
+curl -X GET "http://localhost:8000/api/v1/denoiser/jobs/{job_id}" \
+     -H "Authorization: Bearer ${TOKEN}"
+
+# Retry failed job
+curl -X POST "http://localhost:8000/api/v1/denoiser/jobs/{job_id}/retry" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+#### 2. Spectral Gating (Studio Quality)
+
+```bash
+# Basic usage with noise type
+curl -X POST "http://localhost:8000/api/v1/denoiser/spectral/denoise" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -F "file=@audio.wav" \
+     -F "noise_type=street_noise"
+
+# Available noise_type options:
+- white_noise       # For consistent background hiss
+- street_noise      # For traffic and urban sounds
+- background_chatter # For crowd noise and distant conversations
+- room_noise        # For general room acoustics
+- air_conditioning  # For HVAC systems
+- machine_hum      # For electrical/mechanical hum
+- wind_noise       # For outdoor wind interference
+- general          # Balanced settings for unknown noise
+
+# With custom parameters (optional)
+curl -X POST "http://localhost:8000/api/v1/denoiser/spectral/denoise" \
+     -H "Authorization: Bearer ${TOKEN}" \
+     -F "file=@audio.wav" \
+     -F "noise_type=street_noise" \
+     -F "prop_decrease=0.98" \
+     -F "time_constant_s=2.0" \
+     -F "freq_mask_smooth_hz=300" \
+     -F "time_mask_smooth_ms=150"
+```
+
+### Noise Type Presets
+
+1. White Noise
+
+   - Best for: Consistent background hiss, fan noise
+   - Settings: High prop_decrease, moderate smoothing
+
+   ```bash
+   -F "noise_type=white_noise"
+   ```
+
+2. Street Noise
+
+   - Best for: Traffic, urban sounds, road noise
+   - Settings: Very high prop_decrease, long time constant
+
+   ```bash
+   -F "noise_type=street_noise"
+   ```
+
+3. Background Chatter
+
+   - Best for: Crowd noise, distant conversations
+   - Settings: Non-stationary, high frequency smoothing
+
+   ```bash
+   -F "noise_type=background_chatter"
+   ```
+
+4. Room Noise
+
+   - Best for: Room acoustics, general ambience
+   - Settings: Moderate reduction, balanced smoothing
+
+   ```bash
+   -F "noise_type=room_noise"
+   ```
+
+5. Air Conditioning
+
+   - Best for: HVAC systems, constant mechanical noise
+   - Settings: High reduction, long time smoothing
+
+   ```bash
+   -F "noise_type=air_conditioning"
+   ```
+
+6. Machine Hum
+
+   - Best for: Electrical hum, consistent mechanical noise
+   - Settings: Very high reduction, focused frequency smoothing
+
+   ```bash
+   -F "noise_type=machine_hum"
+   ```
+
+7. Wind Noise
+
+   - Best for: Outdoor recordings, wind interference
+   - Settings: Non-stationary, high frequency smoothing
+
+   ```bash
+   -F "noise_type=wind_noise"
+   ```
+
+8. General
+
+   - Best for: Unknown or mixed noise types
+   - Settings: Balanced reduction and smoothing
+
+   ```bash
+   -F "noise_type=general"
+   ```
+
+### Tips for Best Results
+
+1. Choose the right noise type:
+
+   - Use specific presets for known noise sources
+   - Use 'general' for mixed or unknown noise
+
+2. Fine-tune if needed:
+
+   - Increase prop_decrease for more noise reduction
+   - Decrease prop_decrease to preserve more detail
+   - Adjust time_constant_s for noise consistency
+   - Adjust smoothing parameters for specific frequencies
+
+3. Monitor the noise_reduction_db in the stats:
+   - Higher values indicate more noise reduction
+   - Values around 10-15 dB are typical
+   - Values over 20 dB might affect audio quality

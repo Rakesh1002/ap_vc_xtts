@@ -1,33 +1,36 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, JSON, Enum as SQLEnum
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, JSON, Enum as SQLEnum, Float, Text
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.db.base_class import Base
 from datetime import datetime
-from enum import Enum
+from enum import Enum as PyEnum
+from typing import Optional
 
-class ProcessingStatus(str, Enum):
+class ProcessingStatus(str, PyEnum):
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
 
-class JobType(str, Enum):
+class JobType(str, PyEnum):
     VOICE_CLONING = "voice_cloning"
     TRANSLATION = "translation"
     SPEAKER_DIARIZATION = "speaker_diarization"
     SPEAKER_EXTRACTION = "speaker_extraction"
+    DENOISING = "denoising"
 
 class BaseJob(Base):
     """Base class for all processing jobs"""
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, index=True)
-    status = Column(SQLEnum(ProcessingStatus), default=ProcessingStatus.PENDING)
+    status = Column(SQLEnum(ProcessingStatus, name="processing_status_enum"), default=ProcessingStatus.PENDING)
     task_id = Column(String, index=True, nullable=True)
     input_path = Column(String, nullable=False)
     error_message = Column(String, nullable=True)
-    parameters = Column(JSON, nullable=True)
-    result = Column(JSON, nullable=True)
+    parameters = Column(JSONB, nullable=True)
+    result = Column(JSONB, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     completed_at = Column(DateTime(timezone=True), nullable=True)
@@ -69,7 +72,7 @@ class SpeakerJob(BaseJob):
     """Model for speaker diarization and extraction jobs"""
     __tablename__ = "speaker_jobs"
 
-    job_type = Column(SQLEnum(JobType), nullable=False)
+    job_type = Column(SQLEnum(JobType, name="job_type_enum"), nullable=False)
     num_speakers = Column(Integer, nullable=True)
     rttm_path = Column(String, nullable=True)
     output_paths = Column(JSON, nullable=True)  # List of output audio file paths
@@ -81,3 +84,22 @@ class SpeakerJob(BaseJob):
     @property
     def is_extraction(self):
         return self.job_type == JobType.SPEAKER_EXTRACTION
+
+class DenoiseJob(Base):
+    """Model for audio denoising jobs"""
+    __tablename__ = "denoise_jobs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    input_path = Column(String, nullable=False)
+    output_path = Column(String, nullable=True)
+    status = Column(SQLEnum(ProcessingStatus, name="processing_status_enum"), default=ProcessingStatus.PENDING, nullable=False)
+    task_id = Column(String, nullable=True)
+    error_message = Column(Text, nullable=True)
+    stats = Column(JSONB, nullable=True)
+    parameters = Column(JSONB, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    completed_at = Column(DateTime, nullable=True)
+
+    def __repr__(self):
+        return f"<DenoiseJob(id={self.id}, status={self.status})>"

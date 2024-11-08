@@ -11,7 +11,9 @@ celery_app = Celery(
     include=[  # Add task modules here
         'app.workers.voice_tasks',
         'app.workers.translation_tasks',
-        'app.workers.speaker_tasks'
+        'app.workers.speaker_tasks',
+        'app.workers.denoiser_tasks',
+        'app.workers.spectral_denoiser_tasks'
     ]
 )
 
@@ -32,9 +34,12 @@ celery_app.conf.update(
         CeleryTasks.TRANSLATE_AUDIO: {'queue': CeleryQueues.TRANSLATION},
         CeleryTasks.DIARIZE_SPEAKERS: {'queue': CeleryQueues.SPEAKER},
         CeleryTasks.EXTRACT_SPEAKERS: {'queue': CeleryQueues.SPEAKER},
+        CeleryTasks.DENOISE_AUDIO: {'queue': CeleryQueues.DENOISER},
+        CeleryTasks.SPECTRAL_DENOISE_AUDIO: {'queue': CeleryQueues.SPECTRAL},
         'voice_cleanup': {'queue': CeleryQueues.VOICE},
         'translation_cleanup': {'queue': CeleryQueues.TRANSLATION},
         'speaker_cleanup': {'queue': CeleryQueues.SPEAKER},
+        'denoiser_cleanup': {'queue': CeleryQueues.DENOISER},
     },
     
     # Queue-specific settings
@@ -50,6 +55,22 @@ celery_app.conf.update(
         CeleryQueues.SPEAKER: {
             'exchange': CeleryQueues.SPEAKER,
             'routing_key': 'speaker.process',
+        },
+        CeleryQueues.DENOISER: {
+            'exchange': CeleryQueues.DENOISER,
+            'routing_key': 'denoiser.process',
+            'queue_arguments': {
+                'x-max-priority': 10,
+                'x-message-ttl': 3600000  # 1 hour
+            }
+        },
+        CeleryQueues.SPECTRAL: {
+            'exchange': CeleryQueues.SPECTRAL,
+            'routing_key': 'denoiser.spectral',
+            'queue_arguments': {
+                'x-max-priority': 10,
+                'x-message-ttl': 3600000  # 1 hour
+            }
         }
     },
     
@@ -69,13 +90,40 @@ celery_app.conf.update(
     task_annotations={
         '*': {
             'rate_limit': '10/m'
+        },
+        CeleryTasks.DENOISE_AUDIO: {
+            'rate_limit': '15/m',
+            'time_limit': 1000,
+            'soft_time_limit': 900,
+            'priority': 5
+        },
+        'app.workers.denoiser_tasks.denoise_audio': {
+            'rate_limit': '15/m',
+            'time_limit': 1000,
+            'soft_time_limit': 900,
+            'priority': 5
+        },
+        'app.workers.spectral_denoiser_tasks.denoise_audio': {
+            'rate_limit': '15/m',
+            'time_limit': 1000,
+            'soft_time_limit': 900,
+            'priority': 5
         }
     }
 )
 
-# Optional: Configure queue-specific time limits
+# Queue-specific time limits
 celery_app.conf.task_time_limit = {
     CeleryQueues.VOICE: settings.VOICE_QUEUE_TIME_LIMIT,
     CeleryQueues.TRANSLATION: settings.TRANSLATION_QUEUE_TIME_LIMIT,
     CeleryQueues.SPEAKER: settings.SPEAKER_QUEUE_TIME_LIMIT,
+    CeleryQueues.DENOISER: 1000,  # 1000 seconds hard limit
+}
+
+# Queue-specific concurrency
+celery_app.conf.worker_concurrency = {
+    CeleryQueues.VOICE: settings.VOICE_QUEUE_CONCURRENCY,
+    CeleryQueues.TRANSLATION: settings.TRANSLATION_QUEUE_CONCURRENCY,
+    CeleryQueues.SPEAKER: settings.SPEAKER_QUEUE_CONCURRENCY,
+    CeleryQueues.DENOISER: 2  # 2 concurrent denoising tasks
 } 

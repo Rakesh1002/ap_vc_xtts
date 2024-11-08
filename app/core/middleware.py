@@ -9,6 +9,15 @@ from app.core.metrics import REQUEST_COUNT, REQUEST_LATENCY
 settings = get_settings()
 logger = logging.getLogger(__name__)
 
+# Update rate limits
+RATE_LIMITS = {
+    # ... existing limits ...
+    'denoiser': {
+        'requests_per_minute': 15,
+        'burst_size': 30
+    }
+}
+
 class RateLimiter:
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client

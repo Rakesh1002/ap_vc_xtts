@@ -9,7 +9,12 @@ from app.core.metrics import (
     SPEAKER_DIARIZATION_TIME,
     SPEAKER_EXTRACTION_TIME,
     SPEAKER_COUNT,
-    SPEAKER_CONFIDENCE
+    SPEAKER_CONFIDENCE,
+    DENOISING_PROCESSING_TIME,
+    NOISE_REDUCTION_LEVEL,
+    VAD_CONFIDENCE,
+    SPECTRAL_DENOISING_TIME,
+    SPECTRAL_NOISE_REDUCTION
 )
 from app.core.monitoring_registry import MetricsRegistry
 from app.core.service_registry import ServiceRegistry
@@ -26,6 +31,12 @@ import asyncio
 from sqlalchemy import select
 from app.services.speaker_diarization import SpeakerDiarizationService
 from app.services.speaker_extraction import SpeakerExtractionService
+from app.services.denoiser_service import DenoiserService
+import tempfile
+from pathlib import Path
+from app.services.storage_service import StorageService
+from app.models.audio import DenoiseJob
+from app.services.spectral_denoiser_service import SpectralDenoiserService
 
 logger = logging.getLogger(__name__)
 
@@ -186,10 +197,10 @@ class TaskProcessor:
         try:
             # Get appropriate service
             if task_type == "diarization":
-                service = get_diarization_service()
+                service = SpeakerDiarizationService()
                 result = await service.process_audio(job_id, num_speakers=num_speakers)
             else:
-                service = get_extraction_service()
+                service = SpeakerExtractionService()
                 result = await service.process_audio(job_id)
 
             # Record metrics
@@ -204,6 +215,117 @@ class TaskProcessor:
         except Exception as e:
             metric.labels(status="failure").observe(time.time() - start_time)
             logger.exception(f"Speaker {task_type} task failed")
+            raise
+
+    async def process_denoising_task(
+        self,
+        job_id: int
+    ) -> Dict[str, Any]:
+        """Process audio denoising with metrics tracking"""
+        start_time = time.time()
+        try:
+            async with AsyncSessionLocal() as db:
+                job = await db.get(DenoiseJob, job_id)
+                if not job:
+                    raise ValueError(f"Job {job_id} not found")
+                    
+                service = DenoiserService()
+                storage_service = StorageService()
+                
+                # Create temporary files
+                with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as input_temp, \
+                     tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as output_temp:
+                    
+                    try:
+                        # Download input file
+                        await storage_service.download_file(job.input_path, input_temp.name)
+                        
+                        # Process audio
+                        result = await service.process_audio(
+                            input_path=input_temp.name,
+                            output_path=output_temp.name
+                        )
+                        
+                        # Record metrics
+                        duration = time.time() - start_time
+                        DENOISING_PROCESSING_TIME.labels(status="success").observe(duration)
+                        
+                        if "noise_reduction_db" in result["stats"]:
+                            NOISE_REDUCTION_LEVEL.labels(status="success").observe(
+                                result["stats"]["noise_reduction_db"]
+                            )
+                            
+                        return result
+                        
+                    finally:
+                        # Cleanup temp files
+                        for temp_file in [input_temp.name, output_temp.name]:
+                            try:
+                                Path(temp_file).unlink(missing_ok=True)
+                            except Exception as e:
+                                logger.warning(f"Failed to cleanup temp file {temp_file}: {e}")
+                                
+        except Exception as e:
+            DENOISING_PROCESSING_TIME.labels(status="failure").observe(
+                time.time() - start_time
+            )
+            logger.exception("Denoising task failed")
+            raise
+
+    async def process_spectral_denoising_task(
+        self,
+        job_id: int
+    ) -> Dict[str, Any]:
+        """Process audio denoising with spectral gating"""
+        start_time = time.time()
+        try:
+            async with AsyncSessionLocal() as db:
+                job = await db.get(DenoiseJob, job_id)
+                if not job:
+                    raise ValueError(f"Job {job_id} not found")
+                    
+                service = SpectralDenoiserService()
+                storage_service = StorageService()
+                
+                # Create temporary files
+                with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as input_temp, \
+                     tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as output_temp:
+                    
+                    try:
+                        # Download input file
+                        await storage_service.download_file(job.input_path, input_temp.name)
+                        
+                        # Process audio with parameters from job
+                        result = await service.process_audio(
+                            input_path=input_temp.name,
+                            output_path=output_temp.name,
+                            **job.parameters
+                        )
+                        
+                        # Record metrics
+                        duration = time.time() - start_time
+                        SPECTRAL_DENOISING_TIME.labels(status="success").observe(duration)
+                        
+                        if "noise_reduction_db" in result["stats"]:
+                            SPECTRAL_NOISE_REDUCTION.labels(status="success").observe(
+                                result["stats"]["noise_reduction_db"]
+                            )
+                            
+                        return result
+                        
+                    finally:
+                        # Cleanup temp files
+                        for temp_file in [input_temp.name, output_temp.name]:
+                            try:
+                                Path(temp_file).unlink(missing_ok=True)
+                            except Exception as e:
+                                logger.warning(f"Failed to cleanup temp file {temp_file}: {e}")
+                                
+        except Exception as e:
+            SPECTRAL_DENOISING_TIME.labels(status="failure").observe(
+                time.time() - start_time
+            )
+            logger.exception("Spectral denoising task failed")
             raise
 
 task_processor = TaskProcessor()

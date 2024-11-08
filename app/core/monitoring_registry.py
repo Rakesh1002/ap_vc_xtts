@@ -247,3 +247,30 @@ SPEAKER_CONFIDENCE = MetricsRegistry.register_metric(
     'Speaker detection confidence',
     ['job_type']
 )
+
+# Add denoising metrics to dashboard configuration
+DENOISING_DASHBOARD = {
+    'title': 'Audio Denoising',
+    'metrics': [
+        'denoising_processing_seconds',
+        'noise_reduction_db',
+        'vad_confidence'
+    ],
+    'panels': [
+        {
+            'title': 'Processing Time',
+            'type': 'graph',
+            'metric': 'denoising_processing_seconds'
+        },
+        {
+            'title': 'Noise Reduction',
+            'type': 'graph',
+            'metric': 'noise_reduction_db'
+        },
+        {
+            'title': 'VAD Confidence',
+            'type': 'graph',
+            'metric': 'vad_confidence'
+        }
+    ]
+}

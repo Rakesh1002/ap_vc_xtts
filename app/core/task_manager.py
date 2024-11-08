@@ -4,13 +4,14 @@ from app.core.config import get_settings
 from app.core.metrics import QUEUE_SIZE, ACTIVE_JOBS, JOB_STATUS
 import logging
 from datetime import datetime, timedelta
-from app.models.audio import ProcessingStatus, CloningJob, TranslationJob, BaseJob
+from app.models.audio import ProcessingStatus, CloningJob, TranslationJob, BaseJob, DenoiseJob
 from sqlalchemy import and_, select, func
 from app.db.session import AsyncSessionLocal
 from app.core.celery_app import celery_app
 from app.core.constants import CeleryQueues, CeleryTasks
 from celery.result import AsyncResult
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.services.storage_service import StorageService
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -22,7 +23,9 @@ class TaskManager:
         self.task_history: List[Dict[str, Any]] = []
         self.queue_limits = {
             CeleryQueues.VOICE: settings.VOICE_QUEUE_CONCURRENCY,
-            CeleryQueues.TRANSLATION: settings.TRANSLATION_QUEUE_CONCURRENCY
+            CeleryQueues.TRANSLATION: settings.TRANSLATION_QUEUE_CONCURRENCY,
+            CeleryQueues.DENOISER: settings.DENOISER_QUEUE_CONCURRENCY,
+            CeleryQueues.SPECTRAL: settings.DENOISER_QUEUE_CONCURRENCY
         }
 
     async def can_accept_task(self, queue_name: str) -> bool:
@@ -58,7 +61,7 @@ class TaskManager:
             
             async with AsyncSessionLocal() as db:
                 # Find stale jobs
-                for model in [CloningJob, TranslationJob]:
+                for model in [CloningJob, TranslationJob, DenoiseJob]:
                     result = await db.execute(
                         select(model).where(
                             and_(
@@ -70,25 +73,39 @@ class TaskManager:
                     stale_jobs = result.scalars().all()
                     
                     for job in stale_jobs:
-                        # Cancel Celery task if exists
-                        if job.task_id:
-                            celery_app.control.revoke(job.task_id, terminate=True)
-                        
-                        job.status = ProcessingStatus.FAILED
-                        job.error_message = "Job timed out"
-                        job.updated_at = datetime.utcnow()
-                        
-                        # Update metrics
-                        ACTIVE_JOBS.labels(job_type=job.__class__.__name__).dec()
-                        JOB_STATUS.labels(
-                            job_type=job.__class__.__name__,
-                            status="failed"
-                        ).inc()
-                        
-                        logger.warning(f"Cleaned up stale job: {job.id}")
-                
-                await db.commit()
-                
+                        try:
+                            # Cancel Celery task if exists
+                            if job.task_id:
+                                celery_app.control.revoke(job.task_id, terminate=True)
+                            
+                            # Clean up any associated files
+                            if hasattr(job, 'output_path') and job.output_path:
+                                try:
+                                    storage_service = StorageService()
+                                    await storage_service.delete_file(job.output_path)
+                                except Exception as e:
+                                    logger.warning(f"Failed to delete output file for job {job.id}: {e}")
+                            
+                            # Update job status
+                            job.status = ProcessingStatus.FAILED
+                            job.error_message = "Job timed out"
+                            job.updated_at = datetime.utcnow()
+                            
+                            # Update metrics
+                            ACTIVE_JOBS.labels(job_type=job.__class__.__name__).dec()
+                            JOB_STATUS.labels(
+                                job_type=job.__class__.__name__,
+                                status="failed"
+                            ).inc()
+                            
+                            logger.warning(f"Cleaned up stale job: {job.id}")
+                            
+                        except Exception as e:
+                            logger.error(f"Failed to cleanup job {job.id}: {e}")
+                            continue
+                    
+                    await db.commit()
+                    
         except Exception as e:
             logger.error(f"Failed to cleanup stale jobs: {e}")
 
@@ -134,7 +151,9 @@ class TaskManager:
                 # Find failed jobs for both job types
                 for model, task_name, queue in [
                     (CloningJob, CeleryTasks.CLONE_VOICE, CeleryQueues.VOICE),
-                    (TranslationJob, CeleryTasks.TRANSLATE_AUDIO, CeleryQueues.TRANSLATION)
+                    (TranslationJob, CeleryTasks.TRANSLATE_AUDIO, CeleryQueues.TRANSLATION),
+                    (DenoiseJob, CeleryTasks.DENOISE_AUDIO, CeleryQueues.DENOISER),
+                    (DenoiseJob, CeleryTasks.SPECTRAL_DENOISE_AUDIO, CeleryQueues.SPECTRAL)
                 ]:
                     result = await db.execute(
                         select(model).where(

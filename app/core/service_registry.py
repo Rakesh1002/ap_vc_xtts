@@ -7,6 +7,8 @@ from app.services.speaker_diarization import SpeakerDiarizationService
 from app.services.speaker_extraction import SpeakerExtractionService
 from app.core.cache import cache_manager
 import logging
+from app.services.spectral_denoiser_service import SpectralDenoiserService
+from app.services.denoiser_service import DenoiserService
 
 logger = logging.getLogger(__name__)
 
@@ -40,4 +42,10 @@ def get_diarization_service() -> SpeakerDiarizationService:
     return ServiceRegistry.get_service(SpeakerDiarizationService)
 
 def get_extraction_service() -> SpeakerExtractionService:
-    return ServiceRegistry.get_service(SpeakerExtractionService) 
+    return ServiceRegistry.get_service(SpeakerExtractionService)
+
+def get_denoiser_service() -> DenoiserService:
+    return ServiceRegistry.get_service(DenoiserService)
+
+def get_spectral_denoiser_service() -> SpectralDenoiserService:
+    return ServiceRegistry.get_service(SpectralDenoiserService) 

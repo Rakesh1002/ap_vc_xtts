@@ -6,7 +6,8 @@ from app.models.audio import (  # noqa
     Voice,
     CloningJob,
     TranslationJob,
-    SpeakerJob
+    SpeakerJob,
+    DenoiseJob
 )
 
 # This ensures all models are registered with Base.metadata
@@ -16,5 +17,6 @@ __all__ = [
     "Voice",
     "CloningJob",
     "TranslationJob",
-    "SpeakerJob"
+    "SpeakerJob",
+    "DenoiseJob"
 ] 

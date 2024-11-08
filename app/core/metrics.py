@@ -223,3 +223,67 @@ GPU_UTILIZATION = MetricsRegistry.register_metric(
     'GPU utilization percentage',
     ['device']
 )
+
+# Add denoising metrics
+DENOISING_PROCESSING_TIME = MetricsRegistry.register_metric(
+    'denoising_processing_seconds',
+    Histogram,
+    'Audio denoising processing time',
+    ['status'],
+    buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+)
+
+NOISE_REDUCTION_LEVEL = MetricsRegistry.register_metric(
+    'noise_reduction_db',
+    Histogram,
+    'Noise reduction level in dB',
+    ['status']
+)
+
+VAD_CONFIDENCE = MetricsRegistry.register_metric(
+    'vad_confidence',
+    Histogram,
+    'Voice Activity Detection confidence',
+    []
+)
+
+# Add new metrics for spectral denoising
+SPECTRAL_DENOISING_TIME = MetricsRegistry.register_metric(
+    'spectral_denoising_seconds',
+    Histogram,
+    'Spectral denoising processing time',
+    ['status'],
+    buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
+)
+
+SPECTRAL_NOISE_REDUCTION = MetricsRegistry.register_metric(
+    'spectral_noise_reduction_db',
+    Histogram,
+    'Spectral noise reduction level in dB',
+    ['status']
+)
+
+# Add these metrics
+DENOISER_PROCESSING_TIME = Histogram(
+    'denoiser_processing_time_seconds',
+    'Time spent processing audio with denoiser',
+    ['status']
+)
+
+DENOISER_MEMORY_USAGE = Gauge(
+    'denoiser_memory_usage_bytes',
+    'Memory usage of denoiser service',
+    ['device']
+)
+
+DENOISER_BATCH_SIZE = Histogram(
+    'denoiser_batch_size_seconds',
+    'Audio length being processed',
+    ['status']
+)
+
+DENOISER_ERROR_COUNT = Counter(
+    'denoiser_error_count',
+    'Number of denoiser errors',
+    ['error_type']
+)

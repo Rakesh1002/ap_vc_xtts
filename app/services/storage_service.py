@@ -36,58 +36,22 @@ class StorageService:
         self.temp_dir = Path(settings.DOWNLOAD_DIR)
         self.temp_dir.mkdir(parents=True, exist_ok=True)
 
-    async def upload_file(self, file_data: Union[bytes, BinaryIO, str], key: str) -> str:
-        """Upload a file to S3 with multipart support"""
-        logger.debug(f"Starting upload for file with key: {key}")
+    async def upload_file(self, file_path: str, key: str) -> str:
+        """Upload file from local path to S3"""
         try:
-            # Convert file_data to bytes if it's not already
-            if isinstance(file_data, str):
-                file_data = file_data.encode()
+            if not isinstance(file_path, (str, Path)):
+                raise AudioProcessingError(
+                    message=f"Invalid file_path type: {type(file_path)}. Expected str or Path.",
+                    error_code=ErrorCodes.INVALID_INPUT
+                )
             
-            # Create BytesIO object if file_data is bytes
-            if isinstance(file_data, bytes):
-                file_data = io.BytesIO(file_data)
-            
-            # Ensure the file pointer is at the beginning
-            if hasattr(file_data, 'seek'):
-                file_data.seek(0)
-
-            content_type, _ = mimetypes.guess_type(key)
-            content_type = content_type or 'application/octet-stream'
-            
-            # Configure transfer settings
-            transfer_config = boto3.s3.transfer.TransferConfig(
-                multipart_threshold=settings.MULTIPART_THRESHOLD,
-                multipart_chunksize=settings.MULTIPART_CHUNKSIZE,
-                max_concurrency=settings.MAX_CONCURRENCY
-            )
-
-            # Upload the file
-            logger.debug(f"Uploading file to S3: bucket={self.bucket}, key={key}")
-            self.s3_client.upload_fileobj(
-                file_data, 
-                self.bucket, 
-                key,
-                ExtraArgs={'ContentType': content_type},
-                Config=transfer_config
-            )
-            
+            self.s3_client.upload_file(str(file_path), self.bucket, key)
             url = f"https://{self.bucket}.s3.amazonaws.com/{key}"
             logger.info(f"Successfully uploaded file to {url}")
             return url
             
-        except ClientError as e:
-            error_msg = f"Failed to upload file to S3: {str(e)}. Key: {key}, Bucket: {self.bucket}"
-            logger.error(error_msg)
-            raise AudioProcessingError(
-                message="Failed to upload file to storage",
-                error_code=ErrorCodes.UPLOAD_FAILED,
-                details={"error": str(e)},
-                original_error=e
-            )
         except Exception as e:
-            error_msg = f"Unexpected error during file upload: {str(e)}"
-            logger.error(error_msg)
+            logger.error(f"Failed to upload file to S3: {str(e)}")
             raise AudioProcessingError(
                 message="Failed to upload file",
                 error_code=ErrorCodes.UPLOAD_FAILED,
@@ -95,8 +59,8 @@ class StorageService:
                 original_error=e
             )
 
-    async def download_file(self, key: str) -> bytes:
-        """Download file from S3"""
+    async def download_file(self, key: str, destination: str) -> None:
+        """Download file from S3 to local destination"""
         try:
             if not isinstance(key, str):
                 raise AudioProcessingError(
@@ -104,10 +68,9 @@ class StorageService:
                     error_code=ErrorCodes.INVALID_INPUT
                 )
             
-            buffer = io.BytesIO()
-            self.s3_client.download_fileobj(self.bucket, key, buffer)
-            buffer.seek(0)
-            return buffer.read()
+            self.s3_client.download_file(self.bucket, key, destination)
+            logger.info(f"Successfully downloaded file {key} to {destination}")
+            
         except Exception as e:
             logger.error(f"Failed to download file {key}: {e}")
             raise AudioProcessingError(
@@ -208,3 +171,23 @@ class StorageService:
                 details={"error": str(e), "key": key},
                 original_error=e
             )
+
+    def download_file_sync(self, key: str, local_path: str) -> None:
+        """Synchronous version of download_file"""
+        try:
+            self.s3_client.download_file(self.bucket, key, local_path)
+        except Exception as e:
+            logger.error(f"Failed to download file from S3: {str(e)}")
+            raise
+
+    def upload_file_sync(self, file_data: Union[bytes, BinaryIO, str], key: str) -> str:
+        """Synchronous version of upload_file"""
+        try:
+            if isinstance(file_data, (str, Path)):
+                self.s3_client.upload_file(str(file_data), self.bucket, key)
+            else:
+                self.s3_client.upload_fileobj(file_data, self.bucket, key)
+            return f"{self.bucket}/{key}"
+        except Exception as e:
+            logger.error(f"Failed to upload file to S3: {str(e)}")
+            raise

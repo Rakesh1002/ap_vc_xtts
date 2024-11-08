@@ -160,6 +160,18 @@ start_workers() {
             --time-limit=1800 \
             --soft-time-limit=1700 &
     fi
+    
+    # Denoiser worker
+    poetry run celery -A celery_worker worker \
+        --loglevel=info \
+        -Q denoiser-queue \
+        -n denoiser_worker@%h \
+        --pool=solo \
+        --concurrency=2 \
+        --max-tasks-per-child=50 \
+        --max-memory-per-child=2000000 \
+        --time-limit=1000 \
+        --soft-time-limit=900 &
 }
 
 # Function to start services
@@ -235,6 +247,25 @@ stop_services() {
     fi
     
     print_status "All services stopped"
+}
+
+# Function to start denoiser workers
+start_denoiser_workers() {
+    echo "Starting denoiser workers..."
+    
+    # Start Denoiser worker
+    poetry run celery -A app.workers.celery_worker worker \
+        -Q denoiser-queue \
+        --concurrency=2 \
+        --pool=solo \
+        --loglevel=info &
+        
+    # Start Spectral denoiser worker
+    poetry run celery -A app.workers.celery_worker worker \
+        -Q spectral-queue \
+        --concurrency=2 \
+        --pool=solo \
+        --loglevel=info &
 }
 
 # Main function

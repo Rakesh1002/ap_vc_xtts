@@ -216,6 +216,7 @@ pretrained/
 *.socket
 supervisor.*
 gunicorn.*
+dump.rdb
 
 # Local configurations
 config.local.yml

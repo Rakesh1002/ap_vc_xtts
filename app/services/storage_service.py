@@ -1,7 +1,7 @@
 import boto3
 import logging
 from botocore.exceptions import ClientError
-from typing import BinaryIO, Tuple
+from typing import BinaryIO, Union
 from app.core.config import get_settings
 from urllib.parse import urlparse
 import requests
@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 from app.services.media_extractor import MediaExtractor
 from app.core.errors import AudioProcessingError, ErrorCodes
+import io
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -35,13 +36,21 @@ class StorageService:
         self.temp_dir = Path(settings.DOWNLOAD_DIR)
         self.temp_dir.mkdir(parents=True, exist_ok=True)
 
-    async def upload_file(self, file: BinaryIO, key: str) -> str:
+    async def upload_file(self, file_data: Union[bytes, BinaryIO, str], key: str) -> str:
         """Upload a file to S3 with multipart support"""
         logger.debug(f"Starting upload for file with key: {key}")
         try:
+            # Convert file_data to bytes if it's not already
+            if isinstance(file_data, str):
+                file_data = file_data.encode()
+            
+            # Create BytesIO object if file_data is bytes
+            if isinstance(file_data, bytes):
+                file_data = io.BytesIO(file_data)
+            
             # Ensure the file pointer is at the beginning
-            if hasattr(file, 'seek'):
-                file.seek(0)
+            if hasattr(file_data, 'seek'):
+                file_data.seek(0)
 
             content_type, _ = mimetypes.guess_type(key)
             content_type = content_type or 'application/octet-stream'
@@ -56,7 +65,7 @@ class StorageService:
             # Upload the file
             logger.debug(f"Uploading file to S3: bucket={self.bucket}, key={key}")
             self.s3_client.upload_fileobj(
-                file, 
+                file_data, 
                 self.bucket, 
                 key,
                 ExtraArgs={'ContentType': content_type},
@@ -83,6 +92,28 @@ class StorageService:
                 message="Failed to upload file",
                 error_code=ErrorCodes.UPLOAD_FAILED,
                 details={"error": str(e)},
+                original_error=e
+            )
+
+    async def download_file(self, key: str) -> bytes:
+        """Download file from S3"""
+        try:
+            if not isinstance(key, str):
+                raise AudioProcessingError(
+                    message=f"Invalid key type: {type(key)}. Expected str.",
+                    error_code=ErrorCodes.INVALID_INPUT
+                )
+            
+            buffer = io.BytesIO()
+            self.s3_client.download_fileobj(self.bucket, key, buffer)
+            buffer.seek(0)
+            return buffer.read()
+        except Exception as e:
+            logger.error(f"Failed to download file {key}: {e}")
+            raise AudioProcessingError(
+                message="Failed to download file",
+                error_code=ErrorCodes.DOWNLOAD_FAILED,
+                details={"error": str(e), "key": key},
                 original_error=e
             )
 
@@ -150,6 +181,27 @@ class StorageService:
             return url
         except Exception as e:
             logger.error(f"Failed to generate presigned URL for {key}: {e}")
+            raise AudioProcessingError(
+                message="Failed to generate download URL",
+                error_code=ErrorCodes.STORAGE_ERROR,
+                details={"error": str(e), "key": key},
+                original_error=e
+            )
+
+    async def get_presigned_url(self, key: str, expiration: int = 3600) -> str:
+        """Generate a pre-signed URL for downloading a file"""
+        try:
+            url = self.s3_client.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': self.bucket,
+                    'Key': key
+                },
+                ExpiresIn=expiration
+            )
+            return url
+        except Exception as e:
+            logger.error(f"Failed to generate pre-signed URL for {key}: {e}")
             raise AudioProcessingError(
                 message="Failed to generate download URL",
                 error_code=ErrorCodes.STORAGE_ERROR,

@@ -1,61 +1,99 @@
 """Core optimization and resource management"""
-from typing import Dict, Any
-import psutil
 import torch
-from app.core.config import get_settings
-from app.core.memory import memory_manager
-from app.core.metrics import RESOURCE_USAGE
+import gc
 import logging
+from typing import Dict, Any
+from app.core.metrics import MEMORY_USAGE, GPU_MEMORY_USAGE, GPU_UTILIZATION
 
 logger = logging.getLogger(__name__)
-settings = get_settings()
 
 class ResourceOptimizer:
     def __init__(self):
-        self.memory_manager = memory_manager
-        self.settings = get_settings()
-        self._init_gpu()
-
-    def _init_gpu(self):
-        """Initialize GPU settings"""
-        if torch.cuda.is_available():
-            # Set memory growth
-            for device in range(torch.cuda.device_count()):
-                torch.cuda.set_per_process_memory_fraction(0.8, device)
-                
-            # Optimize allocator
-            torch.cuda.set_per_process_memory_fraction(0.8)
-            torch.backends.cudnn.benchmark = True
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.is_gpu_available = torch.cuda.is_available()
 
     def optimize_for_inference(self):
-        """Optimize system for inference"""
-        # Clear memory
-        self.memory_manager.cleanup()
+        """Optimize system for model inference"""
+        if self.is_gpu_available:
+            # Clear GPU cache
+            torch.cuda.empty_cache()
+            
+            # Set memory growth
+            torch.cuda.set_per_process_memory_fraction(0.7)
+            
+            # Update GPU metrics
+            self._update_gpu_metrics()
         
-        # Set process priority
-        try:
-            psutil.Process().nice(10)
-        except Exception as e:
-            logger.warning(f"Failed to set process priority: {e}")
+        # Run garbage collection
+        gc.collect()
+        
+        # Update memory metrics
+        self._update_memory_metrics()
 
-    def get_resource_metrics(self) -> Dict[str, Any]:
-        """Get current resource metrics"""
-        metrics = {
-            'cpu_percent': psutil.cpu_percent(),
-            'memory_percent': psutil.virtual_memory().percent,
-            'disk_usage': psutil.disk_usage('/').percent,
+    def cleanup(self):
+        """Cleanup resources after processing"""
+        if self.is_gpu_available:
+            torch.cuda.empty_cache()
+        gc.collect()
+        self._update_all_metrics()
+
+    def get_memory_stats(self) -> Dict[str, Any]:
+        """Get current memory statistics"""
+        stats = {
+            'ram_used': self._get_ram_usage(),
+            'ram_available': self._get_ram_available()
         }
         
-        if torch.cuda.is_available():
-            metrics.update({
-                'gpu_memory_allocated': torch.cuda.memory_allocated(),
-                'gpu_memory_cached': torch.cuda.memory_reserved(),
+        if self.is_gpu_available:
+            stats.update({
+                'gpu_used': self._get_gpu_memory_used(),
+                'gpu_available': self._get_gpu_memory_available(),
+                'gpu_utilization': self._get_gpu_utilization()
             })
             
-        # Update Prometheus metrics
-        RESOURCE_USAGE.labels(resource='cpu').set(metrics['cpu_percent'])
-        RESOURCE_USAGE.labels(resource='memory').set(metrics['memory_percent'])
-        
-        return metrics
+        return stats
+
+    def _update_memory_metrics(self):
+        """Update RAM memory metrics"""
+        MEMORY_USAGE.labels(type="used").set(self._get_ram_usage())
+        MEMORY_USAGE.labels(type="available").set(self._get_ram_available())
+
+    def _update_gpu_metrics(self):
+        """Update GPU metrics"""
+        if self.is_gpu_available:
+            GPU_MEMORY_USAGE.labels(device="cuda:0").set(self._get_gpu_memory_used())
+            GPU_UTILIZATION.labels(device="cuda:0").set(self._get_gpu_utilization())
+
+    def _update_all_metrics(self):
+        """Update all resource metrics"""
+        self._update_memory_metrics()
+        if self.is_gpu_available:
+            self._update_gpu_metrics()
+
+    def _get_ram_usage(self) -> int:
+        """Get RAM usage in bytes"""
+        return 0  # TODO: Implement actual RAM usage tracking
+
+    def _get_ram_available(self) -> int:
+        """Get available RAM in bytes"""
+        return 0  # TODO: Implement actual RAM availability tracking
+
+    def _get_gpu_memory_used(self) -> int:
+        """Get GPU memory usage in bytes"""
+        if self.is_gpu_available:
+            return torch.cuda.memory_allocated()
+        return 0
+
+    def _get_gpu_memory_available(self) -> int:
+        """Get available GPU memory in bytes"""
+        if self.is_gpu_available:
+            return torch.cuda.get_device_properties(0).total_memory - torch.cuda.memory_allocated()
+        return 0
+
+    def _get_gpu_utilization(self) -> float:
+        """Get GPU utilization percentage"""
+        if self.is_gpu_available:
+            return torch.cuda.utilization()
+        return 0.0
 
 resource_optimizer = ResourceOptimizer()

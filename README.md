@@ -34,6 +34,14 @@ A high-performance audio processing service providing voice cloning and translat
 - Multiple output formats
 - Batch translation support
 
+### Speaker Analysis Features
+
+The API provides two main speaker analysis capabilities:
+
+#### 1. Speaker Diarization
+
+Uses `pyannote/speaker-diarization-3.1` to identify who spoke when in an audio file.
+
 ## Prerequisites
 
 ### System Requirements
@@ -381,6 +389,39 @@ Response:
 
 ```bash
 curl -X POST "http://localhost:8000/api/v1/voice/clone/1/retry" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+### Start Diarization Job
+
+```curl -X POST "http://localhost:8000/api/v1/speaker/diarize" \
+-H "Authorization: Bearer ${TOKEN}" \
+-F "file=@audio.wav" \
+-F "num_speakers=3" # Optional
+```
+
+#### Get Diarization Job Results
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/speaker/jobs/1" \
+     -H "Authorization: Bearer ${TOKEN}"
+```
+
+#### 2. Speaker Extraction
+
+Uses `pyannote/speech-separation-ami-1.0` to separate different speakers into individual audio files.
+
+```bash
+# Start extraction job
+curl -X POST "http://localhost:8000/api/v1/speaker/extract" \
+-H "Authorization: Bearer ${TOKEN}" \
+-F "file=@audio.wav"
+```
+
+#### Get Extraction Job Results
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/speaker/jobs/1" \
      -H "Authorization: Bearer ${TOKEN}"
 ```
 

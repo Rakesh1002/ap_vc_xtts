@@ -24,35 +24,39 @@ class ErrorCategory(str, Enum):
     MODEL = "model"
 
 class ErrorCodes(str, Enum):
-    # Security Errors
-    INVALID_TOKEN = "INVALID_TOKEN"
-    TOKEN_EXPIRED = "TOKEN_EXPIRED"
-    TOKEN_CREATION_FAILED = "TOKEN_CREATION_FAILED"
-    WEAK_PASSWORD = "WEAK_PASSWORD"
+    # General errors
+    UNKNOWN_ERROR = "UNKNOWN_ERROR"
+    INVALID_INPUT = "INVALID_INPUT"
+    NOT_FOUND = "NOT_FOUND"
     UNAUTHORIZED = "UNAUTHORIZED"
     FORBIDDEN = "FORBIDDEN"
     
-    # Processing Errors
+    # Processing errors
     PROCESSING_FAILED = "PROCESSING_FAILED"
-    TASK_TIMEOUT = "TASK_TIMEOUT"
-    QUEUE_FULL = "QUEUE_FULL"
+    TIMEOUT = "TIMEOUT"
+    RESOURCE_EXHAUSTED = "RESOURCE_EXHAUSTED"
     
-    # Storage Errors
+    # Storage errors
     UPLOAD_FAILED = "UPLOAD_FAILED"
     DOWNLOAD_FAILED = "DOWNLOAD_FAILED"
-    FILE_NOT_FOUND = "FILE_NOT_FOUND"
-    FILE_TOO_LARGE = "FILE_TOO_LARGE"
+    STORAGE_ERROR = "STORAGE_ERROR"
     
-    # Model Errors
+    # Audio processing errors
+    INVALID_AUDIO_FORMAT = "INVALID_AUDIO_FORMAT"
+    AUDIO_TOO_LONG = "AUDIO_TOO_LONG"
+    AUDIO_TOO_SHORT = "AUDIO_TOO_SHORT"
+    AUDIO_CORRUPTED = "AUDIO_CORRUPTED"
+    
+    # Model errors
     MODEL_ERROR = "MODEL_ERROR"
     MODEL_NOT_FOUND = "MODEL_NOT_FOUND"
     INFERENCE_ERROR = "INFERENCE_ERROR"
     
-    # Validation Errors
-    INVALID_INPUT = "INVALID_INPUT"
-    INVALID_FORMAT = "INVALID_FORMAT"
-    INVALID_AUDIO_FORMAT = "INVALID_AUDIO_FORMAT"
-    MISSING_FIELD = "MISSING_FIELD"
+    # Speaker analysis errors
+    NO_SPEECH_DETECTED = "NO_SPEECH_DETECTED"
+    TOO_MANY_SPEAKERS = "TOO_MANY_SPEAKERS"
+    SPEAKER_SEPARATION_FAILED = "SPEAKER_SEPARATION_FAILED"
+    DIARIZATION_FAILED = "DIARIZATION_FAILED"
 
 class BaseError(Exception):
     """Base error class for all custom exceptions"""
@@ -108,24 +112,31 @@ class SecurityError(BaseError):
             original_error=original_error
         )
 
-class AudioProcessingError(BaseError):
-    """Audio processing related errors"""
+class AudioProcessingError(Exception):
+    """Base exception for audio processing errors"""
     def __init__(
         self,
         message: str,
         error_code: ErrorCodes,
         details: Optional[Dict[str, Any]] = None,
-        severity: ErrorSeverity = ErrorSeverity.MEDIUM,
         original_error: Optional[Exception] = None
     ):
-        super().__init__(
-            message=message,
-            error_code=error_code,
-            details=details,
-            severity=severity,
-            category=ErrorCategory.PROCESSING,
-            original_error=original_error
-        )
+        super().__init__(message)
+        self.message = message
+        self.error_code = error_code
+        self.details = details or {}
+        self.original_error = original_error
+
+    def __str__(self):
+        return f"{self.error_code}: {self.message}"
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert error to dictionary format"""
+        return {
+            "error_code": self.error_code,
+            "message": self.message,
+            "details": self.details
+        }
 
 class StorageError(BaseError):
     """Storage-related errors"""

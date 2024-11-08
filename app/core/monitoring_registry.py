@@ -216,3 +216,34 @@ TRANSLATION_ACCURACY = MetricsRegistry.register_metric(
     'Translation accuracy score',
     ['source_lang', 'target_lang']
 )
+
+# Speaker Analysis Metrics
+SPEAKER_DIARIZATION_TIME = MetricsRegistry.register_metric(
+    'speaker_diarization_seconds',
+    Histogram,
+    'Speaker diarization processing time',
+    ['status'],
+    buckets=[1.0, 5.0, 10.0, 30.0, 60.0, 120.0]
+)
+
+SPEAKER_EXTRACTION_TIME = MetricsRegistry.register_metric(
+    'speaker_extraction_seconds',
+    Histogram,
+    'Speaker extraction processing time',
+    ['status'],
+    buckets=[1.0, 5.0, 10.0, 30.0, 60.0, 120.0]
+)
+
+SPEAKER_COUNT = MetricsRegistry.register_metric(
+    'speaker_count',
+    Histogram,
+    'Number of speakers detected',
+    ['job_type']
+)
+
+SPEAKER_CONFIDENCE = MetricsRegistry.register_metric(
+    'speaker_confidence',
+    Histogram,
+    'Speaker detection confidence',
+    ['job_type']
+)

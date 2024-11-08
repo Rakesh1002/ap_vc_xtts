@@ -138,6 +138,41 @@ class Settings(BaseSettings):
     REDIS_RETRY_ON_TIMEOUT: bool = True
     REDIS_SOCKET_KEEPALIVE: bool = True
 
+    # Speaker Analysis Models
+    SPEAKER_MODELS_DIR: str = "models/speaker"
+    DIARIZATION_MODEL_PATH: str = "models/speaker/diarization"
+    SEPARATION_MODEL_PATH: str = "models/speaker/separation"
+    
+    # HuggingFace Settings
+    HF_TOKEN: str  # Required for pyannote models
+    HF_CACHE_DIR: str = "models/huggingface"
+    
+    # Speaker Analysis Settings
+    MAX_SPEAKERS: int = 10
+    MIN_SPEAKER_TIME: float = 1.0  # Minimum speaking time in seconds
+    SPEAKER_OVERLAP_THRESHOLD: float = 0.5  # Overlap threshold for diarization
+    
+    # Queue Settings
+    SPEAKER_QUEUE_CONCURRENCY: int = 2
+    SPEAKER_QUEUE_TIME_LIMIT: int = 1800  # 30 minutes
+    
+    # Processing Settings
+    AUDIO_SAMPLE_RATE: int = 16000
+    MAX_AUDIO_DURATION: int = 7200  # 2 hours
+    MIN_AUDIO_DURATION: int = 1  # 1 second
+    
+    # Storage Settings for Speaker Analysis
+    SPEAKER_UPLOAD_DIR: str = "uploads/speaker"
+    SPEAKER_PROCESSED_DIR: str = "processed/speaker"
+    DIARIZATION_OUTPUT_DIR: str = "processed/diarization"
+    EXTRACTION_OUTPUT_DIR: str = "processed/extraction"
+
+    # Model-specific Settings
+    DIARIZATION_MIN_SPEAKERS: int = 1
+    DIARIZATION_MAX_SPEAKERS: int = 20
+    EXTRACTION_MAX_SPEAKERS: int = 10
+    SPEAKER_MIN_DURATION: float = 0.5  # Minimum duration for speaker segments
+
     class Config:
         case_sensitive = True
         env_file = ".env"

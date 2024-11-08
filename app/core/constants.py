@@ -6,10 +6,13 @@ SUPPORTED_AUDIO_FORMATS = {'audio/wav', 'audio/mpeg', 'audio/ogg'}
 class CeleryQueues:
     VOICE = "voice-queue"
     TRANSLATION = "translation-queue"
+    SPEAKER = "speaker-queue"
 
 class CeleryTasks:
     CLONE_VOICE = "app.workers.voice_tasks.clone_voice"
     TRANSLATE_AUDIO = "app.workers.translation_tasks.translate_audio"
+    DIARIZE_SPEAKERS = "app.workers.speaker_tasks.diarize_speakers"
+    EXTRACT_SPEAKERS = "app.workers.speaker_tasks.extract_speakers"
 
 class TaskTimeouts:
     VOICE_SOFT_TIMEOUT = 3300  # 55 minutes

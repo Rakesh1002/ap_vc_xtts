@@ -7,7 +7,18 @@ from app.schemas.audio import (
     CloningJob,
     TranslationJobCreate,
     TranslationJob,
-    ProcessingStatus
+    ProcessingStatus,
+    JobType
+)
+from app.schemas.speaker import (
+    SpeakerJobType,
+    SpeakerSegment,
+    SpeakerInfo,
+    SpeakerJobCreate,
+    SpeakerJobResponse,
+    DiarizationResult,
+    ExtractionResult,
+    SpeakerAnalysisMetrics
 )
 
 __all__ = [
@@ -23,5 +34,14 @@ __all__ = [
     "CloningJob",
     "TranslationJobCreate",
     "TranslationJob",
-    "ProcessingStatus"
+    "ProcessingStatus",
+    "JobType",
+    "SpeakerJobType",
+    "SpeakerSegment",
+    "SpeakerInfo",
+    "SpeakerJobCreate",
+    "SpeakerJobResponse",
+    "DiarizationResult",
+    "ExtractionResult",
+    "SpeakerAnalysisMetrics"
 ] 

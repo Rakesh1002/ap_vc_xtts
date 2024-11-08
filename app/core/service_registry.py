@@ -3,6 +3,8 @@ from typing import Dict, Type, Any
 from app.services.voice_cloning import VoiceCloningService
 from app.services.translation import TranslationService
 from app.services.storage_service import StorageService
+from app.services.speaker_diarization import SpeakerDiarizationService
+from app.services.speaker_extraction import SpeakerExtractionService
 from app.core.cache import cache_manager
 import logging
 
@@ -32,4 +34,10 @@ def get_translation_service() -> TranslationService:
     return ServiceRegistry.get_service(TranslationService)
 
 def get_storage_service() -> StorageService:
-    return ServiceRegistry.get_service(StorageService) 
+    return ServiceRegistry.get_service(StorageService)
+
+def get_diarization_service() -> SpeakerDiarizationService:
+    return ServiceRegistry.get_service(SpeakerDiarizationService)
+
+def get_extraction_service() -> SpeakerExtractionService:
+    return ServiceRegistry.get_service(SpeakerExtractionService) 

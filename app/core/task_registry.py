@@ -2,6 +2,7 @@
 from typing import Any, Callable, Dict, Optional
 from functools import wraps
 from app.core.config import get_settings
+from app.core.constants import CeleryTasks, CeleryQueues
 import logging
 
 logger = logging.getLogger(__name__)
@@ -43,6 +44,21 @@ class TaskRegistry:
 
             return wrapper
         return decorator
+
+    # Register speaker tasks
+    register_task(
+        CeleryTasks.DIARIZE_SPEAKERS,
+        CeleryQueues.SPEAKER,
+        soft_time_limit=1700,
+        hard_time_limit=1800
+    )
+
+    register_task(
+        CeleryTasks.EXTRACT_SPEAKERS,
+        CeleryQueues.SPEAKER,
+        soft_time_limit=1700,
+        hard_time_limit=1800
+    )
 
     @classmethod
     def get_task(cls, name: str) -> Optional[Dict[str, Any]]:

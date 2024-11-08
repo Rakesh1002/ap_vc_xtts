@@ -5,7 +5,11 @@ from app.core.metrics import (
     ACTIVE_JOBS,
     JOB_STATUS,
     MODEL_INFERENCE_TIME,
-    QUEUE_SIZE
+    QUEUE_SIZE,
+    SPEAKER_DIARIZATION_TIME,
+    SPEAKER_EXTRACTION_TIME,
+    SPEAKER_COUNT,
+    SPEAKER_CONFIDENCE
 )
 from app.core.monitoring_registry import MetricsRegistry
 from app.core.service_registry import ServiceRegistry
@@ -20,6 +24,8 @@ from app.core.errors import AudioProcessingError
 from datetime import datetime
 import asyncio
 from sqlalchemy import select
+from app.services.speaker_diarization import SpeakerDiarizationService
+from app.services.speaker_extraction import SpeakerExtractionService
 
 logger = logging.getLogger(__name__)
 
@@ -165,5 +171,39 @@ class TaskProcessor:
             
             return async_wrapper if asyncio.iscoroutinefunction(func) else sync_wrapper
         return decorator
+
+    async def process_speaker_task(
+        self,
+        job_id: int,
+        task_type: str,
+        num_speakers: Optional[int] = None
+    ):
+        """Process speaker analysis tasks with proper metrics"""
+        metric = (SPEAKER_DIARIZATION_TIME if task_type == "diarization" 
+                 else SPEAKER_EXTRACTION_TIME)
+        
+        start_time = time.time()
+        try:
+            # Get appropriate service
+            if task_type == "diarization":
+                service = get_diarization_service()
+                result = await service.process_audio(job_id, num_speakers=num_speakers)
+            else:
+                service = get_extraction_service()
+                result = await service.process_audio(job_id)
+
+            # Record metrics
+            duration = time.time() - start_time
+            metric.labels(status="success").observe(duration)
+            
+            if "num_speakers" in result:
+                SPEAKER_COUNT.labels(job_type=task_type).observe(result["num_speakers"])
+
+            return result
+
+        except Exception as e:
+            metric.labels(status="failure").observe(time.time() - start_time)
+            logger.exception(f"Speaker {task_type} task failed")
+            raise
 
 task_processor = TaskProcessor()

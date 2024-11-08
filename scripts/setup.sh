@@ -135,6 +135,49 @@ setup_python_env() {
     fi
 }
 
+# Function to setup speaker analysis models
+setup_speaker_models() {
+    print_status "Setting up speaker analysis models..."
+    
+    # Create model directories
+    MODELS_DIR="models/speaker"
+    mkdir -p "$MODELS_DIR"
+    
+    # Download and setup models
+    if [ ! -z "$HF_TOKEN" ]; then
+        print_status "Downloading speaker analysis models..."
+        
+        # Initialize Python environment for downloads
+        python3 -c "
+from pyannote.audio import Pipeline
+import torch
+
+# Download diarization model
+pipeline_diarization = Pipeline.from_pretrained(
+    'pyannote/speaker-diarization-3.1',
+    use_auth_token='$HF_TOKEN'
+)
+
+# Download separation model
+pipeline_separation = Pipeline.from_pretrained(
+    'pyannote/speaker-segmentation-3.1',
+    use_auth_token='$HF_TOKEN'
+)
+
+# Move to GPU if available
+if torch.cuda.is_available():
+    pipeline_diarization = pipeline_diarization.to('cuda')
+    pipeline_separation = pipeline_separation.to('cuda')
+
+print('Models downloaded and initialized successfully')
+"
+        print_status "Speaker analysis models setup completed"
+    else
+        print_error "HF_TOKEN not set. Cannot download speaker analysis models."
+        exit 1
+    fi
+}
+
 # Main setup process
 main() {
     print_status "Starting setup..."
@@ -148,6 +191,9 @@ main() {
         print_error "Model verification failed"
         exit 1
     }
+    
+    # Setup speaker analysis models
+    setup_speaker_models
     
     print_status "Setup completed successfully"
 }

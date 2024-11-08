@@ -1,5 +1,5 @@
 """Centralized metrics configuration"""
-from prometheus_client import Counter, Histogram, Gauge
+from prometheus_client import Counter, Gauge, Histogram, Summary
 from app.core.monitoring_registry import MetricsRegistry
 
 # API Metrics
@@ -24,13 +24,13 @@ TASK_PROCESSING_TIME = MetricsRegistry.register_metric(
     Histogram,
     'Task processing time',
     ['task_type', 'status'],
-    buckets=[1.0, 5.0, 10.0, 30.0, 60.0, 120.0]
+    buckets=[1, 5, 15, 30, 60, 300, 600]
 )
 
 ACTIVE_JOBS = MetricsRegistry.register_metric(
     'active_jobs',
     Gauge,
-    'Currently active jobs',
+    'Number of active jobs',
     ['job_type']
 )
 
@@ -69,7 +69,7 @@ MODEL_INFERENCE_TIME = MetricsRegistry.register_metric(
     Histogram,
     'Model inference time',
     ['model_name', 'operation'],
-    buckets=[1, 5, 10, 30, 60, 120]
+    buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
 )
 
 MODEL_BATCH_SIZE = MetricsRegistry.register_metric(
@@ -163,4 +163,63 @@ TRANSLATION_ACCURACY = MetricsRegistry.register_metric(
     Gauge,
     'Translation accuracy score',
     ['source_lang', 'target_lang']
+)
+
+# Speaker Analysis Metrics
+SPEAKER_DIARIZATION_TIME = MetricsRegistry.register_metric(
+    'speaker_diarization_seconds',
+    Histogram,
+    'Speaker diarization processing time',
+    ['status'],
+    buckets=[1.0, 5.0, 10.0, 30.0, 60.0, 120.0]
+)
+
+SPEAKER_EXTRACTION_TIME = MetricsRegistry.register_metric(
+    'speaker_extraction_seconds',
+    Histogram,
+    'Speaker extraction processing time',
+    ['status'],
+    buckets=[1.0, 5.0, 10.0, 30.0, 60.0, 120.0]
+)
+
+SPEAKER_COUNT = MetricsRegistry.register_metric(
+    'speaker_count',
+    Histogram,
+    'Number of speakers detected',
+    ['job_type']
+)
+
+SPEAKER_CONFIDENCE = MetricsRegistry.register_metric(
+    'speaker_confidence',
+    Histogram,
+    'Speaker detection confidence',
+    ['job_type']
+)
+
+SPEAKER_PROCESSING_ERRORS = MetricsRegistry.register_metric(
+    'speaker_processing_errors_total',
+    Counter,
+    'Speaker processing errors',
+    ['job_type', 'error_type']
+)
+
+SPEAKER_QUEUE_SIZE = MetricsRegistry.register_metric(
+    'speaker_queue_size',
+    Gauge,
+    'Speaker processing queue size',
+    ['job_type']
+)
+
+GPU_MEMORY_USAGE = MetricsRegistry.register_metric(
+    'gpu_memory_usage_bytes',
+    Gauge,
+    'GPU memory usage in bytes',
+    ['device']
+)
+
+GPU_UTILIZATION = MetricsRegistry.register_metric(
+    'gpu_utilization_percent',
+    Gauge,
+    'GPU utilization percentage',
+    ['device']
 )

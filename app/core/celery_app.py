@@ -10,7 +10,8 @@ celery_app = Celery(
     backend=settings.CELERY_RESULT_BACKEND,
     include=[  # Add task modules here
         'app.workers.voice_tasks',
-        'app.workers.translation_tasks'
+        'app.workers.translation_tasks',
+        'app.workers.speaker_tasks'
     ]
 )
 
@@ -29,8 +30,11 @@ celery_app.conf.update(
     task_routes={
         CeleryTasks.CLONE_VOICE: {'queue': CeleryQueues.VOICE},
         CeleryTasks.TRANSLATE_AUDIO: {'queue': CeleryQueues.TRANSLATION},
+        CeleryTasks.DIARIZE_SPEAKERS: {'queue': CeleryQueues.SPEAKER},
+        CeleryTasks.EXTRACT_SPEAKERS: {'queue': CeleryQueues.SPEAKER},
         'voice_cleanup': {'queue': CeleryQueues.VOICE},
         'translation_cleanup': {'queue': CeleryQueues.TRANSLATION},
+        'speaker_cleanup': {'queue': CeleryQueues.SPEAKER},
     },
     
     # Queue-specific settings
@@ -42,6 +46,10 @@ celery_app.conf.update(
         CeleryQueues.TRANSLATION: {
             'exchange': CeleryQueues.TRANSLATION,
             'routing_key': 'translation.process',
+        },
+        CeleryQueues.SPEAKER: {
+            'exchange': CeleryQueues.SPEAKER,
+            'routing_key': 'speaker.process',
         }
     },
     
@@ -69,4 +77,5 @@ celery_app.conf.update(
 celery_app.conf.task_time_limit = {
     CeleryQueues.VOICE: settings.VOICE_QUEUE_TIME_LIMIT,
     CeleryQueues.TRANSLATION: settings.TRANSLATION_QUEUE_TIME_LIMIT,
+    CeleryQueues.SPEAKER: settings.SPEAKER_QUEUE_TIME_LIMIT,
 } 

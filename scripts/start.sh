@@ -126,7 +126,7 @@ start_workers() {
         # Development mode - single worker process
         poetry run celery -A celery_worker worker \
             --loglevel=debug \
-            -Q voice-queue,translation-queue \
+            -Q voice-queue,translation-queue,speaker-queue \
             --pool=solo \
             --concurrency=1 \
             --max-tasks-per-child=10 \

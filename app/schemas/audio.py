@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List, Dict
 from enum import Enum
 
 class ProcessingStatus(str, Enum):
@@ -8,6 +8,12 @@ class ProcessingStatus(str, Enum):
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
+
+class JobType(str, Enum):
+    VOICE_CLONING = "voice_cloning"
+    TRANSLATION = "translation"
+    SPEAKER_DIARIZATION = "speaker_diarization"
+    SPEAKER_EXTRACTION = "speaker_extraction"
 
 class VoiceBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
@@ -65,4 +71,4 @@ class TranslationJob(BaseModel):
     completed_at: Optional[datetime]
 
     class Config:
-        from_attributes = True 
+        from_attributes = True

@@ -394,7 +394,8 @@ curl -X POST "http://localhost:8000/api/v1/voice/clone/1/retry" \
 
 ### Start Diarization Job
 
-```curl -X POST "http://localhost:8000/api/v1/speaker/diarize" \
+```bash
+curl -X POST "http://localhost:8000/api/v1/speaker/diarize" \
 -H "Authorization: Bearer ${TOKEN}" \
 -F "file=@audio.wav" \
 -F "num_speakers=3" # Optional

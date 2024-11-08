@@ -7,7 +7,7 @@ from pyannote.audio import Pipeline
 from huggingface_hub import hf_hub_download
 import torch
 import torchaudio
-import scipy.io.wavfile
+import scipy.io.wavfile as wavfile
 import io
 import logging
 from typing import Dict, Any, Tuple
@@ -17,6 +17,7 @@ from app.core.errors import AudioProcessingError, ErrorCodes
 from pyannote.audio.pipelines.utils.hook import ProgressHook
 from app.core.metrics import SPEAKER_EXTRACTION_TIME, SPEAKER_COUNT
 import gc
+import numpy as np
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -187,7 +188,7 @@ class SpeakerExtractionService:
         sources: Any,
         sample_rate: int
     ) -> Dict[str, Any]:
-        """Save diarization results and separated audio files"""
+        """Save diarization results and separated audio files with normalization"""
         results = {
             "speakers": [],
             "files": []
@@ -201,33 +202,56 @@ class SpeakerExtractionService:
             rttm_buffer.getvalue().encode(), 
             rttm_path
         )
-        
-        # Store RTTM file info without URL
         results["files"].append({
             "type": "rttm",
             "path": rttm_path
         })
 
-        # Save individual speaker audio
+        # Process and save individual speaker audio
         for idx, speaker in enumerate(diarization.labels()):
             speaker_path = f"processed/{job_id}/speaker_{idx}.wav"
             
+            # Get speaker audio
             speaker_audio = sources.data[:, idx]
             if isinstance(speaker_audio, torch.Tensor):
                 speaker_audio = speaker_audio.cpu().numpy()
             
+            # Apply audio normalization
+            normalized_audio = self._normalize_audio(speaker_audio)
+            
+            # Get audio stats for logging
+            original_rms = np.sqrt(np.mean(np.square(speaker_audio)))
+            final_rms = np.sqrt(np.mean(np.square(normalized_audio)))
+            logger.info(
+                f"Speaker {idx} normalization - "
+                f"Original RMS: {20 * np.log10(original_rms):.2f} dB, "
+                f"Final RMS: {20 * np.log10(final_rms):.2f} dB"
+            )
+            
+            # Save normalized audio
             buffer = io.BytesIO()
-            scipy.io.wavfile.write(buffer, sample_rate, speaker_audio)
+            wavfile.write(
+                buffer,
+                sample_rate,
+                (normalized_audio * np.iinfo(np.int16).max).astype(np.int16)
+            )
+            buffer.seek(0)
+            
+            # Upload to storage
             await self.storage.upload_file(
-                buffer.getvalue(), 
+                buffer.getvalue(),
                 speaker_path
             )
             
-            # Store speaker info without URL
+            # Add to results
             results["speakers"].append({
                 "id": idx,
                 "label": speaker,
-                "audio_path": speaker_path
+                "audio_path": speaker_path,
+                "audio_stats": {
+                    "rms_db": float(20 * np.log10(final_rms)),
+                    "peak": float(np.max(np.abs(normalized_audio)))
+                }
             })
             results["files"].append({
                 "type": "audio",
@@ -236,3 +260,24 @@ class SpeakerExtractionService:
             })
 
         return results
+
+    def _normalize_audio(self, waveform: np.ndarray, target_db: float = -18.0) -> np.ndarray:
+        """Normalize audio using RMS normalization with peak limiting"""
+        # Calculate current RMS
+        rms = np.sqrt(np.mean(np.square(waveform)))
+        
+        # Calculate target RMS (convert from dB)
+        target_rms = 10 ** (target_db / 20.0)
+        
+        # Calculate gain needed
+        gain = target_rms / (rms + 1e-6)  # Avoid division by zero
+        
+        # Apply gain
+        normalized = waveform * gain
+        
+        # Apply peak limiting to prevent clipping
+        max_peak = np.max(np.abs(normalized))
+        if max_peak > 0.95:  # Leave some headroom
+            normalized = normalized * (0.95 / max_peak)
+        
+        return normalized
